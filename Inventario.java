@@ -1,0 +1,38 @@
+
+/**
+ * Write a description of class Inventario here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public class Inventario
+{
+    /**
+     * Aquí se guardan los objetos ítems y armas ya preexistentes 
+     * en vectores que funcionan como el inventario
+     */
+    private Item[] inventario_items;
+    private Arma[]inventario_armas;
+
+    /**
+     * Constructor for objects of class Inventario
+     */
+    public Inventario()
+    {
+        //Vamos a comenzar diciendo que no se puede tener 
+        inventario_items = new Item[12];
+        inventario_armas = new Arma[12];
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     * 
+     * @param  y   a sample parameter for a method
+     * @return     the sum of x and y 
+     */
+    public int sampleMethod(int y)
+    {
+        // put your code here
+        return x + y;
+    }
+}
