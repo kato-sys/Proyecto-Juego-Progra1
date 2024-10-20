@@ -141,6 +141,12 @@ class Main{
             }*/
         }
     }
+    //Añadir parte del combate.
+    public void Combate(){
+        //Combate
+    }
+
+
 
     public static void main(String[] args)
     {
