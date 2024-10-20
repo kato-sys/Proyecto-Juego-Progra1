@@ -29,7 +29,7 @@ class Main{
         System.out.print(" " + j + " ");
         }*/
 
-        for (int i = 0; i < tablero.length; i++){
+        for(int i = 0; i < tablero.length; i++){
             for (int j = 0; j < tablero[0].length; j++){
                 if (tablero[i][j] == 1){
                     System.out.print("#");
@@ -137,20 +137,36 @@ class Main{
             else if(matriz[pPosF][pPosC].getType() == Enemigo)
             {
             // el método de Batalla iría aquí
+
             }
             }*/
         }
     }
-    //Añadir parte del combate.
-    public void Combate(){
-        //Combate
+    //Método de combate:
+    private boolean Combate(Enemigo objetivo, Jugador jugador){
+        // Atacar a un monstruo
+        System.out.print("Atacas a: "+ objetivo.getNombre());
+        boolean combateTerminado = false; // variable para saber si el juego terminó
+        jugador.atacar(objetivo);
+            if (objetivo.getVida() <= 0) {
+                System.out.println("¡Has derrotado al " + objetivo.getNombre() + "!");
+            } else {
+                objetivo.atacar(jugador);
+                if (jugador.getVida() <= 0) {
+                    System.out.println("¡Has sido derrotado!");
+                    combateTerminado = true;
+                }
+            }
+        return combateTerminado;
     }
 
 
-
-    public static void main(String[] args)
-    {
-        Juego trigger = new Juego();
+    public static void main(String[]args){
+        Main trigger = new Main();
+        Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
+        Enemigo[] enemigos = new Enemigo[3];
+        enemigos[0] = new Enemigo("Cyborg Renegado",50,5);
+        enemigos[1] = new Enemigo("Hacker Rebelde",20,10);
         //Generación de la habitación.
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
