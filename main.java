@@ -142,6 +142,7 @@ class Main{
             }*/
         }
     }
+    /*
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador){
         // Atacar a un monstruo
@@ -158,15 +159,12 @@ class Main{
                 }
             }
         return combateTerminado;
-    }
+    }*/
 
 
     public static void main(String[]args){
         Main trigger = new Main();
-        Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
-        Enemigo[] enemigos = new Enemigo[3];
-        enemigos[0] = new Enemigo("Cyborg Renegado",50,5);
-        enemigos[1] = new Enemigo("Hacker Rebelde",20,10);
+        //Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
         //Generación de la habitación.
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
