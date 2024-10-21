@@ -5,7 +5,7 @@ import java.util.Scanner;
 class Main{
     //variables que podríar ser útiles para varios métodos.
     Scanner scanner = new Scanner(System.in);
-    int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
+    //int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
     //Habitación.
     public void GeneracionHabitacion(int[][]habitacion){
         int filas = habitacion.length;
@@ -31,18 +31,34 @@ class Main{
 
         for(int i = 0; i < tablero.length; i++){
             for (int j = 0; j < tablero[0].length; j++){
-                if (tablero[i][j] == 1){
-                    System.out.print("#");
-                }else if(tablero[i][j] == 0){
-                    System.out.print(".");
-                }
-                //Continuar con else ifs... Cambia el caracter que imprime. 
+                switch(tablero[i][j]){
+                    case 1:
+                        System.out.print("#"); //Imprimir muros
+                        break;
+                    case 2:
+                        System.out.print("@"); //Jugador
+                        break;
+                    case 3:
+                        System.out.print("/"); //Puerta
+                        break;
+                    case 4:
+                        System.out.print("+"); //Item
+                        break;
+                    case 5:
+                        System.out.print("}"); //Arma
+                        break;
+                    case 6:
+                        System.out.print("E"); //Enemigo
+                        break;
+                    default:
+                        System.out.print("."); //Piso
+                } 
             }
             System.out.println();
         }
     }
     //Sería importante que este método reciba la/las matrices de la habitación.
-    public void RecorridoHabitacion()//aquí podría ir el número de habitación para que se pueda accesar sus elementos aleatorios.
+    public void RecorridoHabitacion(int[][] habitacion)//aquí podría ir el número de habitación para que se pueda accesar sus elementos aleatorios.
     {
         System.out.println("Habitación "); // + num de habitacion
 
@@ -105,15 +121,15 @@ class Main{
                 }
             }
             while(!valido);
-            /*
+            
             //revisando qué se encuentra en la posición a la cual se quiere avanzar
             //para preguntar por el atributo que muestre que hay pared
-            if(matriz[destinationF][destinationC].getType() == Pared)
+            if(habitacion[destinationF][destinationC] == 1)
             {
             System.out.println("No puede avanzar más porque hay una pared.");
             }
             //preguntando si hay puerta
-            else if(matriz[destinationF][destinationC].getType() == Puerta)
+            else if(habitacion[destinationF][destinationC] == 3)
             {
             System.out.println("Felicidades! LLegó al final de la habitación, hasta la próxima entrega!");
             gameOver = true;
@@ -124,40 +140,31 @@ class Main{
             pPosF = destinationF;
             pPosC = destinationC;
             //preguntando si hay un item
-            if(matriz[pPosF][pPosC].getType() == Item)
+            if(habitacion[pPosF][pPosC] == 4)
             {
             System.out.println("Obtuviste el item...hace esto....");
             }
             //preguntando si hay un arma
-            else if(matriz[pPosF][pPosC].getType() == Arma)
+            else if(habitacion[pPosF][pPosC] == 5)
             {
             System.out.println("Obtuviste el arma... hace esto....");
             }
             //preguntando si hay un enemigo
-            else if(matriz[pPosF][pPosC].getType() == Enemigo)
+            else if(habitacion[pPosF][pPosC] == 6)
             {
             // el método de Batalla iría aquí
 
             }
-            }*/
+            }
         }
     }
     /*
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador){
-        // Atacar a un monstruo
-        System.out.print("Atacas a: "+ objetivo.getNombre());
-        boolean combateTerminado = false; // variable para saber si el juego terminó
-        jugador.atacar(objetivo);
-            if (objetivo.getVida() <= 0) {
-                System.out.println("¡Has derrotado al " + objetivo.getNombre() + "!");
-            } else {
-                objetivo.atacar(jugador);
-                if (jugador.getVida() <= 0) {
-                    System.out.println("¡Has sido derrotado!");
-                    combateTerminado = true;
-                }
-            }
+        boolean comabteTerminado = false;
+        while (combateTerminado == false){
+            //Función combate.
+        }
         return combateTerminado;
     }*/
 
@@ -168,8 +175,15 @@ class Main{
         //Generación de la habitación.
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
+        //Habitación de Ejemplo:
+        habitacion[2][3] = 2;//Jugador
+        habitacion[0][1] = 3;//Puerta
+        habitacion[3][4] = 4;//Item
+        habitacion[5][5] = 5;//Arma
+        habitacion[7][7] = 6;//Enemigo
+
         trigger.ImprimirHabitacion(habitacion);
-        //trigger.RecorridoHabitacion();
+        trigger.RecorridoHabitacion(habitacion);
 
     }
 }
