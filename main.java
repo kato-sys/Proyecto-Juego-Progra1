@@ -166,12 +166,14 @@ class Main{
         while (combateTerminado == false){
             //Función combate.
             System.out.println("¿Qué quieres hacer?");
+            System.out.println("ENEMIGO VIDA: "+objetivo.getVida());
+            System.out.println("VIDA: "+jugador.getVida());
             System.out.println("[0] ATACAR");
             System.out.println("[1] ITEM");
             int uMenuCombatChoice = myScanner.nextInt();
             myScanner.nextLine();
             switch(uMenuCombatChoice){
-                case 1:
+                case 0:
                     if (objetivo.getVida() > 0){
                         jugador.atacar(objetivo);
                     if (objetivo.getVida() <= 0){
@@ -185,7 +187,7 @@ class Main{
                         }
                     }
                     }
-                case 2:
+                case 1:
                     //Introducir Menú items. Uso de Items.
             }
            
