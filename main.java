@@ -4,7 +4,7 @@ import java.util.Scanner;
  */
 class Main{
     //variables que podríar ser útiles para varios métodos.
-    Scanner scanner = new Scanner(System.in);
+    Scanner myScanner = new Scanner(System.in);
     //int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
     //Habitación.
     public void GeneracionHabitacion(int[][]habitacion){
@@ -96,7 +96,7 @@ class Main{
             do
             {
                 System.out.println("Ingrese \"w\" (arriba), \"a\" (izquierda), \"s\" (abajo) o \"d\" (derecha) para traversar la habitación.");            
-                String movimiento = scanner.nextLine();
+                String movimiento = myScanner.nextLine();
                 switch(movimiento)
                 {
                     case "w":
@@ -175,13 +175,13 @@ class Main{
                     if (objetivo.getVida() > 0){
                         jugador.atacar(objetivo);
                     if (objetivo.getVida() <= 0){
-                        System.out.println("Has derrotado al " objetivo.getNombre());
-                        combate terminado = true;
+                        System.out.println("Has derrotado al "+ objetivo.getNombre());
+                        combateTerminado = true;
                     }else{
                         objetivo.atacar(jugador);
                         if (jugador.getVida() <= 0){
                             System.out.println("Has Muerto.");
-                            comabteTerminado = true;
+                            combateTerminado = true;
                         }
                     }
                     }
@@ -207,7 +207,7 @@ class Main{
         habitacion[3][4] = 4;//Item
         habitacion[5][5] = 5;//Arma
         habitacion[7][7] = 6;//Enemigo
-
+        trigger.Combate(enemigo,jugador);
         trigger.ImprimirHabitacion(habitacion);
         trigger.RecorridoHabitacion(habitacion);
 
