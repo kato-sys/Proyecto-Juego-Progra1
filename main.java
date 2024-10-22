@@ -158,21 +158,47 @@ class Main{
             }
         }
     }
-    /*
+    
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador){
-        boolean comabteTerminado = false;
+        boolean combateTerminado = false;
+        System.out.println("Atacas a: "+objetivo.getNombre());
         while (combateTerminado == false){
             //Función combate.
+            System.out.println("¿Qué quieres hacer?");
+            System.out.println("[0] ATACAR");
+            System.out.println("[1] ITEM");
+            int uMenuCombatChoice = myScanner.nextInt();
+            myScanner.nextLine();
+            switch(uMenuCombatChoice){
+                case 1:
+                    if (objetivo.getVida() > 0){
+                        jugador.atacar(objetivo);
+                    if (objetivo.getVida() <= 0){
+                        System.out.println("Has derrotado al " objetivo.getNombre());
+                        combate terminado = true;
+                    }else{
+                        objetivo.atacar(jugador);
+                        if (jugador.getVida() <= 0){
+                            System.out.println("Has Muerto.");
+                            comabteTerminado = true;
+                        }
+                    }
+                    }
+                case 2:
+                    //Introducir Menú items. Uso de Items.
+            }
+           
         }
         return combateTerminado;
-    }*/
+    }
 
 
     public static void main(String[]args){
         Main trigger = new Main();
-        //Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
+        Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
         //Generación de la habitación.
+        Enemigo enemigo = new Enemigo("Cyborg Renegado",20,5);
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
         //Habitación de Ejemplo:
