@@ -57,26 +57,31 @@ class Main{
             System.out.println();
         }
     }
-    //Sería importante que este método reciba la/las matrices de la habitación.
-    public void RecorridoHabitacion(int[][] habitacion)//aquí podría ir el número de habitación para que se pueda accesar sus elementos aleatorios.
+
+    public void RecorridoHabitacion(int[][] habitacion, Jugador jugador, Enemigo enemigo) //como este metodo llama al metodo combate se le debe dar de una vez el jugador y enemigo
     {
         System.out.println("Habitación "); // + num de habitacion
 
         boolean gameOver = false;
         while(!gameOver)
         {
-            /**
-             * Aquí se imprimiría la matriz, ya sea si ya se le asignaron signos a las partes 
-             * de la matriz o con variables las creo yo
-             */
-
-            /**
-             * aquí se buscariá la posición del jugador, si ya viene preestablecida, 
-             * sino lo pongo al frente de la puerta. mientras tanto la asumo con estas
-             * variables (p para player, Pos de posición, F para fila y C para columna)
-             */
-            int pPosF = 8;
-            int pPosC = 5;
+            ImprimirHabitacion(habitacion);
+            //posicion del jugador
+            int pPosF = 0;
+            int pPosC = 0;
+            
+            //para encontrar donde esta el jugador en la habitacion y guardar su posicion
+            for(int f = 0; f < habitacion.length; f++)
+            {
+                for (int c = 0; c < habitacion[0].length; c++)
+                {
+                    if(habitacion[f][c] == 2)
+                    {
+                        pPosF = f;
+                        pPosC = c;
+                    }
+                }
+            }
 
             /**
              * estos son para guardar la posición en la matriz a donde 
@@ -124,37 +129,36 @@ class Main{
             
             //revisando qué se encuentra en la posición a la cual se quiere avanzar
             //para preguntar por el atributo que muestre que hay pared
-            if(habitacion[destinationF][destinationC] == 1)
+            switch(habitacion[destinationF][destinationC])
             {
-            System.out.println("No puede avanzar más porque hay una pared.");
+                case 1: //pared
+                    System.out.println("No puede avanzar más porque hay una pared.");
+                    canGo = false;
+                    break;
+                case 3: //puerta
+                    System.out.println("Felicidades! LLegó al final de la habitación, hasta la próxima entrega!");
+                    //llamar a addInventory(true)
+                    gameOver = true;
+                    canGo = false;
+                    break;
+                case 4: //item
+                    System.out.println("Obtuviste el item...hace esto....");
+                    //habitacion[destinationF][destinationC] = ;
+                    // ^ no sé cual es el valor para el piso ^^'
+                    break;
+                case 5: //arma
+                    System.out.println("Obtuviste el arma... hace esto....");
+                    //habitacion[destinationF][destinationC] = ;
+                    break;
+                case 6: //enemigo
+                    Combate(enemigo, jugador);
+                    //habitacion[destinationF][destinationC] = ;
+                    break;
             }
-            //preguntando si hay puerta
-            else if(habitacion[destinationF][destinationC] == 3)
+            if(canGo)
             {
-            System.out.println("Felicidades! LLegó al final de la habitación, hasta la próxima entrega!");
-            gameOver = true;
-            }
-            else
-            {
-            //como nada le obstruye, el jugador se mueve
-            pPosF = destinationF;
-            pPosC = destinationC;
-            //preguntando si hay un item
-            if(habitacion[pPosF][pPosC] == 4)
-            {
-            System.out.println("Obtuviste el item...hace esto....");
-            }
-            //preguntando si hay un arma
-            else if(habitacion[pPosF][pPosC] == 5)
-            {
-            System.out.println("Obtuviste el arma... hace esto....");
-            }
-            //preguntando si hay un enemigo
-            else if(habitacion[pPosF][pPosC] == 6)
-            {
-            // el método de Batalla iría aquí
-
-            }
+                habitacion[destinationF][destinationC] = 2;
+                //habitacion[pPosF][pPosC] = ;
             }
         }
     }
@@ -209,9 +213,9 @@ class Main{
         habitacion[3][4] = 4;//Item
         habitacion[5][5] = 5;//Arma
         habitacion[7][7] = 6;//Enemigo
-        trigger.Combate(enemigo,jugador);
-        trigger.ImprimirHabitacion(habitacion);
-        trigger.RecorridoHabitacion(habitacion);
+        //trigger.Combate(enemigo,jugador);
+        //trigger.ImprimirHabitacion(habitacion);
+        trigger.RecorridoHabitacion(habitacion, jugador, enemigo);
 
     }
 }
