@@ -143,12 +143,13 @@ class Main{
                     break;
                 case 4: //item
                     System.out.println("Obtuviste el item...hace esto....");
-                    //habitacion[destinationF][destinationC] = ;
-                    // ^ no sé cual es el valor para el piso ^^'
+                    //aqui se llamaria la funcion add inventory, primero hay que crear clase items
+                    habitacion[destinationF][destinationC] = 0;
                     break;
                 case 5: //arma
                     System.out.println("Obtuviste el arma... hace esto....");
-                    //habitacion[destinationF][destinationC] = ;
+                    //lo mismo aca, tomando en cuenta que para items se debe dar true de parametro, y aca false
+                    habitacion[destinationF][destinationC] = 0;
                     break;
                 case 6: //enemigo
                     Combate(enemigo, jugador);
@@ -158,7 +159,7 @@ class Main{
             if(canGo)
             {
                 habitacion[destinationF][destinationC] = 2;
-                //habitacion[pPosF][pPosC] = ;
+                habitacion[pPosF][pPosC] = 0;
             }
         }
     }
