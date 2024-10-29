@@ -1,15 +1,23 @@
+
+import java.util.Random;
 import java.util.Scanner;
+
 /**
  * Movimiento/Acción del jugador de la habitación
  */
-class Main{
+class Main {
+
     //variables que podríar ser útiles para varios métodos.
     Scanner myScanner = new Scanner(System.in);
+
     //int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
     //Habitación.
-    public void GeneracionHabitacion(int[][]habitacion){
+    public void GeneracionHabitacion(int[][] habitacion) {
         int filas = habitacion.length;
         int columnas = habitacion[0].length;
+        Random rand = new Random();
+        int index = 0;
+        int[] entities = {2, 3, 4, 4, 5, 6, 6, 6}; // 2 = jugador, 3 = puerta, 4 = item, 5 = arma, 6 = enemigo
         // Generar la fila superior e inferior.
         for (int i = 0; i < columnas; i++) {
             habitacion[0][i] = 1;             // Fila superior
@@ -20,18 +28,34 @@ class Main{
             habitacion[i][0] = 1;             // Columna izquierda
             habitacion[i][columnas - 1] = 1;      // Columna derecha.
         }
+        // El resto de las casillas son piso.
+        for (int i = 0; i < habitacion.length; i++) {
+            for (int j = 0; j < habitacion[0].length; j++) {
+                if (habitacion[i][j] != 1) {
+                    habitacion[i][j] = 0;
+                }
+            }
+        }
+        // Randomizar habitación
+        while (index < entities.length) {
+            int i = rand.nextInt(9);
+            int j = rand.nextInt(9);
+            if (habitacion[i][j] != 1) {
+                habitacion[i][j] = entities[index];
+                index += 1;
+            }
+        }
     }
 
-    public void ImprimirHabitacion(int[][] tablero){
+    public void ImprimirHabitacion(int[][] tablero) {
 
         /*System.out.print("  ");
         for (int j = 0; j < tablero[0].length; j++){
         System.out.print(" " + j + " ");
         }*/
-
-        for(int i = 0; i < tablero.length; i++){
-            for (int j = 0; j < tablero[0].length; j++){
-                switch(tablero[i][j]){
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < tablero[0].length; j++) {
+                switch (tablero[i][j]) {
                     case 1:
                         System.out.print("#"); //Imprimir muros
                         break;
@@ -50,9 +74,9 @@ class Main{
                     case 6:
                         System.out.print("E"); //Enemigo
                         break;
-                    default:
+                    case 0:
                         System.out.print("."); //Piso
-                } 
+                }
             }
             System.out.println();
         }
@@ -63,20 +87,16 @@ class Main{
         System.out.println("Habitación "); // + num de habitacion
 
         boolean gameOver = false;
-        while(!gameOver)
-        {
+        while (!gameOver) {
             ImprimirHabitacion(habitacion);
             //posicion del jugador
             int pPosF = 0;
             int pPosC = 0;
-            
+
             //para encontrar donde esta el jugador en la habitacion y guardar su posicion
-            for(int f = 0; f < habitacion.length; f++)
-            {
-                for (int c = 0; c < habitacion[0].length; c++)
-                {
-                    if(habitacion[f][c] == 2)
-                    {
+            for (int f = 0; f < habitacion.length; f++) {
+                for (int c = 0; c < habitacion[0].length; c++) {
+                    if (habitacion[f][c] == 2) {
                         pPosF = f;
                         pPosC = c;
                     }
@@ -84,53 +104,49 @@ class Main{
             }
 
             /**
-             * estos son para guardar la posición en la matriz a donde 
-             * se quiere mover un jugador en cada turno
+             * estos son para guardar la posición en la matriz a donde se quiere
+             * mover un jugador en cada turno
              */
             int destinationF = 0;
             int destinationC = 0;
 
             /**
-             * esta variable se usará para guardar si la posición a donde quiere ir el jugador
-             * está libre o si choca con una pared
+             * esta variable se usará para guardar si la posición a donde quiere
+             * ir el jugador está libre o si choca con una pared
              */
             boolean canGo = true;
 
             //para revisar el input de acción del usuario
             boolean valido = true;
-            do
-            {
-                System.out.println("Ingrese \"w\" (arriba), \"a\" (izquierda), \"s\" (abajo) o \"d\" (derecha) para traversar la habitación.");            
+            do {
+                System.out.println("Ingrese \"w\" (arriba), \"a\" (izquierda), \"s\" (abajo) o \"d\" (derecha) para traversar la habitación.");
                 String movimiento = myScanner.nextLine();
-                switch(movimiento)
-                {
+                switch (movimiento) {
                     case "w":
-                        destinationF = pPosF-1;
+                        destinationF = pPosF - 1;
                         destinationC = pPosC;
                         break;
                     case "a":
                         destinationF = pPosF;
-                        destinationC = pPosC-1;
+                        destinationC = pPosC - 1;
                         break;
                     case "s":
-                        destinationF = pPosF+1;
+                        destinationF = pPosF + 1;
                         destinationC = pPosC;
                         break;
                     case "d":
                         destinationF = pPosF;
-                        destinationC = pPosC+1;
+                        destinationC = pPosC + 1;
                         break;
                     default:
                         System.out.println("Opción inválida, por favor intente otra vez.");
                         valido = false;
                 }
-            }
-            while(!valido);
-            
+            } while (!valido);
+
             //revisando qué se encuentra en la posición a la cual se quiere avanzar
             //para preguntar por el atributo que muestre que hay pared
-            switch(habitacion[destinationF][destinationC])
-            {
+            switch (habitacion[destinationF][destinationC]) {
                 case 1: //pared
                     System.out.println("No puede avanzar más porque hay una pared.");
                     canGo = false;
@@ -156,64 +172,62 @@ class Main{
                     //habitacion[destinationF][destinationC] = ;
                     break;
             }
-            if(canGo)
-            {
+            if (canGo) {
                 habitacion[destinationF][destinationC] = 2;
                 habitacion[pPosF][pPosC] = 0;
             }
         }
     }
-    
+
     //Método de combate:
-    private boolean Combate(Enemigo objetivo, Jugador jugador){
+    private boolean Combate(Enemigo objetivo, Jugador jugador) {
         boolean combateTerminado = false;
-        System.out.println("Atacas a: "+objetivo.getNombre());
-        while (combateTerminado == false){
+        System.out.println("Atacas a: " + objetivo.getNombre());
+        while (combateTerminado == false) {
             //Función combate.
             System.out.println("¿Qué quieres hacer?");
-            System.out.println("ENEMIGO VIDA: "+objetivo.getVida());
-            System.out.println("VIDA: "+jugador.getVida());
+            System.out.println("ENEMIGO VIDA: " + objetivo.getVida());
+            System.out.println("VIDA: " + jugador.getVida());
             System.out.println("[0] ATACAR");
             System.out.println("[1] ITEM");
             int uMenuCombatChoice = myScanner.nextInt();
             myScanner.nextLine();
-            switch(uMenuCombatChoice){
+            switch (uMenuCombatChoice) {
                 case 0:
-                    if (objetivo.getVida() > 0){
+                    if (objetivo.getVida() > 0) {
                         jugador.atacar(objetivo);
-                    if (objetivo.getVida() <= 0){
-                        System.out.println("Has derrotado al "+ objetivo.getNombre());
-                        combateTerminado = true;
-                    }else{
-                        objetivo.atacar(jugador);
-                        if (jugador.getVida() <= 0){
-                            System.out.println("Has Muerto.");
+                        if (objetivo.getVida() <= 0) {
+                            System.out.println("Has derrotado al " + objetivo.getNombre());
                             combateTerminado = true;
+                        } else {
+                            objetivo.atacar(jugador);
+                            if (jugador.getVida() <= 0) {
+                                System.out.println("Has Muerto.");
+                                combateTerminado = true;
+                            }
                         }
                     }
-                    }
                 case 1:
-                    //Introducir Menú items. Uso de Items.
+                //Introducir Menú items. Uso de Items.
             }
-           
+
         }
         return combateTerminado;
     }
 
-
-    public static void main(String[]args){
+    public static void main(String[] args) {
         Main trigger = new Main();
-        Jugador jugador = new Jugador("Player1",100,15); //Definición placeholder de jugador
+        Jugador jugador = new Jugador("Player1", 100, 15); //Definición placeholder de jugador
         //Generación de la habitación.
-        Enemigo enemigo = new Enemigo("Cyborg Renegado",20,5);
+        Enemigo enemigo = new Enemigo("Cyborg Renegado", 20, 5);
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
         //Habitación de Ejemplo:
-        habitacion[2][3] = 2;//Jugador
-        habitacion[0][1] = 3;//Puerta
-        habitacion[3][4] = 4;//Item
-        habitacion[5][5] = 5;//Arma
-        habitacion[7][7] = 6;//Enemigo
+        //habitacion[2][3] = 2;//Jugador
+        //habitacion[0][1] = 3;//Puerta
+        //habitacion[3][4] = 4;//Item
+        //habitacion[5][5] = 5;//Arma
+        //habitacion[7][7] = 6;//Enemigo
         //trigger.Combate(enemigo,jugador);
         //trigger.ImprimirHabitacion(habitacion);
         trigger.RecorridoHabitacion(habitacion, jugador, enemigo);
