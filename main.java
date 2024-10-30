@@ -222,7 +222,7 @@ class Main{
         boolean combateTerminado = false;
         System.out.println("Atacas a: " + objetivo.getNombre());
         while (combateTerminado == false) {
-            //Funciﾃｳn combate.
+            //Función combate.
             System.out.println("¿Qué quieres hacer?");
             System.out.println("ENEMIGO VIDA: " + objetivo.getVida());
             System.out.println("VIDA: " + jugador.getVida());
@@ -245,8 +245,10 @@ class Main{
                             }
                         }
                     }
+                    break;
                 case 1:
-                usarItem(jugador, objetivo); //Llamar método usar Item
+                    usarItem(jugador, objetivo); //Llamar método usar Item
+                    break;
             }
 
         }
