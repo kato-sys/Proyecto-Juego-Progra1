@@ -16,7 +16,7 @@ public class Inventario
     public Inventario()
     {
         inventario_items = new Item[12];
-        inventario_armas = new Arma[12];
+        inventario_armas = new Item[12];
         cuantosItems = -1;
         cuantasArmas = -1;
     }
@@ -39,7 +39,6 @@ public class Inventario
             }
         }
      }
-     /
 
     public void addInventario(Item objeto, boolean esItem) //nuevamente, booleano es para saber si el objeto a agregar es un item o un arma
      {
