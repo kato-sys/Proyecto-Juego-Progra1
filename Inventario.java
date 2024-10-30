@@ -24,7 +24,7 @@ public class Inventario
       {
             for(int i = 0; i < inventario_items.length; i++)
             {
-                System.out.println(inventario_items[i].getNombre() + ": " + inventario_items[i].getDescripcion() + "\n DEF boost: " + inventario_armas[i].getPoder());
+                System.out.println(inventario_items[i].getNombre() + ": " + inventario_items[i].getDescripcion() + "\n DEF boost: " + inventario_items[i].getPoder());
             }
      }
 
