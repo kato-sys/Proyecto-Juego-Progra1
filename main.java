@@ -178,6 +178,10 @@ class Main {
             }
         }
     }
+    //Método de generación de ítem:
+    private Item generarItem(){
+        //Generación Item
+    }
 
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador) {
@@ -228,7 +232,7 @@ class Main {
         //habitacion[3][4] = 4;//Item
         //habitacion[5][5] = 5;//Arma
         //habitacion[7][7] = 6;//Enemigo
-        //trigger.Combate(enemigo,jugador);
+        //trigger.Combate(enemigo,jugador)
         //trigger.ImprimirHabitacion(habitacion);
         trigger.RecorridoHabitacion(habitacion, jugador, enemigo);
 
