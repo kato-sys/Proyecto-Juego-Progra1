@@ -5,17 +5,17 @@ import java.util.Scanner;
 /**
  * Movimiento/Acción del jugador de la habitación
  */
-class Main {
+class Main{
 
     //variables que podríar ser útiles para varios métodos.
     Scanner myScanner = new Scanner(System.in);
-
+    static Random rand = new Random();
     //int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
     //Habitación.
     public void GeneracionHabitacion(int[][] habitacion) {
         int filas = habitacion.length;
         int columnas = habitacion[0].length;
-        Random rand = new Random();
+        
         int index = 0;
         int[] entities = {2, 3, 4, 4, 5, 6, 6, 6}; // 2 = jugador, 3 = puerta, 4 = item, 5 = arma, 6 = enemigo
         // Generar la fila superior e inferior.
@@ -178,10 +178,24 @@ class Main {
             }
         }
     }
-    //Método de generación de ítem:
-    private Item generarItem(){
-        //Generación Item
-    }
+    private Item generarItem() {
+        int seleccionTipoItem = rand.nextInt(6);
+        switch (seleccionTipoItem) {
+            case 0:
+             return new Item("Arma Secreta", "arma_secreta", "Reduce 50% de la vida del enemigo", 0, 1);
+          case 1:
+              return new Item("Arma Básica", "arma_basica", "Ataca con el poder base del jugador", 0, 1);
+          case 2:
+              return new Item("Arma Legendaria", "arma_legendaria", "Duplica el ataque base del jugador", 0, 1);
+           case 3:
+               return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 5, 3);
+          case 4:
+              return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 0, 1);
+          case 5:
+             return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 0, 1);
+        }
+        return null; // No sé, por si acaso ocurre un error (?)
+    }      
 
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador) {

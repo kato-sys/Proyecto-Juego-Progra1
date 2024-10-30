@@ -53,4 +53,5 @@ public class Jugador{
     public String JugadorStatus() {
         return "Nombre: " + jugadorNombre + ", Vida: " + jugadorVida + ", Ataque: " + jugadorAtaque;
     }
+
 }
