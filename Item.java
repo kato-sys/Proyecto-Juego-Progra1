@@ -68,4 +68,5 @@ public class Item {
                 System.out.println("El ítem no tiene un efecto válido.");
         }
     }
+    
 }

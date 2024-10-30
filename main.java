@@ -1,13 +1,11 @@
-
 import java.util.Random;
 import java.util.Scanner;
-
 /**
- * Movimiento/Acción del jugador de la habitación
+ * Movimiento/Acción del jugador de la habitaciﾃｳn
  */
 class Main{
 
-    //variables que podríar ser útiles para varios métodos.
+    //variables que podrﾃｭar ser útiles para varios métodos.
     Scanner myScanner = new Scanner(System.in);
     static Random rand = new Random();
     //int[][] matriz = new int[9][9]; //asumamos esta matriz como habitación por ahora
@@ -104,7 +102,7 @@ class Main{
             }
 
             /**
-             * estos son para guardar la posición en la matriz a donde se quiere
+             * estos son para guardar la posiciﾃｳn en la matriz a donde se quiere
              * mover un jugador en cada turno
              */
             int destinationF = 0;
@@ -144,7 +142,7 @@ class Main{
                 }
             } while (!valido);
 
-            //revisando qué se encuentra en la posición a la cual se quiere avanzar
+            //revisando quﾃｩ se encuentra en la posición a la cual se quiere avanzar
             //para preguntar por el atributo que muestre que hay pared
             switch (habitacion[destinationF][destinationC]) {
                 case 1: //pared
@@ -156,17 +154,29 @@ class Main{
                     gameOver = true;
                     canGo = false;
                     break;
-                case 4: //item
-                    generarItem();
-                    System.out.println("Obtuviste el item...hace esto....");
-                    //llamar a addInventory(true)
-                    habitacion[destinationF][destinationC] = 0;
+                case 4:
+                    //item
+                    Item item = generarItem(); // Genera el item
+                    switch(item.getTipo())
+                    {
+                        case "armadura_base":
+                            jugador.getInventario().addInventario(item, "armadura"); // Agrega al inventario
+                            break;
+                        case "armadura_legendaria":
+                            jugador.getInventario().addInventario(item, "armadura");
+                            break;
+                        case "buff_ataque":
+                            jugador.getInventario().addInventario(item, "item");
+                            break;
+                    }
+                    System.out.println("Obtuviste el item: " + item.getNombre());
+                    habitacion[destinationF][destinationC] = 0; 
                     break;
-                case 5: //arma
-                    generarItem();
-                    System.out.println("Obtuviste el arma... hace esto....");
-                    habitacion[destinationF][destinationC] = 0;
-                    //llamar a addInventory(true)
+                case 5:
+                    Item arma = generarArma();
+                    jugador.getInventario().addInventario(arma, "arma"); // Agrega al inventario
+                    System.out.println("Obtuviste el arma: " + arma.getNombre());
+                    habitacion[destinationF][destinationC] = 0; // Eliminar el arma de la habitación
                     break;
                 case 6: //enemigo
                     Combate(enemigo, jugador);
@@ -179,31 +189,40 @@ class Main{
             }
         }
     }
+    private Item generarArma(){
+        int seleccionTipoArma = rand.nextInt(3);
+        switch (seleccionTipoArma){
+            case 0:
+                return new Item("Arma Secreta", "arma_secreta", "Reduce 50% de la vida del enemigo", 0, 1);
+            case 1:
+                return new Item("Arma Básica", "arma_basica", "Ataca con el poder base del jugador", 0, 1);
+            case 2:
+                return new Item("Arma Legendaria", "arma_legendaria", "Duplica el ataque base del jugador", 0, 1);
+        }
+        return null; // No sé, por si acaso ocurre un error (?)
+
+    }
     private Item generarItem() {
-        int seleccionTipoItem = rand.nextInt(6);
+        int seleccionTipoItem = rand.nextInt(3);
         switch (seleccionTipoItem) {
             case 0:
-             return new Item("Arma Secreta", "arma_secreta", "Reduce 50% de la vida del enemigo", 0, 1);
-          case 1:
-              return new Item("Arma Básica", "arma_basica", "Ataca con el poder base del jugador", 0, 1);
-          case 2:
-              return new Item("Arma Legendaria", "arma_legendaria", "Duplica el ataque base del jugador", 0, 1);
-           case 3:
-               return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 5, 3);
-          case 4:
+                return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 5, 3);
+            case 1:
               return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 0, 1);
-          case 5:
-             return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 0, 1);
+            case 2:
+                return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 0, 1);
         }
         return null; // No sé, por si acaso ocurre un error (?)
     }      
+
+    
 
     //Método de combate:
     private boolean Combate(Enemigo objetivo, Jugador jugador) {
         boolean combateTerminado = false;
         System.out.println("Atacas a: " + objetivo.getNombre());
         while (combateTerminado == false) {
-            //Función combate.
+            //Funciﾃｳn combate.
             System.out.println("¿Qué quieres hacer?");
             System.out.println("ENEMIGO VIDA: " + objetivo.getVida());
             System.out.println("VIDA: " + jugador.getVida());
@@ -227,18 +246,40 @@ class Main{
                         }
                     }
                 case 1:
-                //Introducir Menú items. Uso de Items.
+                usarItem(jugador, objetivo); //Llamar método usar Item
             }
 
         }
         return combateTerminado;
     }
 
+    private void usarItem(Jugador jugador, Enemigo enemigo) {
+        jugador.getInventario().printInventario(); // Mostrar los ítems
+        System.out.println("Elige un ítem para usar (índice): ");
+        int itemIndex = myScanner.nextInt();
+        myScanner.nextLine();
+        if (itemIndex >= 0 && itemIndex < jugador.getInventario().getCuantosItems()) {
+            // Accede al ítem usando el índice
+            Item item = jugador.getInventario().getInventarioItems()[itemIndex];
+            // Verifica que el ítem no sea null antes de usarlo
+            if (item != null) {
+                item.aplicarEfecto(jugador, enemigo); // Aplica el efecto del ﾃｭtem
+                System.out.println("Has usado: " + item.getNombre());   
+            // Elimina el ítem del inventario si es consumible
+                jugador.getInventario().removeItem(itemIndex);
+            }else {
+                System.out.println("El ítem no es válido. Intenta de nuevo.");
+            }
+        }else{
+            System.out.println("ítem inválido. Intenta de nuevo.");
+        }
+    }
+
     public static void main(String[] args) {
         Main trigger = new Main();
-        Jugador jugador = new Jugador("Player1", 100, 15); //Definición placeholder de jugador
+        Jugador jugador = new Jugador("Player1", 100, 15,10); //Definición placeholder de jugador
         //Generación de la habitación.
-        Enemigo enemigo = new Enemigo("Cyborg Renegado", 20, 5);
+        Enemigo enemigo = new Enemigo("Cyborg Renegado", 20, 5,10);
         int[][] habitacion = new int[9][9];
         trigger.GeneracionHabitacion(habitacion);
         //Habitación de Ejemplo:

@@ -2,12 +2,15 @@ public class Jugador{
     String jugadorNombre;
     int jugadorVida;
     int jugadorAtaque;
-    int[][] jugadorInventario;
+    int defensa;
+    private Inventario inventario; // Agrega este atributo
     //Método constructor
-    public Jugador(String nombre, int vida, int ataque){
+    public Jugador(String nombre, int vida, int ataque, int defensa){
         this.jugadorNombre = nombre;
         this.jugadorVida = vida;
         this.jugadorAtaque = ataque;
+        this.defensa = defensa;
+        this.inventario = new Inventario();
     }
 
     //Getters
@@ -20,8 +23,8 @@ public class Jugador{
     public int getAtaque(){
         return jugadorAtaque;
     }
-    public int[][] getInventario(){
-        return jugadorInventario;
+    public Inventario getInventario(){
+        return inventario;
     }
     //Setters
     public void setVida(int nuevaVida){
