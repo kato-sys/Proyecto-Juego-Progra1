@@ -153,19 +153,20 @@ class Main{
                     break;
                 case 3: //puerta
                     System.out.println("Felicidades! LLegó al final de la habitación, hasta la próxima entrega!");
-                    //llamar a addInventory(true)
                     gameOver = true;
                     canGo = false;
                     break;
                 case 4: //item
+                    generarItem();
                     System.out.println("Obtuviste el item...hace esto....");
-                    //aqui se llamaria la funcion add inventory, primero hay que crear clase items
+                    //llamar a addInventory(true)
                     habitacion[destinationF][destinationC] = 0;
                     break;
                 case 5: //arma
+                    generarItem();
                     System.out.println("Obtuviste el arma... hace esto....");
-                    //lo mismo aca, tomando en cuenta que para items se debe dar true de parametro, y aca false
                     habitacion[destinationF][destinationC] = 0;
+                    //llamar a addInventory(true)
                     break;
                 case 6: //enemigo
                     Combate(enemigo, jugador);
