@@ -1,9 +1,11 @@
+
 public class Item {
-    private String nombre;
-    private String tipo; // "arma", "armadura", "buff", etc.
-    private String descripcion;
-    private int poder; // Valor de ataque, defensa o porcentaje de efecto
-    private int durabilidad; // Para la durabilidad de armaduras... O algo así.
+
+    public String nombre;
+    public String tipo; // "arma", "armadura", "buff", etc.
+    public String descripcion;
+    public int poder; // Valor de ataque, defensa o porcentaje de efecto
+    public int durabilidad; // Para la durabilidad de armaduras... O algo así.
 
     public Item(String nombre, String tipo, String descripcion, int poder, int durabilidad) {
         this.nombre = nombre;
@@ -68,5 +70,5 @@ public class Item {
                 System.out.println("El ítem no tiene un efecto válido.");
         }
     }
-    
+
 }
