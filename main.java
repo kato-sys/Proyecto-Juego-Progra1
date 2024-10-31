@@ -126,22 +126,22 @@ class Main {
                     case "w":
                         destinationF = pPosF - 1;
                         destinationC = pPosC;
-                        checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     case "a":
                         destinationF = pPosF;
                         destinationC = pPosC - 1;
-                        checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     case "s":
                         destinationF = pPosF + 1;
                         destinationC = pPosC;
-                        checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     case "d":
                         destinationF = pPosF;
                         destinationC = pPosC + 1;
-                        checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     default:
                         System.out.println("Opción inválida, por favor intente otra vez.");
@@ -178,18 +178,9 @@ class Main {
                     System.out.println("Obtuviste el item: " + item.getNombre());
                     habitacion[destinationF][destinationC] = 0;
                     break;
-                case 5:
-                    Item arma = generarArma();
-                    jugador.getInventario().addInventario(arma, "arma"); // Agrega al inventario
-                    System.out.println("Obtuviste el arma: " + arma.getNombre());
-                    habitacion[destinationF][destinationC] = 0; // Eliminar el arma de la habitación
-                    break;
-                case 6: //enemigo
-                    Combate(enemigo, jugador, habitacion);
-                    //habitacion[destinationF][destinationC] = ;
-                    break;
             }
             if (canGo) {
+                checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                 habitacion[destinationF][destinationC] = 2;
                 habitacion[pPosF][pPosC] = 0;
             }
@@ -211,7 +202,7 @@ class Main {
     }
 
     private Item generarItem() {
-        int seleccionTipoItem = rand.nextInt(3);
+        int seleccionTipoItem = rand.nextInt(4);
         switch (seleccionTipoItem) {
             case 0:
                 return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 5, 3);
@@ -219,6 +210,8 @@ class Main {
                 return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 0, 1);
             case 2:
                 return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 0, 1);
+            case 3:
+                return generarArma();
         }
         return null; // No sé, por si acaso ocurre un error (?)
     }
@@ -270,12 +263,12 @@ class Main {
 
     private void usarItem(Jugador jugador, Enemigo enemigo) {
         jugador.getInventario().printInventario(); // Mostrar los ítems
-        System.out.println("Elige un ítem para usar (índice): ");
+        System.out.println("Elige un ítem para usar (índice 0, 1, 2): ");
         int itemIndex = myScanner.nextInt();
         myScanner.nextLine();
 
         try {
-            if (itemIndex >= 0 && itemIndex < jugador.getInventario().getCuantosItems()) {
+            if (itemIndex >= 0 && itemIndex <= jugador.getInventario().getCuantosItems()) {
                 // Accede al ítem usando el índice
                 Item item = jugador.getInventario().getInventarioItems()[itemIndex];
                 // Verifica que el ítem no sea null antes de usarlo
