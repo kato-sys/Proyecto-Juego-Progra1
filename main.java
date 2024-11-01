@@ -312,6 +312,6 @@ class Main {
         //trigger.Combate(enemigo,jugador)
         //trigger.ImprimirHabitacion(habitacion);
         trigger.RecorridoHabitacion(habitacion, jugador, enemigo);
-
+        //Hullo!
     }
 }
