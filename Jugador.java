@@ -73,8 +73,9 @@ public class Jugador{
     }
 
     //Método para sabir si tiene el debuff activado.
+    
     public boolean tieneDebuff(){
-      return this.tieneDebuff();
+      return this.tieneDebuff;
     }
 
 }
