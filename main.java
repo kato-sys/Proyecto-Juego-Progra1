@@ -97,6 +97,13 @@ class Main {
             int pPosF = 0;
             int pPosC = 0;
 
+            //para activar debuff
+            if(jugador.tieneDebuff())
+            {
+                jugador.recibirDaño(0);
+            }
+            System.out.println("Vida de jugador: " + jugador.getVida());
+
             //para encontrar donde esta el jugador en la habitacion y guardar su posicion
             for (int f = 0; f < habitacion.length; f++) {
                 for (int c = 0; c < habitacion[0].length; c++) {
@@ -108,7 +115,7 @@ class Main {
             }
 
             /**
-             * estos son para guardar la posiciﾃｳn en la matriz a donde se
+             * estos son para guardar la posicion en la matriz a donde se
              * quiere mover un jugador en cada turno
              */
             int destinationF = 0;
@@ -152,7 +159,7 @@ class Main {
                 }
             } while (!valido);
 
-            //revisando quﾃｩ se encuentra en la posición a la cual se quiere avanzar
+            //revisando que se encuentra en la posición a la cual se quiere avanzar
             //para preguntar por el atributo que muestre que hay pared
             switch (habitacion[destinationF][destinationC]) {
                 case 1: //pared
@@ -175,7 +182,10 @@ class Main {
                             jugador.getInventario().addInventario(item, "armadura");
                             break;
                         case "buff_ataque":
-                            jugador.getInventario().addInventario(item, "item");
+                            jugador.activarDebuff();
+                            break;
+                        case "debuff_defensa":
+                            jugador.activarDebuff();
                             break;
                     }
                     System.out.println("Obtuviste el item: " + item.getNombre());
