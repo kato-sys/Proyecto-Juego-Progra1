@@ -75,6 +75,9 @@ class Main {
                     case 6:
                         System.out.print("E"); //Enemigo
                         break;
+                    case 7:
+                        System.out.println("D");
+                        break;
                     case 0:
                         System.out.print("."); //Piso
                 }
