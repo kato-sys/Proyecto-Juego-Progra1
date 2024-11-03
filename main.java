@@ -136,21 +136,25 @@ class Main {
                     case "w":
                         destinationF = pPosF - 1;
                         destinationC = pPosC;
-                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        valido = true;
                         break;
                     case "a":
                         destinationF = pPosF;
                         destinationC = pPosC - 1;
-                        // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        // checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
+                        valido = true;
                         break;
                     case "s":
                         destinationF = pPosF + 1;
                         destinationC = pPosC;
+                        valido = true;
                         // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     case "d":
                         destinationF = pPosF;
                         destinationC = pPosC + 1;
+                        valido = true;
                         // checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);
                         break;
                     default:
@@ -171,8 +175,7 @@ class Main {
                     gameOver = true;
                     canGo = false;
                     break;
-                case 4:
-                    //item
+                case 4: //item
                     Item item = generarItem(); // Genera el item
                     switch (item.getTipo()) {
                         case "armadura_base":
@@ -182,7 +185,7 @@ class Main {
                             jugador.getInventario().addInventario(item, "armadura");
                             break;
                         case "buff_ataque":
-                        jugador.getInventario().addInventario(item, "buff");
+                        jugador.getInventario().addInventario(item, "item");
                             break;
                         case "debuff_defensa":
                             jugador.activarDebuff();
@@ -190,6 +193,12 @@ class Main {
                     }
                     System.out.println("Obtuviste el item: " + item.getNombre());
                     habitacion[destinationF][destinationC] = 0;
+                    break;
+                case 5:
+                    Item arma = generarArma();
+                    jugador.getInventario().addInventario(arma, "arma");
+                    System.out.println("Obtuviste el arma: " + arma.getNombre());
+
                     break;
             }
             if (canGo) {
