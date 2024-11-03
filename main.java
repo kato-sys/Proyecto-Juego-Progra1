@@ -182,7 +182,7 @@ class Main {
                             jugador.getInventario().addInventario(item, "armadura");
                             break;
                         case "buff_ataque":
-                            jugador.activarDebuff();
+                        jugador.getInventario().addInventario(item, "buff");
                             break;
                         case "debuff_defensa":
                             jugador.activarDebuff();
