@@ -18,7 +18,7 @@ class Main {
         int columnas = habitacion[0].length;
 
         int index = 0;
-        int[] entities = {2, 3, 4, 4, 6}; // 2 = jugador, 3 = puerta, 4 = item, 5 = arma, 6 = enemigo
+        int[] entities = {2, 3, 4, 6, 5, 7}; // 2 = jugador, 3 = puerta, 4 = item, 5 = arma, 6 = enemigo, 7 = debuff
         // Generar la fila superior e inferior.
         for (int i = 0; i < columnas; i++) {
             habitacion[0][i] = 1;             // Fila superior
@@ -76,7 +76,7 @@ class Main {
                         System.out.print("E"); //Enemigo
                         break;
                     case 7:
-                        System.out.println("D");
+                        System.out.print("D");
                         break;
                     case 0:
                         System.out.print("."); //Piso
@@ -187,9 +187,6 @@ class Main {
                         case "buff_ataque":
                         jugador.getInventario().addInventario(item, "item");
                             break;
-                        case "debuff_defensa":
-                            jugador.activarDebuff();
-                            break;
                     }
                     System.out.println("Obtuviste el item: " + item.getNombre());
                     habitacion[destinationF][destinationC] = 0;
@@ -200,6 +197,9 @@ class Main {
                     System.out.println("Obtuviste el arma: " + arma.getNombre());
 
                     break;
+                case 7:
+                    jugador.activarDebuff();
+                break;
             }
             if (canGo) {
                 checksurrouding(destinationF, destinationC, habitacion, jugador, enemigo);

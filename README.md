@@ -17,6 +17,7 @@ Al jugador se le presenta una matriz 9x9 donde:
 - 'E' representa los enemigos
 - '+' representa los ítems
 - '@' representa al jugador
+- 'D' representa el debuff
 
 El movimiento se realiza utilizando las teclas 'w', 'a', 's' y 'd'. Al recoger un ítem, se notifica al jugador qué objeto obtuvo. Estos ítems pueden utilizarse durante el combate con los enemigos, los cuales pueden detectar al jugador a un espacio de distancia (atacan en espacios adyacentes a su posición).
 
@@ -34,8 +35,9 @@ Al usar un ítem, el jugador debe seleccionar uno de su inventario utilizando lo
 
 Se planea:
 1. Crear una base de ítems más extensa que incluya:
-   - Efectos fuera de combate
-   - Efectos diferentes a solo mejorar ataque o defensa
+   - Más efectos fuera de combate
+   - Más efectos dentro de combate.
+   - Efectos que cambien la habitación o enemigos, no solo el estado del jugador. 
 2. Generar más habitaciones
 3. Implementar una condición de victoria
 4. Añadir un sistema de dificultad progresiva que:
