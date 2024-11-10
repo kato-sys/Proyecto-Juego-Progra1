@@ -1,64 +1,86 @@
+import java.util.Random;
+import java.util.Scanner;
 
 public class Inventario {
-
-    /**
-     * Aquí se guardan los objetos ítems y armas ya preexistentes en vectores
-     * que funcionan como el inventario
-     */
-    private Item[] inventario_items = new Item[3];
+    public Scanner myScanner = new Scanner(System.in);
+    public Random rand = new Random();
+    
+    public Item[] inventario_items = new Item[3];
     public Item arma_equipped = null;
     public Item armadura_equipped = null;
 
-    //lleva cuenta de la cantidad de objetos en el arreglo, para ahorrarnos revisar los espacios null
-    private int cuantosItems = -1;
+    // cuantos items hay
+    public int cuantosItems = -1;
 
+    // prin el inv
     public void printInventario() {
-        for (int i = 0; i < inventario_items.length; i++) {
-            if (inventario_items[i] != null) {
-                System.out.println(inventario_items[i].getNombre() + ": " + inventario_items[i].getDescripcion());
+        for (Item inventario_item : inventario_items) {
+            if (inventario_item != null) {
+                System.out.println(inventario_item.getNombre() + ": " + inventario_item.getDescripcion());
             }
         }
-        //se podrían imprimir el arma y armadura si se quisiera también
     }
 
-    public void addInventario(Item objeto, String tipo) //nuevamente, booleano es para saber si el objeto a agregar es un item o un arma
-    {
+    // Añade item
+    public void addInventario(Item objeto, String tipo) {
         switch (tipo) {
-            case "item":
+            case "item" -> {
                 cuantosItems += 1;
                 inventario_items[cuantosItems] = objeto;
-                break;
-            case "arma":
-                arma_equipped = objeto;
-                break;
-            case "armadura":
-                armadura_equipped = objeto;
-                break;
+            }
+            case "arma" -> arma_equipped = objeto;
+            case "armadura" -> armadura_equipped = objeto;
         }
     }
 
+    // remueve item del inventario
     public void removeItem(int index) {
         if (index >= 0 && index < cuantosItems) {
-            inventario_items[index] = null; // Elimina el ítem
+            inventario_items[index] = null; // remueve item
             for (int i = index; i < cuantosItems; i++) {
-                inventario_items[i] = inventario_items[i + 1]; // Desplaza los ítems
+                inventario_items[i] = inventario_items[i + 1]; // muve los items hacia la "izquierda"
             }
-            cuantosItems--; // Decrementa la cantidad de ítems
+            cuantosItems--;
         }
     }
 
-    public int getCuantosItems() {
-        return cuantosItems;
+    public int getCuantosItems() { 
+        return cuantosItems; 
+    }
+    public Item[] getInventarioItems() { 
+        return inventario_items; 
+    }
+    public Item getArma() { 
+        return arma_equipped; 
     }
 
-    // Método para obtener el arreglo de ﾃｭtems
-    public Item[] getInventarioItems() {
-        return inventario_items;
+    // Generates a random weapon
+    public Item generarArma() {
+        int seleccionTipoArma = rand.nextInt(3);
+        switch (seleccionTipoArma) {
+            case 0:
+                return new Item("Arma Secreta", "arma_secreta", "+5 de daño", 5, 1);
+            case 1: 
+                return new Item("Arma Básica", "arma_basica", "+3 de daño", 3, 1);
+            case 2: 
+                return new Item("Arma Legendaria", "arma_legendaria", "+6 de daño", 6, 1);
+            default:
+                return null;
+        }
     }
 
-    // Método para obtener el arreglo de armas
-    public Item getArma() {
-        return arma_equipped;
+    // Genera item random
+    public Item generarItem() {
+        int seleccionTipoItem = rand.nextInt(3);
+        switch (seleccionTipoItem) {
+            case 0:
+                return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 4, 3);
+            case 1:
+                return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 7, 1);
+            case 2:
+                return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 5, 1);
+            default:
+                return null;
+        }
     }
-
 }
