@@ -40,6 +40,9 @@ public class Jugador {
     public void setAtaque(int nuevoAtaque) { 
         this.jugadorAtaque = nuevoAtaque + jugadorAtaque; 
     }
+    public void setDefensa(int nuevoDefensa){
+        this.defensa = defensa + nuevoDefensa;
+    }
 
     public void atacar(Enemigo objetivo) {
         int daño = this.jugadorAtaque;
@@ -48,7 +51,7 @@ public class Jugador {
     }
 
     public void recibirDaño(int daño) {
-        this.jugadorVida -= daño;
+        this.jugadorVida -= (daño - defensa);
         if (tieneDebuff) {
             this.jugadorVida -= 5;
             System.out.println("¡El Debuff te hace recibir daño adicional!");

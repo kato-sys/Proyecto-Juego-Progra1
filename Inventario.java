@@ -74,9 +74,9 @@ public class Inventario {
         int seleccionTipoItem = rand.nextInt(3);
         switch (seleccionTipoItem) {
             case 0:
-                return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 4, 3);
+                return new Item("Armadura Base", "armadura_base", "Reduce ataque recibido hasta agotarse", 2, 3);
             case 1:
-                return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 7, 1);
+                return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce el daño recibido a la mitad", 4, 1);
             case 2:
                 return new Item("Buff de Ataque", "buff_ataque", "Incrementa el ataque en 5-10%", 5, 1);
             default:

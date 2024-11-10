@@ -68,8 +68,12 @@ public class Movimiento {
                 case 4:  // Item
                     Item item = jugador.getInventario().generarItem();
                     System.out.println("Obtuviste el item: " + item.getNombre());
-                    jugador.getInventario().addInventario(item, item.getTipo());
-                    habitacion[destinationF][destinationC] = 0;
+                    if(item.getTipo() == "armadura_base" || item.getTipo() == "armadura_legendaria"){
+                        jugador.setDefensa(item.getPoder());
+                    } else {
+                        jugador.getInventario().addInventario(item, item.getTipo());
+                        habitacion[destinationF][destinationC] = 0;
+                    }
                     break;
                 case 5: // Arma
                     Item arma = jugador.getInventario().generarArma();

@@ -3,8 +3,8 @@ public class main {
         int[][] habitacion = new int[9][9];
         
         Habitacion habitacionObj = new Habitacion();
-        Jugador jugador = new Jugador("Player", 100, 10, 5);
-        Enemigo enemigo = new Enemigo("Goblin", 20, 5, 3);
+        Jugador jugador = new Jugador("Player", 100, 8, 0);
+        Enemigo enemigo = new Enemigo("Goblin", 20, 5, 2);
         Movimiento movimiento = new Movimiento();
 
         habitacionObj.GeneracionHabitacion(habitacion);
