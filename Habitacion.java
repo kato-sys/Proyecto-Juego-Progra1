@@ -2,8 +2,18 @@ import java.util.Random;
 
 public class Habitacion {
     public Random rand = new Random();
+    Habitacion arriba;
+    Habitacion abajo;
+    Habitacion izquierda;
+    Habitacion derecha;
 
-    public void GeneracionHabitacion(int[][] habitacion) {
+    public void GeneracionHabitacion(int[][] habitacion){
+        this.arriba = null;
+        this.abajo = null;
+        this.derecha = null;
+        this.izquierda = null;
+      
+
         int filas = habitacion.length;
         int columnas = habitacion[0].length;
         int index = 0;
