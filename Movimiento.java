@@ -36,18 +36,18 @@ public class Movimiento {
             boolean canGo = true; 
 
             System.out.println("Ingrese 'w' (arriba), 'a' (izquierda), 's' (abajo) o 'd' (derecha): ");
-            String movimiento = myScanner.nextLine();
+            char movimiento = myScanner.next().charAt(0);
             switch (movimiento) {
-                case "w":
+                case 'w':
                     destinationF = pPosF - 1;
                     break;
-                case "a": 
+                case 'a': 
                     destinationC = pPosC - 1;
                     break;
-                case "s":
+                case 's':
                     destinationF = pPosF + 1;
                     break;
-                case "d":
+                case 'd':
                     destinationC = pPosC + 1;
                     break;
                 default:
