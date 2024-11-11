@@ -1,4 +1,4 @@
-public class main {
+public class Trigger {
     public static void main(String[] args) {
         int[][] habitacion = new int[9][9];
         
