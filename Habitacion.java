@@ -7,12 +7,22 @@ public class Habitacion {
     Habitacion izquierda;
     Habitacion derecha;
     int[][] habitacionTamano;
+    int tipoHabitacion; //normal 0, jefe 1, salida 2
+    boolean yaVisitado; //si este cuarto es nuevo o ya se ha pasado
+    int cantidad = 0; //cuantos nodos cuartos hay
+    int indice; //para asignarle numero a la habitacion
 
     public Habitacion(){
       int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
       int columnas = rand.nextInt(9) + 8;
-      this.habitacionTamano = new int[filas][columnas];
+      this.habitacionTamano = new int[filas]                                                  [columnas];
       GeneracionHabitacion(habitacionTamano);
+
+      tipoHabitacion = rand.nextInt(2); //(no es solo eso, hay que tomar en cuenta las probabilidades, seguro aqui iria un metodo que use la clase de probabilidades)
+      yaVisitado = false;
+      cantidad++;
+      indice = cantidad;
+      //aquí tambié se subirían las probabilidades, ya que estan cambian con cada nuevo cuarto
     }
 
     //Getter para el movimiento del jugador.
@@ -20,7 +30,8 @@ public class Habitacion {
       return habitacionTamano;
     }
     
-    public void GeneracionHabitacion(int[][] habitacion){      
+    public void GeneracionHabitacion(int[][] habitacion){  
+        
         int filas = habitacion.length;
         int columnas = habitacion[0].length;
         int index = 0;
