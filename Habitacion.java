@@ -8,7 +8,7 @@ public class Habitacion {
     Habitacion derecha;
     int[][] habitacionTamano;
     int tipoHabitacion; //normal 0, jefe 1, salida 2
-    boolean yaVisitado; //si este cuarto es nuevo o ya se ha pasado
+    boolean yaVisitado; //si este cuarto es nuevo o si ya se ha pasado
     int cantidad = 0; //cuantos nodos cuartos hay
     int indice; //para asignarle numero a la habitacion
 
