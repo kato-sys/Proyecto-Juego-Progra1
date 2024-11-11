@@ -61,8 +61,10 @@ public class Movimiento {
                     System.out.println("No puede avanzar más porque hay una pared.");
                     canGo = false;
                     break;
-                case 3: // Puerta
-                    System.out.println("Felicidades! Llegó al final de la habitación.");
+                case 3: // Puerta Norte
+                    System.out.println("Entraste por la Puerta Norte a la Siguiente Habitación.");
+                    //Teletransportar al jugador a la siguiente habitación.
+
                     gameOver = true;
                     canGo = false;
                     break;
@@ -84,6 +86,22 @@ public class Movimiento {
                 case 7: 
                 jugador.activarDebuff(); // Debuff
                 break;
+                case 8: //Puerta Sur
+                     System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
+                    //Teletransportar al jugador a la siguiente habitación.
+
+                    gameOver = true;
+                    canGo = false;
+                case 9: //Puerta Este
+                    System.out.println("Entraste por la Puerta Este a la Siguiente Habitación.");
+                    //Teletransportar al jugador a la siguiente habitación.
+                    gameOver = true;
+                    canGo = false;
+                case 10:
+                    System.out.println("Entraste por la Puerta Oeste a la Siguiente Habitación.");
+                    //Teletransportar al jugador a la siguiente habitación.
+                    gameOver = true;
+                    canGo = false;
             }
 
             if (canGo) {

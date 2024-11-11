@@ -15,7 +15,7 @@ public class Habitacion {
     public Habitacion(){
       int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
       int columnas = rand.nextInt(9) + 8;
-      this.habitacionTamano = new int[filas]                                                  [columnas];
+      this.habitacionTamano = new int[filas][columnas];
       GeneracionHabitacion(habitacionTamano);
 
       tipoHabitacion = rand.nextInt(2); //(no es solo eso, hay que tomar en cuenta las probabilidades, seguro aqui iria un metodo que use la clase de probabilidades)
@@ -36,8 +36,8 @@ public class Habitacion {
         int columnas = habitacion[0].length;
         int index = 0;
 
-        // Entities (2 = player, 3 = door, 4 = item, 5 = weapon, 6 = enemy, 7 = debuff)
-        int[] entities = {2, 3, 4, 6, 5, 7};
+        // Entities (2 = Jugador, 3 = PuertaNorte, 4 = Item, 5 = Arma, 6 = Enemigo, 7 = Debuff, 8 = Puerta Sur, 9 = Puerta Este, 10 = Puerta Oeste)
+        int[] entities = {2, 4, 6, 5, 7};
 
         // techo y piso
         for (int i = 0; i < columnas; i++) {
@@ -58,6 +58,19 @@ public class Habitacion {
             }
         }
 
+        //Puertas a los lados.
+        //Puerta Norte (Arriba)
+        int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
+        habitacion[0][puertaNorteCol] = 3;
+        //Puerta Sur (Abajo)
+        int puertaSurCol = rand.nextInt(columnas - 2) + 1;
+        habitacion[filas - 1][puertaSurCol] = 8;
+        //Puerta Este (Derecha)
+        int puertaEsteFila = rand.nextInt(filas-2) + 1;
+        habitacion[puertaEsteFila][columnas-1] = 9;
+        //Puerta Oeste (Izquierda)
+        int puertaOesteFila = rand.nextInt(filas - 2) + 1;
+        habitacion[puertaOesteFila][0] = 10;
         // random entities
         while (index < entities.length) {
             int i = rand.nextInt(filas);
@@ -75,11 +88,14 @@ public class Habitacion {
                 switch (celda) {
                     case 1 -> System.out.print("#"); // Pared
                     case 2 -> System.out.print("@"); // Player
-                    case 3 -> System.out.print("/"); // puerta
+                    case 3 -> System.out.print("/"); // Puerta Norte
                     case 4 -> System.out.print("+"); // Item
                     case 5 -> System.out.print("}"); // arma
                     case 6 -> System.out.print("E"); // Enemigo
                     case 7 -> System.out.print("D"); // Debuff
+                    case 8 -> System.out.print("/"); //Puerta Sur
+                    case 9 -> System.out.print("/"); //Puerta Este
+                    case 10 -> System.out.print("/"); //Puerta Oeste
                     default -> System.out.print("."); // piso
                 }
             }
