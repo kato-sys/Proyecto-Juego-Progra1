@@ -1,6 +1,8 @@
+
 public class Trigger {
+
     public static void main(String[] args) {
-        
+
         Habitacion habitacionObj = new Habitacion();
         Jugador jugador = new Jugador("Player", 100, 8, 0);
         Enemigo enemigo = new Enemigo("Goblin", 20, 5, 2);

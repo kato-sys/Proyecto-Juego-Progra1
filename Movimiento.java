@@ -1,9 +1,10 @@
+
 import java.util.Scanner;
 
 public class Movimiento {
+
     Scanner myScanner = new Scanner(System.in);
     Combate callCombate = new Combate();
-    Habitacion callHabitacion = new Habitacion(); 
 
     public void RecorridoHabitacion(Habitacion habitacionObj, Jugador jugador, Enemigo enemigo) {
         int[][] habitacion = habitacionObj.getHabitacion();
@@ -33,7 +34,7 @@ public class Movimiento {
 
             int destinationF = pPosF;
             int destinationC = pPosC;
-            boolean canGo = true; 
+            boolean canGo = true;
 
             System.out.println("Ingrese 'w' (arriba), 'a' (izquierda), 's' (abajo) o 'd' (derecha): ");
             String movimiento = myScanner.nextLine();
@@ -41,7 +42,7 @@ public class Movimiento {
                 case "w":
                     destinationF = pPosF - 1;
                     break;
-                case "a": 
+                case "a":
                     destinationC = pPosC - 1;
                     break;
                 case "s":
@@ -54,7 +55,6 @@ public class Movimiento {
                     System.out.println("Opción inválida. Intente de nuevo.");
                     break;
             }
-
 
             switch (habitacion[destinationF][destinationC]) {
                 case 1: // Pared
@@ -71,7 +71,7 @@ public class Movimiento {
                 case 4:  // Item
                     Item item = jugador.getInventario().generarItem();
                     System.out.println("Obtuviste el item: " + item.getNombre());
-                    if(item.getTipo() == "armadura_base" || item.getTipo() == "armadura_legendaria"){
+                    if (item.getTipo() == "armadura_base" || item.getTipo() == "armadura_legendaria") {
                         jugador.setDefensa(item.getPoder());
                     } else {
                         jugador.getInventario().addInventario(item, item.getTipo());
@@ -83,11 +83,11 @@ public class Movimiento {
                     System.out.println("Obtuviste el arma: " + arma.getNombre());
                     jugador.setAtaque(arma.getPoder());
                     break;
-                case 7: 
-                jugador.activarDebuff(); // Debuff
-                break;
+                case 7:
+                    jugador.activarDebuff(); // Debuff
+                    break;
                 case 8: //Puerta Sur
-                     System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
+                    System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
                     //Teletransportar al jugador a la siguiente habitación.
 
                     gameOver = true;
