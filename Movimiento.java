@@ -11,7 +11,7 @@ public class Movimiento {
         boolean gameOver = false;
 
         while (!gameOver) {
-            callHabitacion.ImprimirHabitacion();
+            habitacionObj.ImprimirHabitacion();
             int pPosF = 0; // Posicion fila
             int pPosC = 0; // Posicion columna
 

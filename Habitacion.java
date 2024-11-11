@@ -9,11 +9,6 @@ public class Habitacion {
     int[][] habitacionTamano;
 
     public Habitacion(){
-      this.arriba = null;
-      this.abajo = null;
-      this.derecha = null;
-      this.izquierda = null;
-
       int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
       int columnas = rand.nextInt(9) + 8;
       this.habitacionTamano = new int[filas][columnas];
