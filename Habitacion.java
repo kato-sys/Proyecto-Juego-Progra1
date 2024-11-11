@@ -6,12 +6,20 @@ public class Habitacion {
     Habitacion abajo;
     Habitacion izquierda;
     Habitacion derecha;
+    int tipoDeHabitacion; //normal, jefe, o salida
+    boolean yaVisitado;
+    int numDeHabitacion;
+    int cantidadDeHabitaciones = 0;
 
-    public void GeneracionHabitacion(int[][] habitacion){
-        this.arriba = null;
-        this.abajo = null;
-        this.derecha = null;
-        this.izquierda = null;
+    public void GeneracionHabitacion(int[][] habitacion, Habitacion up, Habitacion down, Habitacion left, Habitacion right){
+        arriba = up;
+        abajo = down;
+        izquierda = left;
+        derecha = right;
+        tipoDeHabitacion = rand.nextInt(2);
+        yaVisitado = false;
+        cantidadDeHabitaciones++;
+        numDeHabitacion= cantidadDeHabitaciones;
       
 
         int filas = habitacion.length;
