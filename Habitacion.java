@@ -6,14 +6,26 @@ public class Habitacion {
     Habitacion abajo;
     Habitacion izquierda;
     Habitacion derecha;
+    int[][] habitacionTamano;
 
-    public void GeneracionHabitacion(int[][] habitacion){
-        this.arriba = null;
-        this.abajo = null;
-        this.derecha = null;
-        this.izquierda = null;
-      
+    public Habitacion(){
+      this.arriba = null;
+      this.abajo = null;
+      this.derecha = null;
+      this.izquierda = null;
 
+      int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
+      int columnas = rand.nextInt(9) + 8;
+      this.habitacionTamano = new int[filas][columnas];
+      GeneracionHabitacion(habitacionTamano);
+    }
+
+    //Getter para el movimiento del jugador.
+    public int[][] getHabitacion(){
+      return habitacionTamano;
+    }
+    
+    public void GeneracionHabitacion(int[][] habitacion){      
         int filas = habitacion.length;
         int columnas = habitacion[0].length;
         int index = 0;
@@ -51,10 +63,10 @@ public class Habitacion {
         }
     }
 
-    public void ImprimirHabitacion(int[][] tablero) {
-        for (int[] tablero1 : tablero) {
-            for (int j = 0; j < tablero[0].length; j++) {
-                switch (tablero1[j]) {
+    public void ImprimirHabitacion(){
+        for (int[] fila : habitacionTamano) {
+            for (int celda : fila){
+                switch (celda) {
                     case 1 -> System.out.print("#"); // Pared
                     case 2 -> System.out.print("@"); // Player
                     case 3 -> System.out.print("/"); // puerta

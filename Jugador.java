@@ -76,7 +76,7 @@ public class Jugador {
         return this.tieneDebuff; 
     }
 
-    public void recorrer(int[][] habitacion, Jugador jugador, Enemigo enemigo) {
+    public void recorrer(Habitacion habitacion, Jugador jugador, Enemigo enemigo) {
         callMovimiento.RecorridoHabitacion(habitacion, jugador, enemigo);
     }
 

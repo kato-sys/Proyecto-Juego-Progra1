@@ -5,12 +5,13 @@ public class Movimiento {
     Combate callCombate = new Combate();
     Habitacion callHabitacion = new Habitacion(); 
 
-    public void RecorridoHabitacion(int[][] habitacion, Jugador jugador, Enemigo enemigo) {
+    public void RecorridoHabitacion(Habitacion habitacionObj, Jugador jugador, Enemigo enemigo) {
+        int[][] habitacion = habitacionObj.getHabitacion();
         System.out.println("Habitación ");
         boolean gameOver = false;
 
         while (!gameOver) {
-            callHabitacion.ImprimirHabitacion(habitacion);
+            callHabitacion.ImprimirHabitacion();
             int pPosF = 0; // Posicion fila
             int pPosC = 0; // Posicion columna
 
