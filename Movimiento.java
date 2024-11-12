@@ -64,17 +64,6 @@ public class Movimiento {
                 case 3: // Puerta Norte
                     System.out.println("Entraste por la Puerta Norte a la Siguiente Habitación.");
                     //Teletransportar al jugador a la siguiente habitación.
-                    if(habitacionObj.arriba != null)
-                    {
-                        habitacionObj = habitacionObj.arriba;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.arriba = siguiente;
-                        siguiente.abajo = habitacionObj;
-                        habitacionObj = siguiente;
-                    }
                     gameOver = true;
                     canGo = false;
                     break;
@@ -98,50 +87,17 @@ public class Movimiento {
                     break;
                 case 8: //Puerta Sur
                     System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
-                    //Teletransportar al jugador a la siguiente habitación.
-                    if(habitacionObj.abajo != null)
-                    {
-                        habitacionObj = habitacionObj.abajo;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.abajo = siguiente;
-                        siguiente.arriba = habitacionObj;
-                        habitacionObj = siguiente;
-                    }                    
+                    //Teletransportar al jugador a la siguiente habitación.                  
                     gameOver = true;
                     canGo = false;
                 case 9: //Puerta Este
                     System.out.println("Entraste por la Puerta Este a la Siguiente Habitación.");
-                    //Teletransportar al jugador a la siguiente habitación.
-                    if(habitacionObj.derecha != null)
-                    {
-                        habitacionObj = habitacionObj.derecha;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.derecha = siguiente;
-                        siguiente.izquierda = habitacionObj;
-                        habitacionObj = siguiente;
-                    }                    
+                    //Teletransportar al jugador a la siguiente habitación.                  
                     gameOver = true;
                     canGo = false;
                 case 10:
                     System.out.println("Entraste por la Puerta Oeste a la Siguiente Habitación.");
                     //Teletransportar al jugador a la siguiente habitación.
-                    if(habitacionObj.izquierda != null)
-                    {
-                        habitacionObj = habitacionObj.izquierda;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.izquierda = siguiente;
-                        siguiente.derecha = habitacionObj;
-                        habitacionObj = siguiente;
-                    }
                     gameOver = true;
                     canGo = false;
             }
