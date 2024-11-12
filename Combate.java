@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 public class Combate {
+    private misc misc = new misc();
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
 
@@ -33,8 +34,8 @@ public class Combate {
                             }
                         }
 
-                        double probabilidadDrop = 0.3; //En teoría esto debe de tener un 30% de probabilidad de que el enemigo dropee el item.
-                        if(rand.nextDouble() < probabilidadDrop){
+                        int probabilidadDrop = 30; //En teoría esto debe de tener un 30% de probabilidad de que el enemigo dropee el item.
+                        if(misc.probabilidad(probabilidadDrop)){
                           Item itemDrop = rand.nextBoolean() ? jugador.inventario.generarArma() : jugador.inventario.generarItem();
                           if (itemDrop != null){
                             System.out.println("¡El enemigo soltó un ítem cuando lo derrotaste! Soltó un: "+ itemDrop.getNombre());
