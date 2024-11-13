@@ -125,9 +125,51 @@ public class Movimiento {
             habitacion[destinationF][destinationC] = 2;
             habitacion[pPosF][pPosC] = 0;
         }
+        //El enemigo se mueve hacia el jugador después de que el jugador se mueva. LLamado método.
+        moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
+          
+      }
     }
-}
 
+
+    private void moverEnemigoHaciaJugador(int[][] habitacion, int pPosF, int pPosC, Enemigo enemigo, Jugador jugador){
+      //Primero declaramos la posición del enemigo. 
+      int ePosF = 0;
+      int ePosC = 0;
+      
+      //Encontrar la posición del enemigo.
+      for(int f = 0; f < habitacion.length; f++){
+        for (int c = 0; c < habitacion[0].length; c++){
+          if(habitacion[f][c] == 6){ 
+            //Recordar que el 6 en la matriz representa al enemigo.
+            ePosF = f;
+            ePosC = c;
+          }
+        }
+      }
+      //Luego necesitamos calcular el movimiento que vaya hacia el jugador. 
+      int newEPosF = ePosF;
+      int newEPosC = ePosC;
+
+      if (ePosF < pPosF) newEPosF++;
+      else if (ePosF > pPosF) newEPosF--;
+
+      if(ePosC < pPosC) newEPosC++;
+      else if(ePosC > pPosC) newEPosC--;
+
+      //Ahora necesitamos comprobar si la posición es válida, osea, no es pared ni se sale de los límites (Rezo porque funcione a la primera. Oh gran Omnissiah, deidad de los Adeptus Mechanicus, has que este código funcione a la primera.)
+      if(habitacion[newEPosF][newEPosC] == 0){
+        habitacion[ePosF][ePosC] = 0; //Quita el enemigo de la posición anterior.
+        habitacion[newEPosF][newEPosC] = 6; //Mover al enemigo a la nueva posición.
+        //Aquí ahora detecta si está cerca que inicie el combate. 
+        if(Math.abs(newEPosF - pPosF) + Math.abs(newEPosC - pPosC) == 1){
+          callCombate.combate(enemigo,jugador,habitacion);
+        }
+      }
+
+
+
+    }
 
 
     private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, Enemigo objetivo) {
