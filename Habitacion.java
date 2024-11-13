@@ -13,6 +13,7 @@ public class Habitacion {
     boolean yaVisitado; //si este cuarto es nuevo o si ya se ha pasado
     int cantidad = 0; //cuantos nodos cuartos hay
     int indice; //para asignarle numero a la habitacion
+    int puertaAnterior; //1: Arriba, 2: Abajo, 3: Derecha, 4Izquierda.
 
     public Habitacion() {
         int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -20,7 +21,7 @@ public class Habitacion {
         this.habitacionTamano = new int[filas][columnas];
         GeneracionHabitacion(habitacionTamano);
 
-        tipoHabitacion = rand.nextInt(2); //(no es solo eso, hay que tomar en cuenta las probabilidades, seguro aqui iria un metodo que use la clase de probabilidades)
+        tipoHabitacion = rand.nextInt(3); //(no es solo eso, hay que tomar en cuenta las probabilidades, seguro aqui iria un metodo que use la clase de probabilidades)
         yaVisitado = false;
         cantidad++;
         indice = cantidad;
@@ -82,6 +83,13 @@ public class Habitacion {
                 index++;
             }
         }
+    }
+
+    public void setPuertaAnterior(int puerta){
+      this.puertaAnterior = puerta;
+    }
+    public int getPuertaAnterior(){
+      return puertaAnterior;
     }
 
     public void ImprimirHabitacion() {
