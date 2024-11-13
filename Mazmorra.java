@@ -42,63 +42,43 @@ public class Mazmorra {
     }
 
 
-    public Habitacion irSiguiente(int cualPuerta, Habitacion habitacionObj)
+    public Habitacion irSiguiente(String cualPuerta, Habitacion habitacionActual)
     {
+        Habitacion siguiente = null;
         switch(cualPuerta)
         {
-            case 1:
-            if(habitacionObj.arriba != null)
-                    {
-                        habitacionObj = habitacionObj.arriba;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.arriba = siguiente;
-                        siguiente.abajo = habitacionObj;
-                        habitacionObj = siguiente;
-                    }  
+            case "este":
+                if (habitacionActual.derecha == null) {
+                    habitacionActual.derecha = generarNuevaHabitacion();
+                }
+                System.out.println("Entraste por la Puerta Este a la Siguiente Habitación.");
+                siguiente = habitacionActual.derecha;
                 break;
-            case 2:
-            if(habitacionObj.abajo != null)
-                    {
-                        habitacionObj = habitacionObj.abajo;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.abajo = siguiente;
-                        siguiente.arriba = habitacionObj;
-                        habitacionObj = siguiente;
-                    }  
+            case "oeste":
+                if (habitacionActual.izquierda == null) {
+                    habitacionActual.izquierda = generarNuevaHabitacion();
+                }
+                System.out.println("Entraste por la Puerta Oeste a la Siguiente Habitación.");
+                siguiente = habitacionActual.izquierda;
                 break;
-            case 3:
-            if(habitacionObj.izquierda != null)
-                    {
-                        habitacionObj = habitacionObj.izquierda;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.izquierda = siguiente;
-                        siguiente.derecha = habitacionObj;
-                        habitacionObj = siguiente;
-                    }  
+            case "norte":
+                if (habitacionActual.arriba == null) {
+                    habitacionActual.arriba = generarNuevaHabitacion();
+                }
+                System.out.println("Entraste por la Puerta Norte a la Siguiente Habitación.");
+                siguiente = habitacionActual.arriba; 
                 break;
-            case 4:
-            if(habitacionObj.derecha != null)
-                    {
-                        habitacionObj = habitacionObj.derecha;
-                    }
-                    else
-                    {
-                        Habitacion siguiente = new Habitacion();
-                        habitacionObj.derecha = siguiente;
-                        siguiente.izquierda = habitacionObj;
-                        habitacionObj = siguiente;
-                    }  
+            case "sur":
+                if (habitacionActual.abajo == null) {
+                    habitacionActual.abajo = generarNuevaHabitacion();
+                }
+                System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
+                siguiente = habitacionActual.abajo; 
+                break;
+            default:
+                System.out.println("no sé que pasó aquí jaja oops");
                 break;
         }
-     return habitacionObj;   
+     return siguiente;   
     }
 }

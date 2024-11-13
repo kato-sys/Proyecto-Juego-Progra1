@@ -67,11 +67,7 @@ public class Movimiento {
                 canGo = false;
                 break;
             case 3: // Puerta Norte
-                if (habitacionActual.arriba == null) {
-                    habitacionActual.arriba = mazmorra.generarNuevaHabitacion();
-                }
-                System.out.println("Entraste por la Puerta Norte a la Siguiente Habitación.");
-                habitacionActual = habitacionActual.arriba;
+                habitacionActual = mazmorra.irSiguiente("norte", habitacionActual);
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().generarItem();
@@ -92,25 +88,13 @@ public class Movimiento {
                 jugador.activarDebuff(); // Debuff
                 break;
             case 8: // Puerta Sur
-                if (habitacionActual.abajo == null) {
-                    habitacionActual.abajo = mazmorra.generarNuevaHabitacion();
-                }
-                System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
-                habitacionActual = habitacionActual.abajo;
+                habitacionActual = mazmorra.irSiguiente("sur", habitacionActual);
                 break;
             case 9: // Puerta Este
-                if (habitacionActual.derecha == null) {
-                    habitacionActual.derecha = mazmorra.generarNuevaHabitacion();
-                }
-                System.out.println("Entraste por la Puerta Este a la Siguiente Habitación.");
-                habitacionActual = habitacionActual.derecha;
+                habitacionActual= mazmorra.irSiguiente("este", habitacionActual);
                 break;
             case 10: // Puerta Oeste
-                if (habitacionActual.izquierda == null) {
-                    habitacionActual.izquierda = mazmorra.generarNuevaHabitacion();
-                }
-                System.out.println("Entraste por la Puerta Oeste a la Siguiente Habitación.");
-                habitacionActual = habitacionActual.izquierda;
+                habitacionActual = mazmorra.irSiguiente("oeste", habitacionActual);
                 break;
             case 6: // Enemigo
                 checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
