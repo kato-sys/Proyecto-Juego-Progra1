@@ -21,7 +21,12 @@ public class Movimiento {
             jugador.recibirDaño(0);
         }
         System.out.println("Vida de jugador: " + jugador.getVida());
-
+        //Revisar si el jugador está muerto (por el debuff)
+        if(jugador.getVida() <= 0){
+          System.out.println("¡Has muerto! :D FIN DEL JUEGO.");
+          gameOver = true;
+          continue;
+        }
         // Se busca la posicion del jugador en el cuarto
         for (int f = 0; f < habitacion.length; f++) {
             for (int c = 0; c < habitacion[0].length; c++) {
@@ -150,6 +155,7 @@ public class Movimiento {
           callCombate.combate(enemigo,jugador,habitacion);
         }
       }
+
 
 
 
