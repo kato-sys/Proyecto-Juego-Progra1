@@ -47,8 +47,26 @@ public class Item {
             case "armadura_legendaria":
                 jugador.recibirDaño(enemigo.getAtaque() / 2);
                 break;
+            case "armadura_secreta":
+                jugador.recibirDaño(poder);
+                break;
             case "buff_ataque": 
                 jugador.setAtaque(jugador.getAtaque() + (int) (jugador.getAtaque() * 0.1));
+                break;
+            case "buff_defensa":
+                jugador.setAtaque(poder);
+                break;
+            case "buff_sangre":
+                enemigo.atacar(jugador); //???
+                break;
+            case "debuff_ataque": 
+                enemigo.atacar(jugador); //???
+            break;
+            case "debuff_defensa":
+                enemigo.atacar(jugador); //???
+            break;
+            case "debuff_sangre":
+                enemigo.atacar(jugador); //???
                 break;
             default:
             System.out.println("El ítem no tiene un efecto válido.");
