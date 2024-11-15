@@ -110,7 +110,10 @@ public class Movimiento {
             habitacionActual = mazmorra.irSiguiente("oeste", habitacionActual.izquierda);
                 break;
             case 6: // Enemigo
-                checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
+                System.out.println("¡Enemigo!");
+                callCombate.combate(enemigo, jugador, habitacion);
+                //checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
+                canGo = false;
                 break;
             default:
                 // Si es otro número, permitimos el movimiento
@@ -123,7 +126,13 @@ public class Movimiento {
             habitacion[pPosF][pPosC] = 0;
         }
         //El enemigo se mueve hacia el jugador después de que el jugador se mueva. LLamado método.
-        //moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
+        for (int f=0; f<habitacion.length; f++){
+          for(int c = 0; c < habitacion[0].length; c++){
+            if(habitacion[f][c] == 6){
+              moverEnemigoHaciaJugador(habitacion,pPosF,pPosC,enemigo,jugador);
+            }
+          }
+        }
           
       }
     }
