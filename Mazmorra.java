@@ -11,7 +11,7 @@ public class Mazmorra {
     
     public Habitacion generarNuevaHabitacion() {
         Random rand = new Random();
-        Habitacion nuevaHabitacion = new GeneracionHabitacion().getHabitacion();
+        Habitacion nuevaHabitacion = callGen.getHabitacion();
         int puertasGeneradas = 1; // Siempre se genera una puerta para conectar la habitación anterior. Es el 100% de la sinstrucciones
 
         // Probabilidades de generar más puertas
@@ -53,28 +53,28 @@ public class Mazmorra {
                     habitacionActual.derecha = generarNuevaHabitacion();
                 }
                 System.out.println("Entraste por la Puerta Este a la Siguiente Habitación.");
-                siguiente = habitacionActual.derecha;
+                habitacionActual = habitacionActual.derecha;
                 break;
             case "oeste":
                 if (habitacionActual.izquierda == null) {
                     habitacionActual.izquierda = generarNuevaHabitacion();
                 }
                 System.out.println("Entraste por la Puerta Oeste a la Siguiente Habitación.");
-                siguiente = habitacionActual.izquierda;
+                habitacionActual = habitacionActual.izquierda;
                 break;
             case "norte":
                 if (habitacionActual.arriba == null) {
                     habitacionActual.arriba = generarNuevaHabitacion();
                 }
                 System.out.println("Entraste por la Puerta Norte a la Siguiente Habitación.");
-                siguiente = habitacionActual.arriba; 
+                habitacionActual = habitacionActual.arriba; 
                 break;
             case "sur":
                 if (habitacionActual.abajo == null) {
                     habitacionActual.abajo = generarNuevaHabitacion();
                 }
                 System.out.println("Entraste por la Puerta Sur a la Siguiente Habitación.");
-                siguiente = habitacionActual.abajo; 
+                habitacionActual = habitacionActual.abajo; 
                 break;
             default:
                 System.out.println("no sé que pasó aquí jaja oops");

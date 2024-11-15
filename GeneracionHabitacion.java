@@ -17,9 +17,8 @@ public class GeneracionHabitacion {
     }
 
     public void LlenarHabitacion() {
-        int[][] hab = habitacion.tamano();
-        int filas = hab.length;
-        int columnas = hab[0].length;
+        int filas = habitacion.tamano().length;
+        int columnas = habitacion.tamano()[0].length;
         int index = 0;
 
         // Entities (2 = Jugador, 3 = PuertaNorte, 4 = Item, 5 = Arma, 6 = Enemigo, 7 = Debuff, 8 = Puerta Sur, 9 = Puerta Este, 10 = Puerta Oeste)
@@ -27,42 +26,46 @@ public class GeneracionHabitacion {
 
         // techo y piso
         for (int i = 0; i < columnas; i++) {
-            hab[0][i] = 1;
-            hab[filas - 1][i] = 1;
+            habitacion.setvalor(0, i, 1);
+            habitacion.setvalor(filas - 1, i, 1);
         }
-
         // paredes
         for (int i = 0; i < filas; i++) {
-            hab[i][0] = 1;
-            hab[i][columnas - 1] = 1;
+            habitacion.setvalor(i, 0, 1);
+            habitacion.setvalor(i, columnas - 1, 1);
         }
 
         // adentro
         for (int i = 1; i < filas - 1; i++) {
             for (int j = 1; j < columnas - 1; j++) {
-                hab[i][j] = 0;
+                habitacion.setvalor(i, j, 0);
             }
         }
 
+        
         //Puertas a los lados.
         //Puerta Norte (Arriba)
         int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
-        hab[0][puertaNorteCol] = 3;
+        habitacion.setvalor(0, puertaNorteCol, 3);
+        habitacion.arriba = new GeneracionHabitacion().getHabitacion();
         //Puerta Sur (Abajo)
         int puertaSurCol = rand.nextInt(columnas - 2) + 1;
-        hab[filas - 1][puertaSurCol] = 8;
+        habitacion.setvalor(filas - 1, puertaSurCol, 8);
+        habitacion.abajo = new GeneracionHabitacion().getHabitacion();
         //Puerta Este (Derecha)
         int puertaEsteFila = rand.nextInt(filas - 2) + 1;
-        hab[puertaEsteFila][columnas - 1] = 9;
+        habitacion.setvalor(puertaEsteFila, columnas - 1, 9);
+        habitacion.derecha = new GeneracionHabitacion().getHabitacion();
         //Puerta Oeste (Izquierda)
         int puertaOesteFila = rand.nextInt(filas - 2) + 1;
-        hab[puertaOesteFila][0] = 10;
+        habitacion.setvalor(puertaOesteFila, 0, 10);
+        habitacion.izquierda = new GeneracionHabitacion().getHabitacion();
         // random entities
         while (index < entities.length) {
             int i = rand.nextInt(filas);
             int j = rand.nextInt(columnas);
-            if (hab[i][j] == 0) { // revisar que no haya nada
-                hab[i][j] = entities[index];
+            if (habitacion.tamano()[i][j] == 0) { // revisar que no haya nada
+                habitacion.setvalor(i, j, entities[index]);
                 index++;
             }
         }

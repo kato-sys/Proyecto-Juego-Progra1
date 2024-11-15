@@ -16,4 +16,8 @@ public class Habitacion {
     public int[][] tamano(){
         return habitacionTamano;
     }
+
+    public void setvalor(int x, int y, int valor){
+        habitacionTamano[x][y] = valor;
+    }
 }
