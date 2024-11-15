@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class Misc {
+public class misc {
 
     Random random = new Random();
     private int prob;
