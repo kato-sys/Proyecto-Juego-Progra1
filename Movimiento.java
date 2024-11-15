@@ -176,7 +176,16 @@ private void moverEnemigoHaciaJugador(int[][] habitacion, int pPosF, int pPosC, 
             break;
 
         case 4: // Ítem.
-            //Anadir metodo para que el Enemigo tenga un inventario ;;
+            Item item = enemigo.getInventario().generarItem();
+                System.out.println("El enemigo obtuvo el item: " + item.getNombre());
+                if (item.getTipo().equals("armadura_base") || item.getTipo().equals("armadura_legendaria")) {
+                    enemigo.setDefensa(item.getPoder());
+                } else {
+                    jugador.getInventario().addInventario(item, item.getTipo());
+                    habitacion[newEPosF][newEPosC] = 6;
+                    habitacion[ePosF][ePosC] = 0;
+                }
+
             break;
 
         case 7: // Debuff.

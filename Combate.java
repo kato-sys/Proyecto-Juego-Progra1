@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Random;
 public class Combate {
-    private Misc misc = new Misc();
+    private misc misc = new misc();
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
 

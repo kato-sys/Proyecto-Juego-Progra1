@@ -15,10 +15,13 @@ public class Enemigo {
         this.defensaEnemigo = defensa;
         this.envenenado = false;
         this.tieneDebuff = false;
+        this.inventario = new Inventario();
     }
 
     
-
+    public Inventario getInventario(){
+      return inventario;
+    }
     public String getNombre() { 
         return nombreEnemigo; 
     }
@@ -32,6 +35,9 @@ public class Enemigo {
         return defensaEnemigo; 
     }
 
+    public void setDefensa(int nuevaDefensa){
+      this.defensaEnemigo = nuevaDefensa;
+    }
     public void recibirDaño(int daño) {
         int dañoFinal = daño - defensaEnemigo; // reduce daño con su defensa
         if (dañoFinal < 0) dañoFinal = 0;

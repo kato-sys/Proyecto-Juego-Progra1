@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Inventario {
     public Scanner myScanner = new Scanner(System.in);
     public Random rand = new Random();
-    Misc misc = new Misc();
+    misc misc = new misc();
     
     public Item[] inventario_items = new Item[3];
     public Item arma_equipped = null;
