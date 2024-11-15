@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class misc {
+public class Misc {
 
     Random random = new Random();
     private int prob;
@@ -51,5 +51,4 @@ public class misc {
             return 1;
         }
     }
-
 }
