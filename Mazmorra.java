@@ -2,15 +2,16 @@ import java.util.Random;
 public class Mazmorra {
     Habitacion entrada;
     Habitacion salida;
+    GeneracionHabitacion callGen = new GeneracionHabitacion();
     
     public Mazmorra()
     {
-        entrada = new Habitacion();
+        entrada = callGen.getHabitacion();
     }
     
     public Habitacion generarNuevaHabitacion() {
         Random rand = new Random();
-        Habitacion nuevaHabitacion = new Habitacion();
+        Habitacion nuevaHabitacion = new GeneracionHabitacion().getHabitacion();
         int puertasGeneradas = 1; // Siempre se genera una puerta para conectar la habitación anterior. Es el 100% de la sinstrucciones
 
         // Probabilidades de generar más puertas
@@ -24,16 +25,16 @@ public class Mazmorra {
             // Si ya existe una puerta en esa dirección, no la creamos
             switch (puerta) {
                 case 1:
-                    if (nuevaHabitacion.arriba == null) nuevaHabitacion.arriba = new Habitacion();
+                    if (nuevaHabitacion.arriba == null) nuevaHabitacion.arriba = callGen.getHabitacion();
                     break;
                 case 2:
-                    if (nuevaHabitacion.abajo == null) nuevaHabitacion.abajo = new Habitacion();
+                    if (nuevaHabitacion.abajo == null) nuevaHabitacion.abajo = callGen.getHabitacion();
                     break;
                 case 3:
-                    if (nuevaHabitacion.derecha == null) nuevaHabitacion.derecha = new Habitacion();
+                    if (nuevaHabitacion.derecha == null) nuevaHabitacion.derecha = callGen.getHabitacion();
                     break;
                 case 4:
-                    if (nuevaHabitacion.izquierda == null) nuevaHabitacion.izquierda = new Habitacion();
+                    if (nuevaHabitacion.izquierda == null) nuevaHabitacion.izquierda = callGen.getHabitacion();
                     break;
                 }
             puertasGeneradas--;

@@ -3,7 +3,8 @@ public class Trigger {
 
     public static void main(String[] args) {
 
-        Habitacion habitacionObj = new Habitacion();
+        GeneracionHabitacion habitacionObj = new GeneracionHabitacion();
+        
         Jugador jugador = new Jugador("Player", 100, 8, 0);
         Enemigo enemigo = new Enemigo("Goblin", 20, 5, 2);
         Movimiento movimiento = new Movimiento();
@@ -18,3 +19,4 @@ public class Trigger {
         }
     }
 }
+ 
