@@ -79,20 +79,21 @@ public class Inventario {
                 return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce todo ataque en 50%.", 50, 3);
             case 2:
                 return new Item("Armadura Secreta", "armadura_secreta", "Reduce el daño en un 30%. Se pierde un 2% con cada golpe recibido, pero luego de una batalla recupera todos los puntos de armadura.", 30, 50);
-            case 3:
-                return new Item("Buff de Ataque", "buff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
-            case 4:
-                return new Item("Buff de Defensa", "buff_defensa", "Aumenta el ataque base en un 15% de manera acumulativa.", 15, 1);
-            case 5:
-                return new Item("Buff de Sangre", "buff_sangre", "Por cada golpe, sube un 20% del daño final realizado a la vida en la batalla actual.", 20, 1);
-            case 6:
-                return new Item("Debuff de Ataque", "debuff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
-            case 7:
-                return new Item("Debuff de Defensa", "debuff_defensa", "Reduce la defensa en un 15%.", 15, 1);
-            case 8:
-                return new Item("Debuff de Envenenar", "debuff_envenenar", "Por cada turno en batalla, pierde de 1, incrementando a 10 puntos de vida. Luego de eso sigue perdiendo 10 puntos por turno. El envenenamiento dura 20 turnos,o hasta tomar un buff de sangre.", 5, 20);
             default:
                 return null;
         }
     }
+
+    //case 6:
+    //return new Item("Debuff de Ataque", "debuff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
+    //case 7:
+    //    return new Item("Debuff de Defensa", "debuff_defensa", "Reduce la defensa en un 15%.", 15, 1);
+    //case 8:
+    //    return new Item("Debuff de Envenenar", "debuff_envenenar", "Por cada turno en batalla, pierde de 1, incrementando a 10 puntos de vida. Luego de eso sigue perdiendo 10 puntos por turno. El envenenamiento dura 20 turnos,o hasta tomar un buff de sangre.", 5, 20);
+    // case 3:
+    //return new Item("Buff de Ataque", "buff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
+    //case 4:
+    //    return new Item("Buff de Defensa", "buff_defensa", "Aumenta el ataque base en un 15% de manera acumulativa.", 15, 1);
+    //case 5:
+    //    return new Item("Buff de Sangre", "buff_sangre", "Por cada golpe, sube un 20% del daño final realizado a la vida en la batalla actual.", 20, 1);
 }
