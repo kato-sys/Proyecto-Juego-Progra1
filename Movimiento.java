@@ -57,6 +57,11 @@ public class Movimiento {
             case 'd':
                 destinationC = pPosC + 1;
                 break;
+            case 'e':
+                System.out.println("Salida de emergencias activada. Has salido del juego.");
+                gameOver = true;
+                break;
+
             default:
                 System.out.println("Opción inválida. Intente de nuevo.");
                 continue; // Salta al próximo ciclo del bucle
@@ -116,51 +121,69 @@ public class Movimiento {
             habitacion[pPosF][pPosC] = 0;
         }
         //El enemigo se mueve hacia el jugador después de que el jugador se mueva. LLamado método.
-        moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
+        //moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
           
       }
     }
 
+private void moverEnemigoHaciaJugador(int[][] habitacion, int pPosF, int pPosC, Enemigo enemigo, Jugador jugador) {
+    int ePosF = 0, ePosC = 0;
 
-    private void moverEnemigoHaciaJugador(int[][] habitacion, int pPosF, int pPosC, Enemigo enemigo, Jugador jugador){
-      //Primero declaramos la posición del enemigo. 
-      int ePosF = 0;
-      int ePosC = 0;
-      
-      //Encontrar la posición del enemigo.
-      for(int f = 0; f < habitacion.length; f++){
-        for (int c = 0; c < habitacion[0].length; c++){
-          if(habitacion[f][c] == 6){ 
-            //Recordar que el 6 en la matriz representa al enemigo.
-            ePosF = f;
-            ePosC = c;
-          }
+    // Encontrar la posición del enemigo.
+    for (int f = 0; f < habitacion.length; f++) {
+        for (int c = 0; c < habitacion[0].length; c++) {
+            if (habitacion[f][c] == 6) { // 6 representa al enemigo.
+                ePosF = f;
+                ePosC = c;
+            }
         }
-      }
-      //Luego necesitamos calcular el movimiento que vaya hacia el jugador. 
-      int newEPosF = ePosF;
-      int newEPosC = ePosC;
-
-      if (ePosF < pPosF) newEPosF++;
-      else if (ePosF > pPosF) newEPosF--;
-
-      if(ePosC < pPosC) newEPosC++;
-      else if(ePosC > pPosC) newEPosC--;
-
-      //Ahora necesitamos comprobar si la posición es válida, osea, no es pared ni se sale de los límites (Rezo porque funcione a la primera. Oh gran Omnissiah, deidad de los Adeptus Mechanicus, has que este código funcione a la primera.)
-      if(habitacion[newEPosF][newEPosC] == 0){
-        habitacion[ePosF][ePosC] = 0; //Quita el enemigo de la posición anterior.
-        habitacion[newEPosF][newEPosC] = 6; //Mover al enemigo a la nueva posición.
-        //Aquí ahora detecta si está cerca que inicie el combate. 
-        if(Math.abs(newEPosF - pPosF) + Math.abs(newEPosC - pPosC) == 1){
-          callCombate.combate(enemigo,jugador,habitacion);
-        }
-      }
-
-
-
-
     }
+
+    // Determinar probabilidad de moverse hacia el jugador.
+    double probabilidadMover = Math.random();
+    if (probabilidadMover > 0.75) return; // 25% de quedarse quieto.
+
+    // Calcular nueva posición hacia el jugador.
+    int newEPosF = ePosF;
+    int newEPosC = ePosC;
+
+    if (ePosF < pPosF) newEPosF++;
+    else if (ePosF > pPosF) newEPosF--;
+
+    if (ePosC < pPosC) newEPosC++;
+    else if (ePosC > pPosC) newEPosC--;
+
+    // Verificar si la nueva posición es válida.
+    if (newEPosF < 0 || newEPosF >= habitacion.length || newEPosC < 0 || newEPosC >= habitacion[0].length) {
+        return; // Fuera de los límites.
+    }
+
+    switch (habitacion[newEPosF][newEPosC]) {
+        case 0: // Espacio vacío.
+            habitacion[ePosF][ePosC] = 0;
+            habitacion[newEPosF][newEPosC] = 6;
+            break;
+
+        case 4: // Ítem.
+            //Anadir metodo para que el Enemigo tenga un inventario ;;
+            break;
+
+        case 7: // Debuff.
+            enemigo.activarDebuff();
+            System.out.println("El enemigo ha sido afectado por un debuff.");
+            habitacion[newEPosF][newEPosC] = 6; // Mover enemigo.
+            habitacion[ePosF][ePosC] = 0;
+            break;
+
+        case 2: // Jugador (inicia combate).
+            callCombate.combate(enemigo, jugador, habitacion);
+            break;
+
+        default:
+            // Si es otro caso, no se mueve.
+            return;
+    }
+}
 
 
     private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, Enemigo objetivo) {
