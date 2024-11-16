@@ -9,6 +9,9 @@ public class Combate {
         System.out.println("¡Inicio de combate!");
         int playerdecision;
 
+        //Acá el enemigo utiliza un buff si lo tiene.
+        usarItemsBuffEnemigo(enemigo,jugador);
+
         while (jugador.getVida() > 0 && enemigo.getVida() > 0) {
             System.out.println("Que desea hacer? [0] para usar item, [1] para atacar.");
             playerdecision = input.nextInt();
@@ -32,17 +35,11 @@ public class Combate {
                                     habitacion[i][j] = 0;
                                 }
                             }
-                        }
-
-                        int probabilidadDrop = 30; //En teoría esto debe de tener un 30% de probabilidad de que el enemigo dropee el item.
-                        if(misc.probabilidad(probabilidadDrop)){
-                          Item itemDrop = rand.nextBoolean() ? jugador.inventario.generarArma() : jugador.inventario.generarItem();
-                          if (itemDrop != null){
-                            System.out.println("¡El enemigo soltó un ítem cuando lo derrotaste! Soltó un: "+ itemDrop.getNombre());
-                            jugador.inventario.addInventario(itemDrop,"item");
-                          }
-                        }
-
+                            
+                            //Acá el enemigo suelta un item si tiene, y si es derrotado. 
+                            dejarItemAlDerrotarEnemigo(enemigo,jugador);
+                            break;
+                        }      
                     }
 
                     enemigo.atacar(jugador);
@@ -54,6 +51,12 @@ public class Combate {
                     System.out.println("Opcion invalida");
                     break;
             }
+
+            //Aquí el enemigo usa ítems si su vida es 50% O menos.
+            if(enemigo.getVida() < enemigo.getVidaInicial() * 0.5){
+              usarItemsVidaEnemigo(enemigo,jugador);
+            }
+            
         }
     }
 
@@ -89,4 +92,48 @@ public class Combate {
         }
         return buff;
     }
+
+    private void usarItemsBuffEnemigo(Enemigo enemigo, Jugador jugador){
+      Item[] items = enemigo.getInventario().getInventarioItems();
+      for(int i = 0; i <= enemigo.getInventario().getCuantosItems(); i++) {
+        if(items[i] != null && items[i].getTipo().contains("buff")){
+          items[i].aplicarEfectoEnemigo(enemigo, jugador);
+          System.out.println(enemigo.getNombre()+" usó un/a: "+ items[i].getNombre());
+          enemigo.getInventario().removeItem(i);
+        }
+      }
+    }
+    private void usarItemsVidaEnemigo(Enemigo enemigo, Jugador jugador){
+      Item[] items = enemigo.getInventario().getInventarioItems();
+      for(int i = 0; i <= enemigo.getInventario().getCuantosItems(); i++){
+        if (items[i] != null && items[i].getTipo().contains("vida")){
+          items[i].aplicarEfectoEnemigo(enemigo, jugador);
+          System.out.println(enemigo.getNombre() + " se curó usando un/a: "+ items[i].getNombre());
+          enemigo.getInventario().removeItem(i);
+        }
+      }
+    }
+    private void dejarItemAlDerrotarEnemigo(Enemigo enemigo, Jugador jugador){
+      Item[] items = enemigo.getInventario().getInventarioItems();
+      int itemCount = enemigo.getInventario().getCuantosItems();
+      if(itemCount > 0){
+        //Esto es que deja caer un ítem aleatorio del inventario enemigo (Si es que hay items)
+        int randomIndex = rand.nextInt(itemCount +1);
+        Item itemDrop = items[randomIndex];
+        System.out.println("El enemigo soltó un: "+ itemDrop.getNombre());
+        jugador.getInventario().addInventario(itemDrop, "item");
+        enemigo.getInventario().removeItem(randomIndex);
+      }else{
+        //Si no tiene items, ocurre lo de que tiene un 15% de probabilidad de que suelte un ítem aleatorio
+        int probabilidadDrop = 15;
+        if(misc.probabilidad(probabilidadDrop)){
+          Item itemDrop = rand.nextBoolean() ? jugador.getInventario().generarArma() :jugador.getInventario().generarItem();
+          if(itemDrop != null){
+            System.out.println("El enemigo soltó item al ser derrotado. Soltó un: " + itemDrop.getNombre());
+            jugador.getInventario().addInventario(itemDrop, "item");
+          }
+        }
+      }
+    }
+    
 }

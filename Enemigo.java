@@ -6,11 +6,13 @@ public class Enemigo {
     private boolean tieneDebuff; 
     private boolean envenenado;
     public Inventario inventario;
+    private int enemigoVidaInicial;
     
 
     public Enemigo(String nombre, int vida, int ataque, int defensa) {
         this.nombreEnemigo = nombre;
         this.vidaEnemigo = vida;
+        this.enemigoVidaInicial = vida;
         this.ataqueEnemigo = ataque;
         this.defensaEnemigo = defensa;
         this.envenenado = false;
@@ -18,7 +20,16 @@ public class Enemigo {
         this.inventario = new Inventario();
     }
 
-    
+    public void setVida(int nuevaVida){
+      this.vidaEnemigo = nuevaVida;
+    }
+    public void setAtaque(int nuevoAtaque){
+      this.ataqueEnemigo = nuevoAtaque;
+    }
+
+    public int getVidaInicial(){
+      return enemigoVidaInicial;
+    }
     public Inventario getInventario(){
       return inventario;
     }
