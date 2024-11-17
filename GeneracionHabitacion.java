@@ -3,11 +3,12 @@ import java.util.Random;
 public class GeneracionHabitacion {
     private final Random rand = new Random();
     Habitacion habitacion;
-
+    private final int filas;
+    private final int columnas;
     
     public GeneracionHabitacion() {
-        int filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
-        int columnas = rand.nextInt(9) + 8;
+        this.filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
+        this.columnas = rand.nextInt(9) + 8;
         int[][] tamano = new int[filas][columnas]; 
         habitacion = new Habitacion(tamano, null, null, null, null);
     }
@@ -34,13 +35,29 @@ public class GeneracionHabitacion {
             habitacion.setvalor(i, 0, 1);
             habitacion.setvalor(i, columnas - 1, 1);
         }
-
         // adentro
         for (int i = 1; i < filas - 1; i++) {
             for (int j = 1; j < columnas - 1; j++) {
                 habitacion.setvalor(i, j, 0);
             }
         }
+        
+        //Aquí voy a tratar de generar las paredes internas aleatorias. Son de 2 a 5 de longitud, sin cruzarse. 
+        int numParedes = rand.nextInt(4) + 2; //Acá se define el número de paredes dentro de una habitación, según las instrucciones pueden ser de 2 a 5. 
+        for (int i = 0; i < numParedes; i++){
+          int longitud = rand.nextInt(4) + 2; //Aquí se define la longitud d elas paredes, que puede ser de 2 a 5.
+          boolean horizontal = rand.nextBoolean(); //Para hacerlo más chiva aquí hago un boolean para definir si es horizontal o vertical. 
+          int x = rand.nextInt(filas - (horizontal ? 1 : longitud) - 2) + 1; 
+          int y = rand.nextInt(columnas - (horizontal ? longitud : 1) - 2) + 1; //Estas dos líneas definen la longitud de la fila. Básicamente es un operador ternario. Que si la pared es horizontal, restamos uno porque entonces la pared solo ocupa una fila. Y si es vertical pues le restamos la longitud. Y luego le sumamos uno para asegurarnos de que la pared no este al borde de la habitacion. 
+        for (int j = 0; j < longitud; j++){
+          if(habitacion.tamano()[x][y] == 0){
+            habitacion.setvalor(x,y,1);
+            if(horizontal) y++;
+            else x++;
+          }else break; //Esto es para prevenir errores... ;-;
+        } 
+        }
+        
 
         
         //Puertas a los lados.
@@ -61,15 +78,89 @@ public class GeneracionHabitacion {
         habitacion.setvalor(puertaOesteFila, 0, 10);
         habitacion.izquierda = new GeneracionHabitacion().getHabitacion();
         // random entities
-        while (index < entities.length) {
-            int i = rand.nextInt(filas);
-            int j = rand.nextInt(columnas);
-            if (habitacion.tamano()[i][j] == 0) { // revisar que no haya nada
-                habitacion.setvalor(i, j, entities[index]);
-                index++;
-            }
+        // Aquí se van a generar los enemigos según probabilidad.
+        double probEnemigos = rand.nextDouble();
+        if(probEnemigos < 0.02){
+          colocarEnemigos(4); //Cuatro enemigos se generan.
+        }else if(probEnemigos < 0.12){
+          colocarEnemigos(3);
+        }else if(probEnemigos < 0.37){
+          colocarEnemigos(2);
+        } else {
+          colocarEnemigos(1);
+        }
+
+        //Probabilidad de colocar un ítem aleatorio. (17 %)
+        if (rand.nextDouble() < 0.17) {
+          colocarItemAleatorio();
+        }
+        //Probabilidad 2% de que salga una armadura o arma.
+        if (rand.nextDouble() < 0.02){
+          colocarArmaduraOArma();
+        }
+        if (rand.nextDouble() < 0.1) { // Probabilidad del 10%
+          colocarDebuffs(2); // Genera 2 debuffs
+        }
+
+
+        colocarJugador(); //Se me olvidó colocar al jugador. XDD
+    }
+
+    //Método para colocar los enemigos. 
+    private void colocarEnemigos(int cantidad){
+      for(int i = 0; i < cantidad; i++){
+        int x,y;
+        do{
+          x = rand.nextInt(filas - 2) + 1;
+          y = rand.nextInt(columnas - 2) + 1;
+        }while (habitacion.tamano()[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
+        habitacion.setvalor(x,y,6); //Colocar enemigo. 
         }
     }
+    //Método para colocar items aleatorios.
+    private void colocarItemAleatorio(){
+      int x,y;
+      do{
+        x = rand.nextInt(filas - 2) + 1;
+        y = rand.nextInt(columnas - 2) + 1;
+      } while (habitacion.tamano()[x][y] != 0); //Nuevamente, asegurarse de que esté vacía. 
+        habitacion.setvalor(x,y,4); //Colocar Item.
+    }
+    
+    //Método para colocar armaduras/armas aleatorias.
+    private void colocarArmaduraOArma(){
+      int x,y;
+      do {
+        x = rand.nextInt(filas - 2) + 1;
+        y = rand.nextInt(columnas - 2) + 1;
+      }while (habitacion.tamano()[x][y] != 0); //Asegurarse de que esté vacío.
+      if (rand.nextBoolean()){
+        habitacion.setvalor(x,y,5); //Colocamos arma. Como el arma y la armadura son dos cosas diferentes, puse un boolean para que lo decidiera ahí mismo. 
+      }else {
+        habitacion.setvalor(x,y,4); //Colocar Armadura
+      }
+    }
+
+    private void colocarJugador(){
+      int x,y;
+      do{
+        x = rand.nextInt(filas - 2) + 1;
+        y = rand.nextInt(columnas - 2) + 1;
+      } while(habitacion.tamano()[x][y] != 0);
+      habitacion.setvalor(x,y,2);
+    }
+
+    private void colocarDebuffs(int cantidad) {
+    for (int i = 0; i < cantidad; i++) {
+        int x, y;
+        do {
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+        } while (habitacion.tamano()[x][y] != 0);
+        habitacion.setvalor(x, y, 7); // Colocar debuff
+    }
+  }
+
 
     public void ImprimirHabitacion() {
         for (int[] fila : habitacion.tamano()) {
