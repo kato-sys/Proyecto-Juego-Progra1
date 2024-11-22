@@ -21,7 +21,7 @@ public class Movimiento {
 
         // Daño del debuff
         if (jugador.tieneDebuff()) {
-            jugador.recibirDaño(0);
+            jugador.recibirDaño(5);
         }
         System.out.println("Vida de jugador: " + jugador.getVida());
         //Revisar si el jugador está muerto (por el debuff)
@@ -109,11 +109,6 @@ public class Movimiento {
             case 10: // Puerta Oeste
             habitacionActual = mazmorra.irSiguiente("oeste", habitacionActual.izquierda);
                 break;
-            case 6: // Enemigo
-                System.out.println("¡Enemigo!");
-                callCombate.combate(enemigo, jugador, habitacion);
-                canGo = false;
-                break;
             default:
                 // Si es otro número, permitimos el movimiento
                 break;
@@ -123,82 +118,80 @@ public class Movimiento {
             // Se mueve el jugador a la posicion
             habitacion[destinationF][destinationC] = 2;
             habitacion[pPosF][pPosC] = 0;
-            checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
-            moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
-            checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo);
-
+            checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
+            // Mover enemigos después de verificar combates
+            if (HabitacionGenerada.quedanEnemigos()) {
+                moverEnemigos(habitacion, pPosF, pPosC, HabitacionGenerada);
+            }
+            checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
         }
-        //moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
-        
-         //El enemigo se mueve hacia el jugador después de que el jugador se mueva. LLamado método.
-        /*
-        for (int f = 0; f < habitacion.length; f++) { 
-            for (int c = 0; c < habitacion[0].length; c++) { 
-                if (habitacion[f][c] == 6) { 
-                    moverEnemigoHaciaJugador(habitacion, pPosF, pPosC, enemigo, jugador);
-                    
-                } 
-            } 
-        }*/
-        //checksurrounding(destinationF, destinationC, habitacion, jugador, enemigo); 
       }
     }
 
-    private void moverEnemigoHaciaJugador(int[][] habitacion, int pPosF, int pPosC, Enemigo enemigo, Jugador jugador) {
-        int ePosF = -1, ePosC = -1;
+private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, GeneracionHabitacion HabitacionGenerada) {
+    // Solo verifica casillas adyacentes
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
 
-        // Encontrar la posición actual del enemigo.
-        for (int f = 0; f < habitacion.length; f++) {
-            for (int c = 0; c < habitacion[0].length; c++) {
-                if (habitacion[f][c] == 6) { // 6 representa al enemigo.
-                    ePosF = f;
-                    ePosC = c;
-                    break;
+    for (int i = 0; i < dx.length; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        // Verificar límites y buscar enemigos adyacentes
+        if (nx >= 0 && nx < habitacion.length &&
+            ny >= 0 && ny < habitacion[0].length &&
+            habitacion[nx][ny] == 6) { // 6 representa al enemigo
+            Enemigo enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
+
+            if (enemigoActual != null) {
+                System.out.println("¡Has encontrado un enemigo!");
+                callCombate.combate(enemigoActual, jugador, habitacion);
+
+                // Si el enemigo muere, actualizar la habitación
+                if (enemigoActual.getVida() <= 0) {
+                    habitacion[nx][ny] = 0;
+                    HabitacionGenerada.eliminarEnemigo(enemigoActual);
                 }
             }
         }
-
-        // Si no se encuentra un enemigo en la matriz, no hacemos nada.
-        if (ePosF == -1 || ePosC == -1) return;
-
-        // Calcular nueva posición hacia el jugador.
-        int newEPosF = ePosF;
-        int newEPosC = ePosC;
-
-        if (ePosF < pPosF) newEPosF++;
-        else if (ePosF > pPosF) newEPosF--;
-
-        if (ePosC < pPosC) newEPosC++;
-        else if (ePosC > pPosC) newEPosC--;
-
-        // Verificar si la nueva posicion es valida.
-        if (newEPosF >= 0 && newEPosF < habitacion.length &&
-            newEPosC >= 0 && newEPosC < habitacion[0].length &&
-            habitacion[newEPosF][newEPosC] == 0) {
-            habitacion[ePosF][ePosC] = 0; // Liberar posicion anterior.
-            habitacion[newEPosF][newEPosC] = 6; // Mover enemigo.
-        }   
     }
-    private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, Enemigo enemigo) {
+}
 
-        int filas = habitacion.length;
-        int columnas = habitacion[0].length;
 
-        // Revisar adyacentes y diagonales
-        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
-
-        for (int i = 0; i < dx.length; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-
-            if (nx >= 0 && nx < filas && ny >= 0 && ny < columnas && habitacion[nx][ny] == 6) {
-                callCombate.combate(enemigo, jugador, habitacion);
-                if (enemigo.getVida() <= 0) { // Eliminar enemigo tras combate
-                    habitacion[nx][ny] = 0;
+private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, GeneracionHabitacion HabitacionGenerada) {
+    for (int f = 0; f < habitacion.length; f++) {
+        for (int c = 0; c < habitacion[0].length; c++) {
+            if (habitacion[f][c] == 6) {
+                Enemigo enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(f, c);
+                if (enemigoActual != null) {
+                    moverEnemigoIndividual(habitacion, f, c, jugadorF, jugadorC, enemigoActual);
                 }
-                break;
             }
-        }    
+        }
     }
+}
+
+private void moverEnemigoIndividual(int[][] habitacion, int ePosF, int ePosC, int jugadorF, int jugadorC, Enemigo enemigo) {
+    int newEPosF = ePosF;
+    int newEPosC = ePosC;
+
+    // Decide si moverse verticalmente u horizontalmente
+    if (Math.abs(ePosF - jugadorF) > Math.abs(ePosC - jugadorC)) {
+        newEPosF += (ePosF < jugadorF) ? 1 : -1; // Moverse verticalmente
+    } else {
+        newEPosC += (ePosC < jugadorC) ? 1 : -1; // Moverse horizontalmente
+    }
+
+    // Verificar si la nueva posición es válida y está vacía
+    if (newEPosF >= 0 && newEPosF < habitacion.length &&
+        newEPosC >= 0 && newEPosC < habitacion[0].length &&
+        habitacion[newEPosF][newEPosC] == 0) {
+        habitacion[ePosF][ePosC] = 0; // Liberar posición anterior
+        habitacion[newEPosF][newEPosC] = 6; // Ocupa nueva posición
+    }
+}
+
+
+
+
 }
