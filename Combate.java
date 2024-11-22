@@ -59,38 +59,6 @@ public class Combate {
         }
     }
 
-    public Item debuffAleatorio()
-    {
-        int num = rand.nextInt(2);
-        Item debuff = null;
-        switch(num)
-        {
-            case 0:
-                debuff = new Item("Debuff de Ataque", "debuff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
-            case 1:
-                debuff = new Item("Debuff de Defensa", "debuff_defensa", "Reduce la defensa en un 15%.", 15, 1);
-            case 2:
-                debuff = new Item("Debuff de Envenenar", "debuff_envenenar", "Por cada turno en batalla, pierde de 1, incrementando a 10 puntos de vida. Luego de eso sigue perdiendo 10 puntos por turno. El envenenamiento dura 20 turnos,o hasta tomar un buff de sangre.", 5, 20);
-        }
-        return debuff;
-
-    }
-
-    public Item buffAleatorio()
-    {
-        int num = rand.nextInt(2);
-        Item buff = null;
-        switch(num)
-        {
-            case 0:
-                buff = new Item("Buff de Ataque", "buff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
-            case 1:
-                buff = new Item("Buff de Defensa", "buff_defensa", "Aumenta el ataque base en un 15% de manera acumulativa.", 15, 1);
-            case 2:
-                buff = new Item("Buff de Sangre", "buff_sangre", "Por cada golpe, sube un 20% del daño final realizado a la vida en la batalla actual.", 20, 1);
-        }
-        return buff;
-    }
 
     private void usarItemsBuffEnemigo(Enemigo enemigo, Jugador jugador){
       Item[] items = enemigo.getInventario().getInventarioItems();
