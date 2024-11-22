@@ -51,4 +51,9 @@ public class misc {
             return 1;
         }
     }
+
+    public int probBuffs()
+    {
+        
+    }
 }

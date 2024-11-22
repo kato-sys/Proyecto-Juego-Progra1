@@ -35,10 +35,10 @@ public class Combate {
                                     habitacion[i][j] = 0;
                                 }
                             }
-                        }  
+                        }
                         //Acá el enemigo suelta un item si tiene, y si es derrotado. 
                         dejarItemAlDerrotarEnemigo(enemigo,jugador);
-                        break;    
+                        break;      
                     }
 
                     enemigo.atacar(jugador);
