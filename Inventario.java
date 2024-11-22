@@ -54,6 +54,9 @@ public class Inventario {
     public Item getArma() { 
         return arma_equipped; 
     }
+    public Item getArmadura() {
+        return armadura_equipped;
+    }
 
     // Generates a random weapon
     public Item generarArma() {
@@ -84,11 +87,4 @@ public class Inventario {
                 return null;
         }
     }
-
-    
-    //return new Item("Buff de Ataque", "buff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 15, 1);
-    //case 4:
-    //    return new Item("Buff de Defensa", "buff_defensa", "Aumenta el ataque base en un 15% de manera acumulativa.", 15, 1);
-    //case 5:
-    //    return new Item("Buff de Sangre", "buff_sangre", "Por cada golpe, sube un 20% del daño final realizado a la vida en la batalla actual.", 20, 1);
 }
