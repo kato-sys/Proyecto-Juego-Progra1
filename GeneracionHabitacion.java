@@ -27,10 +27,10 @@ public class GeneracionHabitacion {
     public void LlenarHabitacion() {
         int filas = habitacion.tamano().length;
         int columnas = habitacion.tamano()[0].length;
-        int index = 0;
+        //int index = 0;
 
         // Entities (2 = Jugador, 3 = PuertaNorte, 4 = Item, 5 = Arma, 6 = Enemigo, 7 = Debuff, 8 = Puerta Sur, 9 = Puerta Este, 10 = Puerta Oeste)
-        int[] entities = {2, 4, 6, 5, 7};
+        //int[] entities = {2, 4, 6, 5, 7};
 
         // techo y piso
         for (int i = 0; i < columnas; i++) {

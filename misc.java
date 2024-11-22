@@ -11,44 +11,33 @@ public class misc {
         return probabilidad > prob;
     }
 
-    public int probArmas()
+    public Item probArmas()
     {
-        prob = random.nextInt(50);
-        //0-30: básica
-        if(prob < 30)
+        prob = random.nextInt(79);
+        if(prob < 30) //0-29: arma básica
         {
-            return 1;
+            return new Item("Arma Básica", "arma_basica", "Aumenta el daño en un 20%.", 20, 1);
         }
-        //30-45: secreta
-        else if(prob < 45)
+        else if(prob < 45)  //30-44: arma secreta
         {
-            return 0;
+            return new Item("Arma Secreta", "arma_secreta", "Esta ataca porcentualmente, reduciendo la vida en un 50% de la vida actual por cada ataque, agregado al ataque base del agente (cada vez pegará menos que la anterior).", 50, 1);
 
         }
-        //45-50: legendaria
-        else
+        else if(prob < 50) //45-49: arma legendaria
         {
-            return 2;
+            return new Item("Arma Legendaria", "arma_legendaria", "El ataque base se multiplica por 2.", 6, 1);
         }
-    }
-
-    public int probItems()
-    {
-        prob = random.nextInt(50);
-        //0-15: armadura basica
-        if(prob < 15)
+        else if(prob < 65) //50-64: armadura basica
         {
-            return 0;
+            return new Item("Armadura Básica", "armadura_base", "Reduce el daño en un 20%. Se pierde un 2% con cada golpe recibido. ", 20, 50);
         }
-        //15-25: armadura secreta
-        else if(prob < 25)
+        else if(prob < 75) //65-74: armadura secreta
         {
-            return 2;
+            return new Item("Armadura Secreta", "armadura_secreta", "Reduce el daño en un 30%. Se pierde un 2% con cada golpe recibido, pero luego de una batalla recupera todos los puntos de armadura.", 30, 50);
         }
-        //25-30: legendaria
-        else 
+        else //75-79: armadura legendaria
         {
-            return 1;
+            return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce todo ataque en 50%.", 50, 3);
         }
     }
 
@@ -59,24 +48,17 @@ public class misc {
         {
             case 0:
                 return new Item("Buff de aumento de ataque", "buff_ataque", "Aumenta el ataque base entre un 10% a un 20% de manera acumulativa.", 20, 4);
-                break;
             case 1:
                 return new Item("Buff de aumento de defensa", "buff_defensa", "Aumenta la defensa en un 15% de manera acumulativa.", 15, 4);
-                break;
             case 2:
                 return new Item("Buff de sangre", "buff_sangre", "Por cada golpe, sube un 20% del daño final realizado a la vida en la batalla actual.", 20, 4);
-                break;
             case 3:
                 return new Item("Debuff de defensa", "debuff_defensa", "Reduce la defensa en un 15%.", 15, 4);
-                break;
             case 4:
                 return new Item("Debuff de ataque", "debuff_ataque", "Reduce el ataque en un 20%.", 20, 4);
-                break;
             case 5:
                 return new Item("Debuff de envenenar", "debuff_envenenar", "Por cada turno en batalla, pierde de 1, incrementando a 10 puntos de vida. Luego de eso sigue perdiendo 10 puntos por turno. El envenenamiento dura 20 turnos,o hasta tomar un buff de sangre.", 10, 20);
-                break;
-
         }
-        return -1;
+        return null;
     }
 }

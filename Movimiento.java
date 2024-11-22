@@ -83,19 +83,14 @@ public class Movimiento {
                 habitacionActual = mazmorra.irSiguiente("norte", habitacionActual.arriba);
                 break;
             case 4:  // Item
-                Item item = jugador.getInventario().generarItem();
+                Item item = jugador.getInventario().recogerGenerarItem();
                 System.out.println("Obtuviste el item: " + item.getNombre());
-                if (item.getTipo().equals("armadura_base") || item.getTipo().equals("armadura_legendaria")  || item.getTipo().equals("armadura_secreta")) {
-                    jugador.setDefensa(item.getPoder());
-                } else {
-                    jugador.getInventario().addInventario(item, item.getTipo());
-                    habitacion[destinationF][destinationC] = 0;
-                }
+                habitacion[destinationF][destinationC] = 0;
                 break;
             case 5: // Arma
-                Item arma = jugador.getInventario().generarArma();
+                Item arma = jugador.getInventario().recogerGenerarArma(jugador);
                 System.out.println("Obtuviste el arma: " + arma.getNombre());
-                jugador.setAtaque(arma.getPoder());
+                habitacion[destinationF][destinationC] = 0;
                 break;
             case 7:
                 jugador.activarDebuff(); // Debuff

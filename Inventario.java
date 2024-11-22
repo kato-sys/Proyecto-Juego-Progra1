@@ -59,32 +59,21 @@ public class Inventario {
     }
 
     // Generates a random weapon
-    public Item generarArma() {
-        int seleccionTipoArma = misc.probArmas();
-        switch (seleccionTipoArma) {
-            case 0:
-                return new Item("Arma Secreta", "arma_secreta", "Esta ataca porcentualmente, reduciendo la vida en un 50% de la vida actual por cada ataque, agregado al ataque base del agente (cada vez pegará menos que la anterior).", 50, 1);
-            case 1: 
-                return new Item("Arma Básica", "arma_basica", "Aumenta el daño en un 20%.", 20, 1);
-            case 2: 
-                return new Item("Arma Legendaria", "arma_legendaria", "El ataque base se multiplica por 2.", 6, 1);
-            default:
-                return null;
+    public Item recogerGenerarArma(Jugador jugador) {
+        Item arma = misc.probArmas();
+        if (arma.getTipo().equals("armadura_base") || arma.getTipo().equals("armadura_legendaria")  || arma.getTipo().equals("armadura_secreta")) {
+            jugador.setDefensa(arma.getPoder());
+        } else {
+            jugador.setAtaque(arma.getPoder());
         }
+        return arma;
     }
 
     // Genera item random
-    public Item generarItem() {
-        int seleccionTipoItem = misc.probItems();
-        switch (seleccionTipoItem) {
-            case 0:
-                return new Item("Armadura Básica", "armadura_base", "Reduce el daño en un 20%. Se pierde un 2% con cada golpe recibido. ", 20, 50);
-            case 1:
-                return new Item("Armadura Legendaria", "armadura_legendaria", "Reduce todo ataque en 50%.", 50, 3);
-            case 2:
-                return new Item("Armadura Secreta", "armadura_secreta", "Reduce el daño en un 30%. Se pierde un 2% con cada golpe recibido, pero luego de una batalla recupera todos los puntos de armadura.", 30, 50);
-            default:
-                return null;
-        }
+    public Item recogerGenerarItem() {
+        Item buff = misc.probBuffs();
+        addInventario(buff, buff.getTipo());
+        return buff;
+        
     }
 }

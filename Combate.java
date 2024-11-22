@@ -94,10 +94,9 @@ public class Combate {
         //Si no tiene items, ocurre lo de que tiene un 15% de probabilidad de que suelte un ítem aleatorio
         int probabilidadDrop = 15;
         if(misc.probabilidad(probabilidadDrop)){
-          Item itemDrop = rand.nextBoolean() ? jugador.getInventario().generarArma() :jugador.getInventario().generarItem();
+          Item itemDrop = rand.nextBoolean() ? jugador.getInventario().recogerGenerarArma(jugador) :jugador.getInventario().recogerGenerarArma(jugador);
           if(itemDrop != null){
             System.out.println("El enemigo soltó item al ser derrotado. Soltó un: " + itemDrop.getNombre());
-            jugador.getInventario().addInventario(itemDrop, "item");
           }
         }
       }
