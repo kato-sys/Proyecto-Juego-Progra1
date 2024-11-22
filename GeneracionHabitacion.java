@@ -5,16 +5,23 @@ public class GeneracionHabitacion {
     Habitacion habitacion;
     private final int filas;
     private final int columnas;
+    private Enemigo[] enemigos;
+    private static final int MAX_ENEMIGOS = 4; 
     
     public GeneracionHabitacion() {
         this.filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
         this.columnas = rand.nextInt(9) + 8;
         int[][] tamano = new int[filas][columnas]; 
         habitacion = new Habitacion(tamano, null, null, null, null);
+        enemigos = new Enemigo[4];
     }
 
     public Habitacion getHabitacion(){
         return habitacion;
+    }
+
+    public Enemigo[] getEnemigos(){
+      return enemigos;
     }
 
     public void LlenarHabitacion() {
@@ -79,10 +86,7 @@ public class GeneracionHabitacion {
         habitacion.izquierda = new GeneracionHabitacion().getHabitacion();
       
 
-        colocarEnemigos(1);
         // Aquí se van a generar los enemigos según probabilidad.
-        /*
-        De momento esto queda vetado.
         double probEnemigos = rand.nextDouble();
         if(probEnemigos < 0.02){
           colocarEnemigos(4); //Cuatro enemigos se generan.
@@ -92,7 +96,7 @@ public class GeneracionHabitacion {
           colocarEnemigos(2);
         } else {
           colocarEnemigos(1);
-        }*/
+        }
 
         //Probabilidad de colocar un ítem aleatorio. (17 %)
         if (rand.nextDouble() < 0.17) {
@@ -112,15 +116,55 @@ public class GeneracionHabitacion {
 
     //Método para colocar los enemigos.
     private void colocarEnemigos(int cantidad){
-      for(int i = 0; i < cantidad; i++){
+      for(int i = 0; i < cantidad && i < MAX_ENEMIGOS; i++){
         int x,y;
         do{
           x = rand.nextInt(filas - 2) + 1;
           y = rand.nextInt(columnas - 2) + 1;
         }while (habitacion.tamano()[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
+        
+        enemigos[i] = new Enemigo("Goblin", 20, 5, 2);
         habitacion.setvalor(x,y,6); //Colocar enemigo. 
         }
     }
+
+        // Método para verificar si quedan enemigos en la habitación
+    public boolean quedanEnemigos() {
+        for (Enemigo enemigo : enemigos) {
+            if (enemigo != null && enemigo.getVida() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Método para eliminar un enemigo específico
+    public void eliminarEnemigo(Enemigo enemigo) {
+        for (int i = 0; i < enemigos.length; i++) {
+            if (enemigos[i] == enemigo) {
+                enemigos[i] = null;
+                break;
+            }
+        }
+    }
+
+    // Método para obtener un enemigo en una posición específica
+    public Enemigo getEnemigoPorPosicion(int x, int y) {
+        for (int i = 0; i < enemigos.length; i++) {
+            if (enemigos[i] != null && enemigos[i].getVida() > 0) {
+                // Buscar la posición del enemigo en la habitación
+                for (int f = 0; f < habitacion.tamano().length; f++) {
+                    for (int c = 0; c < habitacion.tamano()[0].length; c++) {
+                        if (habitacion.tamano()[f][c] == 6 && f == x && c == y) {
+                            return enemigos[i];
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     //Método para colocar items aleatorios.
     private void colocarItemAleatorio(){
       int x,y;
@@ -130,6 +174,8 @@ public class GeneracionHabitacion {
       } while (habitacion.tamano()[x][y] != 0); //Nuevamente, asegurarse de que esté vacía. 
         habitacion.setvalor(x,y,4); //Colocar Item.
     }
+
+
     
     //Método para colocar armaduras/armas aleatorias.
     private void colocarArmaduraOArma(){
