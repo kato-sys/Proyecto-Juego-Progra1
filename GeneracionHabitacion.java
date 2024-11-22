@@ -77,8 +77,12 @@ public class GeneracionHabitacion {
         int puertaOesteFila = rand.nextInt(filas - 2) + 1;
         habitacion.setvalor(puertaOesteFila, 0, 10);
         habitacion.izquierda = new GeneracionHabitacion().getHabitacion();
-        // random entities
+      
+
+        colocarEnemigos(1);
         // Aquí se van a generar los enemigos según probabilidad.
+        /*
+        De momento esto queda vetado.
         double probEnemigos = rand.nextDouble();
         if(probEnemigos < 0.02){
           colocarEnemigos(4); //Cuatro enemigos se generan.
@@ -88,7 +92,7 @@ public class GeneracionHabitacion {
           colocarEnemigos(2);
         } else {
           colocarEnemigos(1);
-        }
+        }*/
 
         //Probabilidad de colocar un ítem aleatorio. (17 %)
         if (rand.nextDouble() < 0.17) {
@@ -106,7 +110,7 @@ public class GeneracionHabitacion {
         colocarJugador(); //Se me olvidó colocar al jugador. XDD
     }
 
-    //Método para colocar los enemigos. 
+    //Método para colocar los enemigos.
     private void colocarEnemigos(int cantidad){
       for(int i = 0; i < cantidad; i++){
         int x,y;
