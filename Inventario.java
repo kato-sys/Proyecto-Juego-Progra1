@@ -6,12 +6,15 @@ public class Inventario {
     public Random rand = new Random();
     misc misc = new misc();
     
-    public Item[] inventario_items = new Item[3];
+    public Item[] inventario_items = new Item[24];
     public Item arma_equipped = null;
     public Item armadura_equipped = null;
+    public Item[] debuffs; //un vector separado del inventario para guardar los debuffs con los que se ha topado el jugador
 
-    // cuantos items hay
+    // cuantos items hay (se empieza en -1 para que uando se agregue un item, se incremente y empieze en la posición 0)
     public int cuantosItems = -1;
+    //cuantos debuffs hay
+    public int cuantosDebuffs = -1;
 
     // prin el inv
     public void printInventario() {
@@ -58,21 +61,37 @@ public class Inventario {
         return armadura_equipped;
     }
 
+    public void addDebuffs(Item debuff) 
+    {
+        debuffs[cuantosDebuffs] = debuff;
+        cuantosDebuffs++;
+    }
+
     // Generates a random weapon
     public Item recogerGenerarArma(Jugador jugador) {
         Item arma = misc.probArmas();
         if (arma.getTipo().equals("armadura_base") || arma.getTipo().equals("armadura_legendaria")  || arma.getTipo().equals("armadura_secreta")) {
             jugador.setDefensa(arma.getPoder());
+            addInventario(arma, "armadura");
         } else {
             jugador.setAtaque(arma.getPoder());
+            addInventario(arma, "arma");
         }
+        
         return arma;
     }
 
-    // Genera item random
+    // Genera buff/debuff random
     public Item recogerGenerarItem() {
         Item buff = misc.probBuffs();
-        addInventario(buff, buff.getTipo());
+        if(buff.getTipo().equals("buff_ataque") || buff.getTipo().equals("buff_defensa") || buff.getTipo().equals("buff_sangre"))
+        {
+            addInventario(buff, "item");
+        }
+        else
+        {
+            addDebuffs(buff);
+        }
         return buff;
         
     }
