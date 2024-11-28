@@ -1,34 +1,34 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 public class Combate {
     private misc misc = new misc();
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
 
-    public void combate(Enemigo enemigo, Jugador jugador, int[][] habitacion) {
+    public void combate(Enemigo[] enemigos, Jugador jugador, int[][] habitacion, int index) {
         System.out.println("¡Inicio de combate!");
         int playerdecision;
 
         //Acá el enemigo utiliza un buff si lo tiene.
-        usarItemsBuffEnemigo(enemigo,jugador);
+        usarItemsBuffEnemigo(enemigos[index],jugador);
 
-        while (jugador.getVida() > 0 && enemigo.getVida() > 0) {
+        while (jugador.getVida() > 0 && enemigos[index].getVida() > 0) {
             System.out.println("Que desea hacer? [0] para usar item, [1] para atacar.");
             playerdecision = input.nextInt();
             switch (playerdecision) {
                 case 0:
-                    enemigo.atacar(jugador);
+                    enemigos[index].atacar(jugador);
                     if (jugador.getVida() <= 0) {
                         System.out.println(jugador.getNombre() + " ha sido derrotado.");
                     }
 
-                    jugador.usarItem(jugador, enemigo);
+                    jugador.usarItem(jugador, enemigos[index]);
                     break;
             
                 case 1:
-                    jugador.atacar(enemigo);
-                    if (enemigo.getVida() <= 0) {
-                        System.out.println(enemigo.getNombre() + " ha sido derrotado.");
+                    jugador.atacar(enemigos[index]);
+                    if (enemigos[index].getVida() <= 0) {
+                        System.out.println(enemigos[index].getNombre() + " ha sido derrotado.");
                         for (int i = 0; i < habitacion.length; i++) {
                             for (int j = 0; j < habitacion[0].length; j++) {
                                 if (habitacion[i][j] == 6) {
@@ -37,11 +37,11 @@ public class Combate {
                             }
                         }
                         //Acá el enemigo suelta un item si tiene, y si es derrotado. 
-                        dejarItemAlDerrotarEnemigo(enemigo,jugador);
+                        dejarItemAlDerrotarEnemigo(enemigos[index],jugador);
                         break;      
                     }
 
-                    enemigo.atacar(jugador);
+                    enemigos[index].atacar(jugador);
                     if (jugador.getVida() <= 0) {
                         System.out.println(jugador.getNombre() + " ha sido derrotado.");
                     }
@@ -52,8 +52,8 @@ public class Combate {
             }
 
             //Aquí el enemigo usa ítems si su vida es 50% O menos.
-            if(enemigo.getVida() < enemigo.getVidaInicial() * 0.5){
-              usarItemsVidaEnemigo(enemigo,jugador);
+            if(enemigos[index].getVida() < enemigos[index].getVidaInicial() * 0.5){
+              usarItemsVidaEnemigo(enemigos[index],jugador);
             }
             
         }

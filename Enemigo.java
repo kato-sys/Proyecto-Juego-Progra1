@@ -7,6 +7,8 @@ public class Enemigo {
     private boolean envenenado;
     public Inventario inventario;
     private int enemigoVidaInicial;
+    private int indexi;  // Agregamos la posición en la fila
+    private int indexj; 
     
 
     public Enemigo(String nombre, int vida, int ataque, int defensa) {
@@ -18,6 +20,26 @@ public class Enemigo {
         this.envenenado = false;
         this.tieneDebuff = false;
         this.inventario = new Inventario();
+        this.indexi = indexi; // Asignamos la posición en i
+        this.indexj = indexj; // Asignamos la posición en j
+    }
+
+        // Métodos getters para obtener la posición del enemigo
+    public int getIndexi() {
+        return indexi;
+    }
+
+    public int getIndexj() {
+        return indexj;
+    }
+
+    // Métodos setters para cambiar la posición del enemigo (si es necesario)
+    public void setIndexi(int indexi) {
+        this.indexi = indexi;
+    }
+
+    public void setIndexj(int indexj) {
+        this.indexj = indexj;
     }
 
     public void setVida(int nuevaVida){
