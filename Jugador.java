@@ -77,7 +77,7 @@ public class Jugador {
     }
 
     public void recorrer(Jugador jugador, Enemigo enemigo) {
-        callMovimiento.RecorridoHabitacion(jugador, enemigo);
+        callMovimiento.RecorridoHabitacion(jugador);
     }
 
     public void usarItem(Jugador var1, Enemigo var2) {

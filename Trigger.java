@@ -10,7 +10,7 @@ public class Trigger {
         Movimiento movimiento = new Movimiento();
         System.out.println("Bienvenido al juego! Intenta encontrar la salida (/) y esquiva o enfrenta los enemigos (E).");
 
-        movimiento.RecorridoHabitacion(jugador, enemigo);
+        movimiento.RecorridoHabitacion(jugador);
 
         if (jugador.getVida() > 0) {
             System.out.println("¡Has salido de la habitación y ganado el juego!");

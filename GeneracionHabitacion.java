@@ -129,24 +129,25 @@ public class GeneracionHabitacion {
     }
 
         // Método para verificar si quedan enemigos en la habitación
-    public boolean quedanEnemigos() {
-        for (Enemigo enemigo : enemigos) {
-            if (enemigo != null && enemigo.getVida() > 0) {
-                return true;
-            }
+ // Método para verificar si quedan enemigos en la habitación
+public boolean quedanEnemigos() {
+    for (Enemigo enemigo : enemigos) {
+        if (enemigo != null && enemigo.getVida() > 0) {
+            return true; // Hay al menos un enemigo vivo
         }
-        return false;
     }
+    return false; // No quedan enemigos vivos
+}
 
-    // Método para eliminar un enemigo específico
-    public void eliminarEnemigo(Enemigo enemigo) {
-        for (int i = 0; i < enemigos.length; i++) {
-            if (enemigos[i] == enemigo) {
-                enemigos[i] = null;
-                break;
-            }
+// Método para eliminar un enemigo específico
+public void eliminarEnemigo(Enemigo enemigo) {
+    for (int i = 0; i < enemigos.length; i++) {
+        if (enemigos[i] != null && enemigos[i].equals(enemigo)) {
+            enemigos[i] = null; // Eliminar al enemigo específico
+            break; // Salir del bucle una vez que se ha eliminado
         }
     }
+}
 
     // Método para obtener un enemigo en una posición específica
     public Enemigo getEnemigoPorPosicion(int x, int y) {
