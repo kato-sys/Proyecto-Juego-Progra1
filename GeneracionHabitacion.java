@@ -6,7 +6,7 @@ public class GeneracionHabitacion {
     private final int filas;
     private final int columnas;
     private Enemigo[] enemigos;
-    private static final int MAX_ENEMIGOS = 4; 
+    //private static final int MAX_ENEMIGOS = 4; 
     
     public GeneracionHabitacion() {
         this.filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
