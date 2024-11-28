@@ -116,7 +116,7 @@ public class GeneracionHabitacion {
 
     //Método para colocar los enemigos.
     private void colocarEnemigos(int cantidad){
-      for(int i = 0; i < cantidad && i < MAX_ENEMIGOS; i++){
+      for(int i = 0; i < cantidad; i++){
         int x,y;
         do{
           x = rand.nextInt(filas - 2) + 1;
@@ -139,26 +139,18 @@ public boolean quedanEnemigos() {
     return false; // No quedan enemigos vivos
 }
 
-// Método para eliminar un enemigo específico
-public void eliminarEnemigo(Enemigo enemigo) {
-    for (int i = 0; i < enemigos.length; i++) {
-        if (enemigos[i] != null && enemigos[i].equals(enemigo)) {
-            enemigos[i] = null; // Eliminar al enemigo específico
-            break; // Salir del bucle una vez que se ha eliminado
-        }
-    }
-}
+
 
     // Método para obtener un enemigo en una posición específica
-    public Enemigo getEnemigoPorPosicion(int x, int y) {
+    public int getEnemigoPorPosicion(int x, int y) {
         for (int i = 0; i < enemigos.length; i++) {
             if (enemigos[i] != null && enemigos[i].getVida() > 0) {
                 if(habitacion.tamano()[x][y] == 6 && enemigos[i].getPosFila() == x && enemigos[i].getPosColumna() == y){
-                    return enemigos[i];
+                    return i;
                 }
             }
         }
-        return null;
+        return 0;
     }
 
     //Método para colocar items aleatorios.

@@ -116,6 +116,7 @@ public class Movimiento {
             habitacion[pPosF][pPosC] = 0;
             checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
             // Mover enemigos después de verificar combates
+            checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
             
         }
       }
@@ -125,7 +126,7 @@ public class Movimiento {
     // Solo verifica casillas adyacentes
     int[] dx = {-1, 1, 0, 0};
     int[] dy = {0, 0, -1, 1};
-
+    int enemigoIndex = 0;
     for (int i = 0; i < dx.length; i++) {
         int nx = x + dx[i];
         int ny = y + dy[i];
@@ -134,29 +135,8 @@ public class Movimiento {
         if (nx >= 0 && nx < habitacion.length &&
             ny >= 0 && ny < habitacion[0].length &&
             habitacion[nx][ny] == 6) { // 6 representa al enemigo
-            Enemigo enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
-
-            if (enemigoActual != null) {
-                System.out.println("¡Has encontrado un enemigo!");
-                for(int k = 0; k < HabitacionGenerada.getEnemigos().length; k++){
-                    if (HabitacionGenerada.getEnemigos()[k] != null){
-                        callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, i);
-                    }
-                }
-
-                
-
-                // Si el enemigo muere, actualizar la habitación
-                if (enemigoActual.getVida() <= 0) {
-                    habitacion[nx][ny] = 0;
-                    HabitacionGenerada.eliminarEnemigo(enemigoActual);
-                    // Verificar si hay más enemigos
-                    if (!HabitacionGenerada.quedanEnemigos()) {
-                        System.out.println("Todos los enemigos han sido derrotados.");
-                        // Aquí podrías agregar lógica adicional para lo que ocurre cuando todos los enemigos son derrotados
-                    }
-                }
-            }
+            int enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
+            callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, enemigoActual, HabitacionGenerada);
         }
     }
 }
