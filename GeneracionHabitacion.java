@@ -123,7 +123,7 @@ public class GeneracionHabitacion {
           y = rand.nextInt(columnas - 2) + 1;
         }while (habitacion.tamano()[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
         
-        enemigos[i] = new Enemigo("Goblin", 20, 5, 2);
+        enemigos[i] = new Enemigo("Goblin", 20, 5, 2, x, y);
         habitacion.setvalor(x,y,6); //Colocar enemigo. 
         }
     }
@@ -153,13 +153,8 @@ public void eliminarEnemigo(Enemigo enemigo) {
     public Enemigo getEnemigoPorPosicion(int x, int y) {
         for (int i = 0; i < enemigos.length; i++) {
             if (enemigos[i] != null && enemigos[i].getVida() > 0) {
-                // Buscar la posición del enemigo en la habitación
-                for (int f = 0; f < habitacion.tamano().length; f++) {
-                    for (int c = 0; c < habitacion.tamano()[0].length; c++) {
-                        if (habitacion.tamano()[f][c] == 6 && f == x && c == y) {
-                            return enemigos[i];
-                        }
-                    }
+                if(habitacion.tamano()[x][y] == 6 && enemigos[i].getPosFila() == x && enemigos[i].getPosColumna() == y){
+                    return enemigos[i];
                 }
             }
         }

@@ -29,13 +29,6 @@ public class Combate {
                     jugador.atacar(enemigos[index]);
                     if (enemigos[index].getVida() <= 0) {
                         System.out.println(enemigos[index].getNombre() + " ha sido derrotado.");
-                        for (int i = 0; i < habitacion.length; i++) {
-                            for (int j = 0; j < habitacion[0].length; j++) {
-                                if (habitacion[i][j] == 6) {
-                                    habitacion[i][j] = 0;
-                                }
-                            }
-                        }
                         //Acá el enemigo suelta un item si tiene, y si es derrotado. 
                         dejarItemAlDerrotarEnemigo(enemigos[index],jugador);
                         break;      
