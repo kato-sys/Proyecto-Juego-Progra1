@@ -116,6 +116,7 @@ public class Movimiento {
             habitacion[pPosF][pPosC] = 0;
             checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
             // Mover enemigos después de verificar combates
+            moverEnemigos(habitacion, destinationF, destinationC, HabitacionGenerada);
             checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
             
         }
@@ -123,22 +124,64 @@ public class Movimiento {
     }
 
     private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, GeneracionHabitacion HabitacionGenerada) {
-    // Solo verifica casillas adyacentes
-    int[] dx = {-1, 1, 0, 0};
-    int[] dy = {0, 0, -1, 1};
-    int enemigoIndex = 0;
-    for (int i = 0; i < dx.length; i++) {
-        int nx = x + dx[i];
-        int ny = y + dy[i];
+        // Solo verifica casillas adyacentes
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+        int enemigoIndex = 0;
+        for (int i = 0; i < dx.length; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
 
-        // Verificar límites y buscar enemigos adyacentes
-        if (nx >= 0 && nx < habitacion.length &&
-            ny >= 0 && ny < habitacion[0].length &&
-            habitacion[nx][ny] == 6) { // 6 representa al enemigo
-            int enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
-            callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, enemigoActual, HabitacionGenerada);
+            // Verificar límites y buscar enemigos adyacentes
+            if (nx >= 0 && nx < habitacion.length &&
+                ny >= 0 && ny < habitacion[0].length &&
+                habitacion[nx][ny] == 6) { // 6 representa al enemigo
+                int enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
+                callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, enemigoActual, HabitacionGenerada);
+            }
+        }
+    }
+
+    private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, GeneracionHabitacion HabitacionGenerada) {
+    for (Enemigo enemigo : HabitacionGenerada.getEnemigos()) {
+        if (enemigo != null && enemigo.getVida() > 0) {
+            int enemigoF = enemigo.getPosFila();
+            int enemigoC = enemigo.getPosColumna();
+
+            // Calculamos las diferencias
+            int deltaF = jugadorF - enemigoF;
+            int deltaC = jugadorC - enemigoC;
+
+            // Decidir el movimiento basado en la distancia
+            int nuevaF = enemigoF;
+            int nuevaC = enemigoC;
+
+            if (Math.abs(deltaF) > Math.abs(deltaC)) {
+                // Priorizar movimiento vertical
+                nuevaF += (deltaF > 0) ? 1 : -1;
+            } else {
+                // Priorizar movimiento horizontal
+                nuevaC += (deltaC > 0) ? 1 : -1;
+            }
+
+            // Validar si la nueva posición es válida
+            if (nuevaF >= 0 && nuevaF < habitacion.length &&
+                nuevaC >= 0 && nuevaC < habitacion[0].length &&
+                habitacion[nuevaF][nuevaC] == 0) { // Espacio vacío
+                // Actualizar posición del enemigo en la matriz
+                habitacion[enemigoF][enemigoC] = 0;
+                habitacion[nuevaF][nuevaC] = 6;
+
+                // Actualizar posición del enemigo
+                enemigo.setPosFila(nuevaF);
+                enemigo.setPosColumna(nuevaC);
+            }
         }
     }
 }
+
+
+
+
 
 }
