@@ -138,17 +138,6 @@ public class Movimiento {
                 callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, enemigoActual, HabitacionGenerada);
             }
         }
-
-                //for(int f = x-1; f <= x; f++)
-        //{
-        //    for(int c = y-1; c <= y; c++)
-          //  {
-            //    if(habitacion[f][c] == 6)
-              //  {
-                //    callCombate.combate(enemigosEnCuarto, jugador, habitacion, HabitacionGenerada.getEnemigoPorPosicion(f, c), HabitacionGenerada);
-                  //  }
-            //}
-        //}
     }
 
     private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, GeneracionHabitacion HabitacionGenerada) {
