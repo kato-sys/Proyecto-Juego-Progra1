@@ -17,6 +17,7 @@ public class Combate {
         usarItemsBuffEnemigo(enemigos[index],jugador);
         boolean combateSigue = true;
         while (combateSigue) {
+            System.out.println("VIDA: " + jugador.getVida());
             //Aquí el enemigo usa ítems si su vida es 50% O menos.
             if(enemigos[index].getVida() < enemigos[index].getVidaInicial() * 0.5){
               usarItemsVidaEnemigo(enemigos[index],jugador);

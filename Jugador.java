@@ -56,7 +56,7 @@ public class Jugador {
     public void atacar(Enemigo objetivo) {
         int daño = this.jugadorAtaque;
         objetivo.recibirDaño(daño);
-        System.out.println(this.jugadorNombre + " ataca a " + objetivo.getNombre() + " y le causa " + daño + " de daño.");
+        //System.out.println(this.jugadorNombre + " ataca a " + objetivo.getNombre() + " y le causa " + daño + " de daño.");
     }
 
     public void recibirDaño(int daño) {

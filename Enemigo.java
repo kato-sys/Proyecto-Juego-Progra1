@@ -75,15 +75,16 @@ public class Enemigo {
         int dañoFinal = daño - defensaEnemigo; // reduce daño con su defensa
         if (dañoFinal < 0) dañoFinal = 0;
         this.vidaEnemigo -= dañoFinal;
+        if (this.vidaEnemigo < 0) {
+            this.vidaEnemigo = 0;
+        }
         System.out.println(nombreEnemigo + " recibe " + dañoFinal + " de daño. Vida restante: " + vidaEnemigo);
         //Daño adicional si tiene debuff
         if (tieneDebuff) {
             this.vidaEnemigo -= 5;
             System.out.println("¡El Debuff te hace recibir daño adicional!");
         }
-        if (this.vidaEnemigo < 0) {
-            this.vidaEnemigo = 0;
-        }
+        
     }
 
     // Veneno (futuro)
