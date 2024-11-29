@@ -72,12 +72,13 @@ public class Movimiento {
         
         switch (habitacionMatriz[destinationF][destinationC]) {
             case 1: // Pared
-                System.out.println("No puede avanzar más porque hay una pared.");
                 canGo = false;
+                System.out.println("No puede avanzar más porque hay una pared.");
                 break;
             case 3: // Puerta Norte
                 canGo = false;
                 habitacion = mazmorra.irSiguiente(0);
+                canGo = false;
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().recogerGenerarItem();
