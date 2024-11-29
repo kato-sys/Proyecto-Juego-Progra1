@@ -171,11 +171,31 @@ public class Habitacion {
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
           }while (habitacion[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
-          
-          enemigos[i] = new Enemigo("Goblin", 20, 5, 2, x, y);
-          habitacion[x][y] = 6; //Colocar enemigo. 
-          }
-      }
+        if (rand.nextDouble() < 0.00001){
+          enemigos[i] = new Enemigo("[[ETERNO RESPLANDOR DEL FALLECIMIENTO DE INFINITAS ESTRELLAS]]", 999, 999, 999, x, y);
+        }else{
+            int posibleEnemigo = rand.nextInt(4);
+            switch(posibleEnemigo){
+                case 0:
+                    enemigos[i] = new Enemigo("Goblin", 10, 2, 2, x, y);
+                    break;
+                case 1:
+                    enemigos[i] = new Enemigo("Orco", 30, 10, 5, x, y);
+                    break;
+                case 2:
+                    enemigos[i] = new Enemigo("Espectro", 20, 1, 1, x, y);
+                    break;
+                case 3:
+                    enemigos[i] = new Enemigo("Slime", 10, 5, 0, x, y);
+                    break;
+                default:
+                    enemigos[i] = new Enemigo("Goblin", 10, 2, 2, x, y);
+                    break;
+            }
+        }
+        habitacion[x][y] = 6; //Colocar enemigo. 
+        }
+    }
 
     //Método para colocar items aleatorios.
     private void colocarItemAleatorio(){
