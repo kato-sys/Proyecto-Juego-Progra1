@@ -10,7 +10,10 @@ public class Combate {
     private Scanner input = new Scanner(System.in);
 
     public void combate(Enemigo[] enemigos, Jugador jugador, int[][] habitacion, int index, Habitacion HabitacionGenerada) {
-        System.out.println("¡Inicio de combate!");
+        if (enemigos[index].getAtaque() == 999){
+          combateEstrellas();
+        }
+        System.out.println("¡"+enemigos[index].getNombre()+" ATACA!");
         int playerdecision;
 
         //Acá el enemigo utiliza un buff si lo tiene.
@@ -108,5 +111,24 @@ public class Combate {
         }
       }
     }
+
+public void combateEstrellas() {
+    try {
+        System.out.println("El suelo tiembla.");
+        Thread.sleep(2000); // Pause for 2 seconds
+        System.out.println("A lo lejos suena una trompeta. La séptima trompeta.");
+        Thread.sleep(2000); // Pause for 2 seconds
+        System.out.println("Desde más allá de toda realidad digital o real, despierta nuevamente.");
+        Thread.sleep(2000); // Pause for 2 seconds
+        System.out.println("Ha llegado... El Fin.");
+        Thread.sleep(2000); // Pause for 2 seconds
+    } catch (InterruptedException e) {
+        // Handle exception if the sleep is interrupted
+        System.out.println("Error: The sleep was interrupted.");
+        Thread.currentThread().interrupt(); // Restore interrupted status
+    }
+}
+
+    
     
 }
