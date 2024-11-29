@@ -66,8 +66,8 @@ public class Habitacion {
         for (int i = 0; i < numParedes; i++){
             int longitud = rand.nextInt(4) + 2; //Aquí se define la longitud d elas paredes, que puede ser de 2 a 5.
             boolean horizontal = rand.nextBoolean(); //Para hacerlo más chiva aquí hago un boolean para definir si es horizontal o vertical. 
-            int x = rand.nextInt(filas - (horizontal ? 1 : longitud) - 2) + 1; 
-            int y = rand.nextInt(columnas - (horizontal ? longitud : 1) - 2) + 1; //Estas dos líneas definen la longitud de la fila. Básicamente es un operador ternario. Que si la pared es horizontal, restamos uno porque entonces la pared solo ocupa una fila. Y si es vertical pues le restamos la longitud. Y luego le sumamos uno para asegurarnos de que la pared no este al borde de la habitacion. 
+            int x = rand.nextInt(filas - (horizontal ? 1 : longitud) - 4) + 2; 
+            int y = rand.nextInt(columnas - (horizontal ? longitud : 1) - 4) + 2; //Estas dos líneas definen la longitud de la fila. Básicamente es un operador ternario. Que si la pared es horizontal, restamos uno porque entonces la pared solo ocupa una fila. Y si es vertical pues le restamos la longitud. Y luego le sumamos uno para asegurarnos de que la pared no este al borde de la habitacion. 
             for (int j = 0; j < longitud; j++){
                 if(habitacion[x][y] == 0){
                     habitacion[x][y] = 1;
@@ -220,29 +220,30 @@ public void colocarJugador(int direction) {
     }
 
     // If the new position is the door, adjust to an empty adjacent space
-    if (habitacion[x][y] == (direction + 3)) {
-        int newX = x, newY = y;
-        boolean found = false;
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
-        for (int i = 0; i < 4; i++) {
-            newX = x + dx[i];
-            newY = y + dy[i];
-            if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
-                x = newX;
-                y = newY;
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            // If no adjacent space found, place randomly within bounds but not on walls
-            do {
-                x = rand.nextInt(filas - 2) + 1;
-                y = rand.nextInt(columnas - 2) + 1;
-            } while (habitacion[x][y] != 0);
+    if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { // Si es una puerta
+    // Busca una celda adyacente vacía
+    boolean found = false;
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, -1, 1};
+    for (int i = 0; i < 4; i++) {
+        int newX = x + dx[i];
+        int newY = y + dy[i];
+        if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
+            x = newX;
+            y = newY;
+            found = true;
+            break;
         }
     }
+    if (!found) {
+        // Si no encuentra una celda vacía adyacente, coloca al jugador en un lugar aleatorio válido
+        do {
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+        } while (habitacion[x][y] != 0);
+    }
+}
+
 
     // Place the player if the position is valid
     if (habitacion[x][y] == 0) {

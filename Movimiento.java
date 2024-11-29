@@ -34,7 +34,8 @@ public class Movimiento {
                 }
             }
         }
-
+        jugador.ultimaPosicionJugadorF = pPosF;
+        jugador.ultimaPosicionJugadorC = pPosC;
         int destinationF = pPosF;
         int destinationC = pPosC;
         boolean canGo = true;
@@ -68,7 +69,7 @@ public class Movimiento {
             System.out.println("Movimiento fuera de los límites. Intente de nuevo.");
             continue;
         }
-
+        
         switch (habitacionMatriz[destinationF][destinationC]) {
             case 1: // Pared
                 System.out.println("No puede avanzar más porque hay una pared.");
@@ -133,7 +134,7 @@ public class Movimiento {
         }
     }
 
-    private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, Habitacion HabitacionGenerada) {
+private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, Habitacion HabitacionGenerada) {
     for (Enemigo enemigo : HabitacionGenerada.enemigos) {
         if (enemigo != null && enemigo.getVida() > 0) {
             int enemigoF = enemigo.getPosFila();
@@ -166,10 +167,30 @@ public class Movimiento {
                 // Actualizar posición del enemigo
                 enemigo.setPosFila(nuevaF);
                 enemigo.setPosColumna(nuevaC);
+
+                // Verificar la nueva casilla
+                verificarCasillaEnemigo(habitacion, nuevaF, nuevaC, enemigo);
             }
         }
     }
 }
+private void verificarCasillaEnemigo(int[][] habitacion, int fila, int columna, Enemigo enemigo) {
+    switch (habitacion[fila][columna]) {
+        case 4: // Ítem
+            Item item = enemigo.getInventario().recogerGenerarItem();
+            System.out.println(enemigo.getNombre() + " recogió el ítem: " + item.getNombre());
+            habitacion[fila][columna] = 0; // Limpiar la casilla
+            break;
+        case 7: // Debuff
+            enemigo.activarDebuff();
+            System.out.println(enemigo.getNombre() + " ha activado un debuff.");
+            break;
+        default:
+            // No pasa nada si la casilla está vacía o no tiene interacción
+            break;
+    }
+}
+
 
 
 

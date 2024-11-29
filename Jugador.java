@@ -6,6 +6,8 @@ public class Jugador {
     int jugadorVida;
     int jugadorAtaque;
     int defensa;
+    int ultimaPosicionJugadorF;
+    int ultimaPosicionJugadorC;
     private Scanner myScanner = new Scanner(System.in);
     public Inventario inventario; // inventario
     private boolean tieneDebuff; // status debuff
@@ -19,6 +21,13 @@ public class Jugador {
         this.inventario = new Inventario();
         this.tieneDebuff = false;
         this.callMovimiento = new Movimiento();
+    }
+
+    public int getUltimaPosicionJugadorF(){
+        return ultimaPosicionJugadorF;
+    }
+        public int getUltimaPosicionJugadorC(){
+        return ultimaPosicionJugadorC;
     }
 
     public String getNombre() { 
