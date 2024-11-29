@@ -16,7 +16,7 @@ public class Habitacion {
         columnas = rand.nextInt(9) + 8;
         this.vecinos = new Habitacion[4];
         this.habitacion = new int[filas][columnas];
-        enemigos = new Enemigo[4];
+        enemigos = new Enemigo[5];
         LlenarHabitacion();
     }
 
@@ -61,21 +61,45 @@ public class Habitacion {
             }
         }
         
-        //Aquí voy a tratar de generar las paredes internas aleatorias. Son de 2 a 5 de longitud, sin cruzarse. 
-        int numParedes = rand.nextInt(4) + 2; //Acá se define el número de paredes dentro de una habitación, según las instrucciones pueden ser de 2 a 5. 
-        for (int i = 0; i < numParedes; i++){
-            int longitud = rand.nextInt(4) + 2; //Aquí se define la longitud d elas paredes, que puede ser de 2 a 5.
-            boolean horizontal = rand.nextBoolean(); //Para hacerlo más chiva aquí hago un boolean para definir si es horizontal o vertical. 
-            int x = rand.nextInt(filas - (horizontal ? 1 : longitud) - 4) + 2; 
-            int y = rand.nextInt(columnas - (horizontal ? longitud : 1) - 4) + 2; //Estas dos líneas definen la longitud de la fila. Básicamente es un operador ternario. Que si la pared es horizontal, restamos uno porque entonces la pared solo ocupa una fila. Y si es vertical pues le restamos la longitud. Y luego le sumamos uno para asegurarnos de que la pared no este al borde de la habitacion. 
-            for (int j = 0; j < longitud; j++){
-                if(habitacion[x][y] == 0){
-                    habitacion[x][y] = 1;
-                    if(horizontal) y++;
-                    else x++;
-                }else break; //Esto es para prevenir errores... ;-;
-            } 
+        // Aquí voy a tratar de generar las paredes internas aleatorias. Son de 2 a 5 de longitud, sin cruzarse.
+        int numParedes = rand.nextInt(4) + 2; // Número de paredes dentro de la habitación.
+        for (int i = 0; i < numParedes; i++) {
+            int longitud = rand.nextInt(4) + 2; // Longitud de las paredes.
+            boolean horizontal = rand.nextBoolean(); // Horizontal o vertical.
+            int x, y;
+
+            // Asegurar que la pared se genera lejos de puertas y bordes.
+            boolean posicionValida;
+            do {
+                posicionValida = true;
+                x = rand.nextInt(filas - (horizontal ? 1 : longitud) - 2) + 1;
+                y = rand.nextInt(columnas - (horizontal ? longitud : 1) - 2) + 1;
+
+                // Verificar que la pared no bloquee puertas o esté demasiado cerca.
+                for (int j = 0; j < longitud; j++) {
+                    int nuevoX = x + (horizontal ? 0 : j);
+                    int nuevoY = y + (horizontal ? j : 0);
+            
+                    if (habitacion[nuevoX][nuevoY] != 0 || // Celda ocupada.
+                        (nuevoX == 0 || nuevoX == filas - 1 || nuevoY == 0 || nuevoY == columnas - 1) || // Cerca de bordes.
+                        (Math.abs(nuevoX - 0) < 2 && habitacion[0][nuevoY] == 3) || // Cerca de puerta norte.
+                        (Math.abs(nuevoX - (filas - 1)) < 2 && habitacion[filas - 1][nuevoY] == 8) || // Cerca de puerta sur.
+                        (Math.abs(nuevoY - (columnas - 1)) < 2 && habitacion[nuevoX][columnas - 1] == 9) || // Cerca de puerta este.
+                        (Math.abs(nuevoY - 0) < 2 && habitacion[nuevoX][0] == 10)) { // Cerca de puerta oeste.
+                        posicionValida = false;
+                        break;
+                    }
+                }
+            } while (!posicionValida);
+
+            // Generar la pared.
+            for (int j = 0; j < longitud; j++) {
+                habitacion[x][y] = 1;
+                if (horizontal) y++;
+                else x++;
+            }
         }
+
         
         //Puertas a los lados.
         //Puerta Norte (Arriba)
@@ -199,7 +223,6 @@ public void colocarJugador(int direction) {
         if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
             x = newX;
             y = newY;
-            encontrada = true;
             break;
         }
     }
