@@ -172,7 +172,7 @@ public class Habitacion {
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
           }while (habitacion[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
-        if (rand.nextDouble() < 0.00001){
+        if (rand.nextDouble() < 0.0001){
           enemigos[i] = new Enemigo("[[ETERNO RESPLANDOR DEL FALLECIMIENTO DE INFINITAS ESTRELLAS]]", 999, 999, 999, x, y);
         }else{
             int posibleEnemigo = rand.nextInt(4);
