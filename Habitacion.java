@@ -10,6 +10,10 @@ public class Habitacion {
     boolean habitacionIncial;
     boolean habitacionJefe;
     boolean habitacionSalida;
+    int puertas = 1;
+    int cualPuerta;
+    misc prob = new misc();
+    boolean[] puertasPrevias = {true, true, true, true};
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -101,19 +105,47 @@ public class Habitacion {
         }
 
         
-        //Puertas a los lados.
-        //Puerta Norte (Arriba)
-        int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
-        habitacion[0][puertaNorteCol] = 3;
-        //Puerta Sur (Abajo)
-        int puertaSurCol = rand.nextInt(columnas - 2) + 1;
-        habitacion[filas - 1][puertaSurCol] = 8;
-        //Puerta Este (Derecha)
-        int puertaEsteFila = rand.nextInt(filas - 2) + 1;
-        habitacion[puertaEsteFila][columnas - 1] = 9;
-        //Puerta Oeste (Izquierda)
-        int puertaOesteFila = rand.nextInt(filas - 2) + 1;
-        habitacion[puertaOesteFila][0] = 10;
+        //Cantidad de puertas.
+        if(prob.probabilidad(60)) puertas += 1;
+        if(prob.probabilidad(40)) puertas += 1;
+        if(prob.probabilidad(20)) puertas += 1;
+        while(puertas > 0){
+            cualPuerta = rand.nextInt(4);
+            switch (cualPuerta) {
+                case 0: //Puerta Norte (Arriba)
+                    if(puertasPrevias[0]){
+                        int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
+                        habitacion[0][puertaNorteCol] = 3;
+                        puertasPrevias[0] = false;
+                        puertas -= 1;
+                    }
+                    break;
+                case 1: //Puerta Sur (Abajo)
+                    if(puertasPrevias[1]){
+                        int puertaSurCol = rand.nextInt(columnas - 2) + 1;
+                        habitacion[filas - 1][puertaSurCol] = 8;
+                        puertasPrevias[1] = false;
+                        puertas -= 1;
+                    }
+                    break;
+                case 2: //Puerta Este (Derecha)
+                    if(puertasPrevias[2]){
+                        int puertaEsteFila = rand.nextInt(filas - 2) + 1;
+                        habitacion[puertaEsteFila][columnas - 1] = 9;
+                        puertasPrevias[2] = false;
+                        puertas -= 1;
+                    }
+                    break;
+                case 3: //Puerta Oeste (Izquierda)
+                    if(puertasPrevias[3]){
+                        int puertaOesteFila = rand.nextInt(filas - 2) + 1;
+                        habitacion[puertaOesteFila][0] = 10;
+                        puertasPrevias[3] = false;
+                        puertas -= 1;
+                    }
+                    break;
+            }
+        }
 
         // Aquí se van a generar los enemigos según probabilidad.
         double probEnemigos = rand.nextDouble();
