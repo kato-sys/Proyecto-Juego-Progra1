@@ -77,8 +77,8 @@ public class Movimiento {
                 break;
             case 3: // Puerta Norte
                 canGo = false;
+                habitacion.deDondeViene = 1;
                 habitacion = mazmorra.irSiguiente(0);
-                canGo = false;
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().recogerGenerarItem();
@@ -95,14 +95,17 @@ public class Movimiento {
                 break;
             case 8: // Puerta Sur
                 canGo = false;
+                habitacion.deDondeViene = 2;
                 habitacion = mazmorra.irSiguiente(1);
                 break;
             case 9: // Puerta Este
                 canGo = false;
+                habitacion.deDondeViene = 3;
                 habitacion = mazmorra.irSiguiente(2);
                 break;
             case 10: // Puerta Oeste
                 canGo = false;
+                habitacion.deDondeViene = 4;
                 habitacion = mazmorra.irSiguiente(3);
                 break;
             default:

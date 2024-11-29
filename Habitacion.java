@@ -10,6 +10,7 @@ public class Habitacion {
     boolean habitacionIncial;
     boolean habitacionJefe;
     boolean habitacionSalida;
+    int deDondeViene = 0; // 0 si es el primer cuarto, 1 para norte, 2 para sur, 3 para este, 4 para oeste
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -202,12 +203,38 @@ public class Habitacion {
     }
 
     public void colocarJugadorHabitacionBase(){
-        int x,y;
-        do{
-          x = rand.nextInt(filas - 2) + 1;
-          y = rand.nextInt(columnas - 2) + 1;
-        } while(habitacion[x][y] != 0);
-        habitacion[x][y] = 2;
+        if(habitacionIncial)
+        {
+            int x,y;
+            do{
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+            } while(habitacion[x][y] != 0);
+            habitacion[x][y] = 2;
+        }
+        else
+        {
+            switch(deDondeViene)
+            {
+                case 1: //viene de la puerta norte, entonces debe aparecer a la par de la puerta sur
+                    for(int c = 0; c < habitacion[habitacion.length-1].length;c++)
+                    {
+                        if(habitacion[c][habitacion.length-1]==)
+                        {
+                            habitacion[c][habitacion.length-2] = 2;
+                        }
+                    }
+                    break;
+                case 2: //viene de la puerta sur, entonces debe aparecer a la par de la puerta norte
+                    break;
+                case 3: //viene de la puerta este, entonces debe aparecer a la par de la puerta oeste
+                    break;
+                case 4: //viene de la puerta oeste, entonces debe aparecer a la par de la puerta este
+                    break;
+                default:
+                    System.out.println("Algo salio mal :(");
+            }
+        }
       }
 
 public void colocarJugador(int direction) {
