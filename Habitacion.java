@@ -188,40 +188,9 @@ public class Habitacion {
 
 public void colocarJugador(int direction) {
     int x = 0, y = 0;
-    boolean doorFound = false;
-
-    // Find the door position
-    for (int i = 0; i < filas; i++) {
-        for (int j = 0; j < columnas; j++) {
-            if (habitacion[i][j] == (direction + 3)) {
-                x = i;
-                y = j;
-                doorFound = true;
-                break;
-            }
-        }
-        if (doorFound) break;
-    }
-
-    // Mover al jugador adyacente a la puerta.
-    switch (direction) {
-        case 0: // Norte
-            x = Math.min(x + 1, filas - 1);
-            break;
-        case 1: // Sur
-            x = Math.max(x - 1, 0);
-            break;
-        case 2: // Este
-            y = Math.max(y - 1, 0);
-            break;
-        case 3: // Oeste
-            y = Math.min(y + 1, columnas - 1);
-            break;
-    }
-
     if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { 
     // Busca una celda adyacente vacía
-    boolean found = false;
+    boolean encontrada = false;
     int[] dx = {-1, 1, 0, 0};
     int[] dy = {0, 0, -1, 1};
     for (int i = 0; i < 4; i++) {
@@ -230,11 +199,11 @@ public void colocarJugador(int direction) {
         if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
             x = newX;
             y = newY;
-            found = true;
+            encontrada = true;
             break;
         }
     }
-    if (!found) {
+    if (!encontrada) {
         // Si no encuentra una celda vacía adyacente, coloca al jugador en un lugar aleatorio válido
         do {
             x = rand.nextInt(filas - 2) + 1;
