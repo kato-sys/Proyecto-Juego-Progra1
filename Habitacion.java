@@ -10,7 +10,6 @@ public class Habitacion {
     boolean habitacionIncial;
     boolean habitacionJefe;
     boolean habitacionSalida;
-    int deDondeViene = 0; // 0 si es el primer cuarto, 1 para norte, 2 para sur, 3 para este, 4 para oeste
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -223,79 +222,69 @@ public class Habitacion {
     }
 
     public void colocarJugadorHabitacionBase(){
-        if(habitacionIncial)
-        {
             int x,y;
             do{
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
             } while(habitacion[x][y] != 0);
-            habitacion[x][y] = 2;
-        }
-        else
+            habitacion[x][y] = 2;    
+    }
+
+    public void colocarJugador(int dir) {
+        switch(dir)
         {
-            switch(deDondeViene)
-            {
-                case 1: //viene de la puerta norte, entonces debe aparecer a la par de la puerta sur
-                    for(int c = 0; c < habitacion[habitacion.length-1].length;c++)
+            case 1: //puerta sur
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
                     {
-                        if(habitacion[c][habitacion.length-1]==)
+                        if(habitacion[f][c] == 8)
                         {
-                            habitacion[c][habitacion.length-2] = 2;
+                            habitacion[f-1][c] = 2;
                         }
                     }
-                    break;
-                case 2: //viene de la puerta sur, entonces debe aparecer a la par de la puerta norte
-                    break;
-                case 3: //viene de la puerta este, entonces debe aparecer a la par de la puerta oeste
-                    break;
-                case 4: //viene de la puerta oeste, entonces debe aparecer a la par de la puerta este
-                    break;
-                default:
-                    System.out.println("Algo salio mal :(");
+                }
+                break;
+            case 0: //viene de la puerta sur, entonces debe aparecer a la par de la puerta norte
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
+                    {
+                        if(habitacion[f][c] == 3)
+                        {
+                            habitacion[1][c] = 2;
+                        }
+                    }
+                }                
+                break;
+            case 3: //viene de la puerta este, entonces debe aparecer a la par de la puerta oeste
+            for(int f = 0; f < habitacion.length;f++)
+            {
+                for(int c = 0; c < habitacion[f].length;c++)
+                {
+                    if(habitacion[f][c] == 10)
+                    {
+                        habitacion[f][1] = 2;
+                    }
+                }
             }
-        }
-      }
-
-public void colocarJugador(int direction) {
-    int x = 0, y = 0;
-    if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { 
-    // Busca una celda adyacente vacía
-    boolean encontrada = false;
-    int[] dx = {-1, 1, 0, 0};
-    int[] dy = {0, 0, -1, 1};
-    for (int i = 0; i < 4; i++) {
-        int newX = x + dx[i];
-        int newY = y + dy[i];
-        if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
-            x = newX;
-            y = newY;
-            break;
+                break;
+            case 2: //viene de la puerta oeste, entonces debe aparecer a la par de la puerta este
+            for(int f = 0; f < habitacion.length;f++)
+            {
+                for(int c = 0; c < habitacion[f].length;c++)
+                {
+                    if(habitacion[f][c] == 9)
+                    {
+                        habitacion[f][c-1] = 2;
+                    }
+                }
+            }                break;
+            default:
+                System.out.println("Algo salio mal :(");
+                break;
         }
     }
-    if (!encontrada) {
-        // Si no encuentra una celda vacía adyacente, coloca al jugador en un lugar aleatorio válido
-        do {
-            x = rand.nextInt(filas - 2) + 1;
-            y = rand.nextInt(columnas - 2) + 1;
-        } while (habitacion[x][y] != 0);
-    }
-}
-
-
-    // Colocar el jugador si la posición es válida.
-    if (habitacion[x][y] == 0) {
-        habitacion[x][y] = 2; 
-    } else {
-        // Si ya hay algo en ese lugar, ponerlo en un lugar aleatorio.
-        do {
-            x = rand.nextInt(filas - 2) + 1;
-            y = rand.nextInt(columnas - 2) + 1;
-        } while (habitacion[x][y] != 0);
-        habitacion[x][y] = 2;
-    }
-}
-
 
 
       private void colocarDebuffs(int cantidad) {
