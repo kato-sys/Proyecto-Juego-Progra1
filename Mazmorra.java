@@ -1,5 +1,5 @@
 public class Mazmorra {
-    Habitacion habitacionOriginal; // Starting room
+    Habitacion habitacionOriginal; 
     Habitacion habitacionActual;
 
     public Mazmorra() {
@@ -9,7 +9,7 @@ public class Mazmorra {
         habitacionOriginal.colocarJugadorHabitacionBase();
     }
 
-    // Generate a new room when the player goes through a door
+    // Método de creación de una posición. 
     private Habitacion crearHabitacion(int direction) {
         Habitacion habitacionNueva = new Habitacion();
         habitacionActual.connectar(habitacionNueva, direction);
@@ -27,11 +27,11 @@ public class Mazmorra {
             }
         }
 
-        // Track player's current position
+        // Encontrar la posición actual del jugador
         int playerX = -1, playerY = -1;
         for (int i = 0; i < habitacionActual.habitacion.length; i++) {
             for (int j = 0; j < habitacionActual.habitacion[0].length; j++) {
-                if (habitacionActual.habitacion[i][j] == 2) { // Assuming '2' represents the player
+                if (habitacionActual.habitacion[i][j] == 2) {
                     playerX = i;
                     playerY = j;
                     break;
@@ -78,7 +78,7 @@ private int oppositeDirection(int direction) {
         case 1: return 0; // Sur
         case 2: return 3; // Este
         case 3: return 2; // Oeste
-        default: return -1; // Invalid direction
+        default: return -1; 
     }
 }
 

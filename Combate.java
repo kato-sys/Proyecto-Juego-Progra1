@@ -1,6 +1,10 @@
+//Imports de librerías necesarias.
 import java.util.Random;
 import java.util.Scanner;
+
+
 public class Combate {
+    //Definiciones de clases
     private misc misc = new misc();
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
@@ -17,6 +21,7 @@ public class Combate {
             if(enemigos[index].getVida() < enemigos[index].getVidaInicial() * 0.5){
               usarItemsVidaEnemigo(enemigos[index],jugador);
             }
+            //Aquí el jugador se le da la elección de actuar. Con dos opciones, 0 para uitilizar un item. Y 1 para atacar.
             System.out.println("Que desea hacer? [0] para usar item, [1] para atacar.");
             playerdecision = input.nextInt();
             switch (playerdecision) {
@@ -25,12 +30,11 @@ public class Combate {
                     if (jugador.getVida() <= 0) {
                         System.out.println(jugador.getNombre() + " ha sido derrotado.");
                     }
-
                     jugador.usarItem(jugador, enemigos[index]);
                     break;
-            
                 case 1:
                     jugador.atacar(enemigos[index]);
+                    //Acá cada vez que el jugador ataca, se revisa la vida del enemigo. Si es cero, es derrotado.
                     if (enemigos[index].getVida() == 0) {
                         System.out.println(enemigos[index].getNombre() + " ha sido derrotado.");
                         //Acá el enemigo suelta un item si tiene, y si es derrotado. 
@@ -44,7 +48,7 @@ public class Combate {
                         combateSigue = false;
                         break;      
                     }
-
+                    // Si el enemigo sigue vivo, ataca al jugador.
                     enemigos[index].atacar(jugador);
                     if (jugador.getVida() == 0) {
                         System.out.println(jugador.getNombre() + " ha sido derrotado.");

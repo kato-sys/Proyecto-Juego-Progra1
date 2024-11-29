@@ -1,4 +1,5 @@
 public class Enemigo {
+    //Variables del enemigo.
     private String nombreEnemigo;
     private int vidaEnemigo;
     private int ataqueEnemigo;
@@ -10,7 +11,7 @@ public class Enemigo {
     private int posFila;  // Agregamos la posición en la fila
     private int posColumna; 
     
-
+    //Método constructor de un enemigo.
     public Enemigo(String nombre, int vida, int ataque, int defensa, int posFila, int posColumna) {
         this.nombreEnemigo = nombre;
         this.vidaEnemigo = vida;
@@ -24,31 +25,15 @@ public class Enemigo {
         this.posColumna = posColumna; // Asignamos la posición en j
     }
 
-        // Métodos getters para obtener la posición del enemigo
+    // Métodos getters 
+    //Posición enemigo.
     public int getPosFila() {
         return posFila;
     }
-
     public int getPosColumna() {
         return posColumna;
     }
-
-    // Métodos setters para cambiar la posición del enemigo (si es necesario)
-    public void setPosFila(int nuevaPosFila) {
-        this.posFila = nuevaPosFila;
-    }
-
-    public void setPosColumna(int nuevaPosColumna) {
-        this.posColumna = nuevaPosColumna;
-    }
-
-    public void setVida(int nuevaVida){
-      this.vidaEnemigo = nuevaVida;
-    }
-    public void setAtaque(int nuevoAtaque){
-      this.ataqueEnemigo = nuevoAtaque;
-    }
-
+    //Stats e Inventario del Enemigo.
     public int getVidaInicial(){
       return enemigoVidaInicial;
     }
@@ -67,10 +52,25 @@ public class Enemigo {
     public int getDefensa() { 
         return defensaEnemigo; 
     }
-
+    // Métodos Setters
+    //Posición.
+    public void setPosFila(int nuevaPosFila) {
+        this.posFila = nuevaPosFila;
+    }
+    public void setPosColumna(int nuevaPosColumna) {
+        this.posColumna = nuevaPosColumna;
+    }
+    public void setVida(int nuevaVida){
+      this.vidaEnemigo = nuevaVida;
+    }
+    public void setAtaque(int nuevoAtaque){
+      this.ataqueEnemigo = nuevoAtaque;
+    }
     public void setDefensa(int nuevaDefensa){
       this.defensaEnemigo = nuevaDefensa;
     }
+
+
     public void recibirDaño(int daño) {
         int dañoFinal = daño - defensaEnemigo; // reduce daño con su defensa
         if (dañoFinal < 0) dañoFinal = 0;

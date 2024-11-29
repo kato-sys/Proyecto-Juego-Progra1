@@ -203,24 +203,23 @@ public void colocarJugador(int direction) {
         if (doorFound) break;
     }
 
-    // Move the player forward from the door, with boundary checks
+    // Mover al jugador adyacente a la puerta.
     switch (direction) {
-        case 0: // Entering from the Norte (North)
+        case 0: // Norte
             x = Math.min(x + 1, filas - 1);
             break;
-        case 1: // Entering from the Sur (South)
+        case 1: // Sur
             x = Math.max(x - 1, 0);
             break;
-        case 2: // Entering from the Este (East)
+        case 2: // Este
             y = Math.max(y - 1, 0);
             break;
-        case 3: // Entering from the Oeste (West)
+        case 3: // Oeste
             y = Math.min(y + 1, columnas - 1);
             break;
     }
 
-    // If the new position is the door, adjust to an empty adjacent space
-    if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { // Si es una puerta
+    if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { 
     // Busca una celda adyacente vacía
     boolean found = false;
     int[] dx = {-1, 1, 0, 0};
@@ -245,11 +244,11 @@ public void colocarJugador(int direction) {
 }
 
 
-    // Place the player if the position is valid
+    // Colocar el jugador si la posición es válida.
     if (habitacion[x][y] == 0) {
-        habitacion[x][y] = 2; // Assuming '2' represents the player
+        habitacion[x][y] = 2; 
     } else {
-        // If the spot is taken, find a nearby valid spot
+        // Si ya hay algo en ese lugar, ponerlo en un lugar aleatorio.
         do {
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
