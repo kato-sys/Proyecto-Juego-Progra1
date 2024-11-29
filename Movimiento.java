@@ -76,6 +76,7 @@ public class Movimiento {
                 canGo = false;
                 break;
             case 3: // Puerta Norte
+                canGo = false;
                 habitacion = mazmorra.irSiguiente(0);
                 break;
             case 4:  // Item
@@ -92,12 +93,15 @@ public class Movimiento {
                 jugador.activarDebuff(); // Debuff
                 break;
             case 8: // Puerta Sur
+                canGo = false;
                 habitacion = mazmorra.irSiguiente(1);
                 break;
             case 9: // Puerta Este
+                canGo = false;
                 habitacion = mazmorra.irSiguiente(2);
                 break;
             case 10: // Puerta Oeste
+                canGo = false;
                 habitacion = mazmorra.irSiguiente(3);
                 break;
             default:
