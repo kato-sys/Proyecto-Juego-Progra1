@@ -67,7 +67,6 @@ public class Mazmorra {
         int opposite = oppositeDirection(direction);
         habitacionActual = habitacionActual.vecinos[direction];
         habitacionActual.colocarJugador(opposite); // Place player based on entry
-
         System.out.println("Has pasado a otra habitacion");
         return habitacionActual;
     }
