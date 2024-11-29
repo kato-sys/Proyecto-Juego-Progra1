@@ -42,6 +42,14 @@ public class Movimiento {
 
         System.out.println("Ingrese 'w' (arriba), 'a' (izquierda), 's' (abajo) o 'd' (derecha): ");
         char movimiento = myScanner.next().charAt(0);
+        if (movimiento == 'm'){
+            //Imprimir el mapa de la mazmorra.
+            mazmorra.ImprimirMapa();
+        }
+        if (movimiento == 'e'){
+            System.out.println("Salida de emergencias activada. Has salido del juego.");
+            gameOver = true;
+        }
         switch (movimiento) {
             case 'w':
                 destinationF = pPosF - 1;
@@ -55,13 +63,8 @@ public class Movimiento {
             case 'd':
                 destinationC = pPosC + 1;
                 break;
-            case 'e':
-                System.out.println("Salida de emergencias activada. Has salido del juego.");
-                gameOver = true;
-                break;
-
             default:
-                System.out.println("Opción inválida. Intente de nuevo.");
+                System.out.println("No te moviste.");
                 continue; // Salta al próximo ciclo del bucle
         }
 
