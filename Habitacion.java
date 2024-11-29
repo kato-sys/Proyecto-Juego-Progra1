@@ -10,12 +10,6 @@ public class Habitacion {
     boolean habitacionIncial;
     boolean habitacionJefe;
     boolean habitacionSalida;
-<<<<<<< HEAD
-=======
-    int deDondeViene = 0; // 0 si es el primer cuarto, 1 para norte, 2 para sur, 3 para este, 4 para oeste
-    private static int contadorHabitaciones = 0;
-    int numeroHabitacion;
->>>>>>> 92719e6cdec4fd045ae1de50e9639ef478d43fcf
     int puertas = 1;
     int cualPuerta;
     misc prob = new misc();
@@ -27,7 +21,6 @@ public class Habitacion {
         this.vecinos = new Habitacion[4];
         this.habitacion = new int[filas][columnas];
         enemigos = new Enemigo[5];
-        this.numeroHabitacion = contadorHabitaciones++; // Incrementa el contador y asigna el número
         LlenarHabitacion();
     }
 
@@ -52,10 +45,6 @@ public class Habitacion {
     }
     public void setHabitacionSalida(boolean esSalida){
         this.habitacionSalida = esSalida;
-    }
-
-    public int getNumeroHabitacion() {
-        return numeroHabitacion; // Devuelve el número único de esta habitación
     }
 
     public void LlenarHabitacion() {
@@ -214,7 +203,7 @@ public class Habitacion {
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
           }while (habitacion[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
-        if (rand.nextDouble() < 0.0001){
+        if (rand.nextDouble() < 0.00001){
           enemigos[i] = new Enemigo("[[ETERNO RESPLANDOR DEL FALLECIMIENTO DE INFINITAS ESTRELLAS]]", 999, 999, 999, x, y);
         }else{
             int posibleEnemigo = rand.nextInt(4);
@@ -265,80 +254,13 @@ public class Habitacion {
     }
 
     public void colocarJugadorHabitacionBase(){
-            int x,y;
-            do{
-            x = rand.nextInt(filas - 2) + 1;
-            y = rand.nextInt(columnas - 2) + 1;
-            } while(habitacion[x][y] != 0);
-            habitacion[x][y] = 2;    
-    }
-
-    public void colocarJugador(int dir) {
-        switch(dir)
-        {
-<<<<<<< HEAD
-            case 1: //puerta sur
-                for(int f = 0; f < habitacion.length;f++)
-                {
-                    for(int c = 0; c < habitacion[f].length;c++)
-                    {
-                        if(habitacion[f][c] == 8)
-=======
-            switch(deDondeViene)
-            {
-                case 1: //viene de la puerta norte, entonces debe aparecer a la par de la puerta sur
-                    for(int c = 0; c < habitacion[habitacion.length-1].length;c++){
-                        if(habitacion[c][habitacion.length-1]== 0)
->>>>>>> 92719e6cdec4fd045ae1de50e9639ef478d43fcf
-                        {
-                            habitacion[f-1][c] = 2;
-                        }
-                    }
-                }
-                break;
-            case 0: //viene de la puerta sur, entonces debe aparecer a la par de la puerta norte
-                for(int f = 0; f < habitacion.length;f++)
-                {
-                    for(int c = 0; c < habitacion[f].length;c++)
-                    {
-                        if(habitacion[f][c] == 3)
-                        {
-                            habitacion[1][c] = 2;
-                        }
-                    }
-                }                
-                break;
-            case 3: //viene de la puerta este, entonces debe aparecer a la par de la puerta oeste
-            for(int f = 0; f < habitacion.length;f++)
-            {
-                for(int c = 0; c < habitacion[f].length;c++)
-                {
-                    if(habitacion[f][c] == 10)
-                    {
-                        habitacion[f][1] = 2;
-                    }
-                }
-            }
-<<<<<<< HEAD
-                break;
-            case 2: //viene de la puerta oeste, entonces debe aparecer a la par de la puerta este
-            for(int f = 0; f < habitacion.length;f++)
-            {
-                for(int c = 0; c < habitacion[f].length;c++)
-                {
-                    if(habitacion[f][c] == 9)
-                    {
-                        habitacion[f][c-1] = 2;
-                    }
-                }
-            }                break;
-            default:
-                System.out.println("Algo salio mal :(");
-                break;
-=======
-        }
+        int x,y;
+        do{
+          x = rand.nextInt(filas - 2) + 1;
+          y = rand.nextInt(columnas - 2) + 1;
+        } while(habitacion[x][y] != 0);
+        habitacion[x][y] = 2;
       }
-
 
 public void colocarJugador(int direction) {
     int x = 0, y = 0;
@@ -354,9 +276,31 @@ public void colocarJugador(int direction) {
             x = newX;
             y = newY;
             break;
->>>>>>> 92719e6cdec4fd045ae1de50e9639ef478d43fcf
         }
     }
+    if (!encontrada) {
+        // Si no encuentra una celda vacía adyacente, coloca al jugador en un lugar aleatorio válido
+        do {
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+        } while (habitacion[x][y] != 0);
+    }
+}
+
+
+    // Colocar el jugador si la posición es válida.
+    if (habitacion[x][y] == 0) {
+        habitacion[x][y] = 2; 
+    } else {
+        // Si ya hay algo en ese lugar, ponerlo en un lugar aleatorio.
+        do {
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+        } while (habitacion[x][y] != 0);
+        habitacion[x][y] = 2;
+    }
+}
+
 
 
       private void colocarDebuffs(int cantidad) {
