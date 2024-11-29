@@ -11,6 +11,8 @@ public class Habitacion {
     boolean habitacionJefe;
     boolean habitacionSalida;
     int deDondeViene = 0; // 0 si es el primer cuarto, 1 para norte, 2 para sur, 3 para este, 4 para oeste
+    private static int contadorHabitaciones = 0;
+    int numeroHabitacion;
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -18,6 +20,7 @@ public class Habitacion {
         this.vecinos = new Habitacion[4];
         this.habitacion = new int[filas][columnas];
         enemigos = new Enemigo[5];
+        this.numeroHabitacion = contadorHabitaciones++; // Incrementa el contador y asigna el número
         LlenarHabitacion();
     }
 
@@ -42,6 +45,10 @@ public class Habitacion {
     }
     public void setHabitacionSalida(boolean esSalida){
         this.habitacionSalida = esSalida;
+    }
+
+    public int getNumeroHabitacion() {
+        return numeroHabitacion; // Devuelve el número único de esta habitación
     }
 
     public void LlenarHabitacion() {
@@ -237,9 +244,8 @@ public class Habitacion {
             switch(deDondeViene)
             {
                 case 1: //viene de la puerta norte, entonces debe aparecer a la par de la puerta sur
-                    for(int c = 0; c < habitacion[habitacion.length-1].length;c++)
-                    {
-                        if(habitacion[c][habitacion.length-1]==)
+                    for(int c = 0; c < habitacion[habitacion.length-1].length;c++){
+                        if(habitacion[c][habitacion.length-1]== 0)
                         {
                             habitacion[c][habitacion.length-2] = 2;
                         }
@@ -256,6 +262,7 @@ public class Habitacion {
             }
         }
       }
+
 
 public void colocarJugador(int direction) {
     int x = 0, y = 0;
