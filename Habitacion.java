@@ -264,44 +264,59 @@ public class Habitacion {
       }
 
 
-public void colocarJugador(int direction) {
-    int x = 0, y = 0;
-    if (habitacion[x][y] >= 3 && habitacion[x][y] <= 10) { 
-    // Busca una celda adyacente vacía
-    boolean encontrada = false;
-    int[] dx = {-1, 1, 0, 0};
-    int[] dy = {0, 0, -1, 1};
-    for (int i = 0; i < 4; i++) {
-        int newX = x + dx[i];
-        int newY = y + dy[i];
-        if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
-            x = newX;
-            y = newY;
-            break;
+public void colocarJugador(int dir) {
+        switch(dir)
+        {
+            case 0: //puerta norte
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
+                    {
+                        if(habitacion[f][c] == 3)
+                        {
+                            habitacion[1][c] = 2;
+                        }
+                    }
+                }
+                break;
+            case 1: //puerta sur
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
+                    {
+                        if(habitacion[f][c] == 8)
+                        {
+                            habitacion[f-1][c] = 2;
+                        }
+                    }
+                }
+                break;
+            case 2: //puerta este
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
+                    {
+                        if(habitacion[f][c] == 9)
+                        {
+                            habitacion[1][c-1] = 2;
+                        }
+                    }
+                }
+                break;
+            case 3: //puerta oeste
+                for(int f = 0; f < habitacion.length;f++)
+                {
+                    for(int c = 0; c < habitacion[f].length;c++)
+                    {
+                        if(habitacion[f][c] == 10)
+                        {
+                            habitacion[f][1] = 2;
+                        }
+                    }
+                }
+                break;
         }
     }
-    if (!encontrada) {
-        // Si no encuentra una celda vacía adyacente, coloca al jugador en un lugar aleatorio válido
-        do {
-            x = rand.nextInt(filas - 2) + 1;
-            y = rand.nextInt(columnas - 2) + 1;
-        } while (habitacion[x][y] != 0);
-    }
-}
-
-
-    // Colocar el jugador si la posición es válida.
-    if (habitacion[x][y] == 0) {
-        habitacion[x][y] = 2; 
-    } else {
-        // Si ya hay algo en ese lugar, ponerlo en un lugar aleatorio.
-        do {
-            x = rand.nextInt(filas - 2) + 1;
-            y = rand.nextInt(columnas - 2) + 1;
-        } while (habitacion[x][y] != 0);
-        habitacion[x][y] = 2;
-    }
-}
 
 
 
