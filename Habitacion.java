@@ -7,6 +7,9 @@ public class Habitacion {
     int filas;
     int columnas;
     public Enemigo[] enemigos;
+    boolean habitacionIncial;
+    boolean habitacionJefe;
+    boolean habitacionSalida;
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -15,6 +18,29 @@ public class Habitacion {
         this.habitacion = new int[filas][columnas];
         enemigos = new Enemigo[4];
         LlenarHabitacion();
+    }
+
+    public boolean getHabitacionInicial(){
+        return habitacionIncial;
+    }
+    
+    public boolean getHabitacionJefe(){
+        return habitacionJefe;
+    }
+
+    public boolean getHabitacionSalida(){
+        return habitacionSalida;
+    }
+
+    public void setHabitacionInicial(boolean esInicial){
+        this.habitacionIncial = esInicial;
+    }
+
+    public void setHabitacionJefe(boolean esJefe){
+        this.habitacionJefe = esJefe;
+    }
+    public void setHabitacionSalida(boolean esSalida){
+        this.habitacionSalida = esSalida;
     }
 
     public void LlenarHabitacion() {
@@ -90,13 +116,28 @@ public class Habitacion {
         }
 
 
-        colocarJugador(); //Se me olvidó colocar al jugador. XDD
+         //Se me olvidó colocar al jugador. XDD
+         //Colocar el jugador aquí. 
+         if (habitacionIncial){
+            colocarJugadorHabitacionBase();
+         }
     }
 
     public void connectar(Habitacion nuevaHabitacion, int direction) {
         vecinos[direction] = nuevaHabitacion;
-        //other.vecinos[oppositeDirection(direction)] = this;
+        nuevaHabitacion.vecinos[direccionOpuesta(direction)] = this;
     }
+
+    public int direccionOpuesta(int direction) {
+        switch (direction) {
+            case 0: return 1; // Norte
+            case 1: return 0; // Sur
+            case 2: return 3; // Este
+            case 3: return 2; // Oeste
+            default: return -1; // Dirección Inválida
+        }
+    }
+
 
     //Método para colocar los enemigos.
     private void colocarEnemigos(int cantidad){
@@ -136,7 +177,7 @@ public class Habitacion {
             }
     }
 
-    private void colocarJugador(){
+    public void colocarJugadorHabitacionBase(){
         int x,y;
         do{
           x = rand.nextInt(filas - 2) + 1;
@@ -144,6 +185,79 @@ public class Habitacion {
         } while(habitacion[x][y] != 0);
         habitacion[x][y] = 2;
       }
+
+public void colocarJugador(int direction) {
+    int x = 0, y = 0;
+    boolean doorFound = false;
+
+    // Find the door position
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            if (habitacion[i][j] == (direction + 3)) {
+                x = i;
+                y = j;
+                doorFound = true;
+                break;
+            }
+        }
+        if (doorFound) break;
+    }
+
+    // Move the player forward from the door, with boundary checks
+    switch (direction) {
+        case 0: // Entering from the Norte (North)
+            x = Math.min(x + 1, filas - 1);
+            break;
+        case 1: // Entering from the Sur (South)
+            x = Math.max(x - 1, 0);
+            break;
+        case 2: // Entering from the Este (East)
+            y = Math.max(y - 1, 0);
+            break;
+        case 3: // Entering from the Oeste (West)
+            y = Math.min(y + 1, columnas - 1);
+            break;
+    }
+
+    // If the new position is the door, adjust to an empty adjacent space
+    if (habitacion[x][y] == (direction + 3)) {
+        int newX = x, newY = y;
+        boolean found = false;
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+        for (int i = 0; i < 4; i++) {
+            newX = x + dx[i];
+            newY = y + dy[i];
+            if (newX >= 0 && newX < filas && newY >= 0 && newY < columnas && habitacion[newX][newY] == 0) {
+                x = newX;
+                y = newY;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            // If no adjacent space found, place randomly within bounds but not on walls
+            do {
+                x = rand.nextInt(filas - 2) + 1;
+                y = rand.nextInt(columnas - 2) + 1;
+            } while (habitacion[x][y] != 0);
+        }
+    }
+
+    // Place the player if the position is valid
+    if (habitacion[x][y] == 0) {
+        habitacion[x][y] = 2; // Assuming '2' represents the player
+    } else {
+        // If the spot is taken, find a nearby valid spot
+        do {
+            x = rand.nextInt(filas - 2) + 1;
+            y = rand.nextInt(columnas - 2) + 1;
+        } while (habitacion[x][y] != 0);
+        habitacion[x][y] = 2;
+    }
+}
+
+
 
       private void colocarDebuffs(int cantidad) {
         for (int i = 0; i < cantidad; i++) {

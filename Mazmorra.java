@@ -5,6 +5,8 @@ public class Mazmorra {
     public Mazmorra() {
         habitacionOriginal = new Habitacion();
         habitacionActual = habitacionOriginal;
+        habitacionOriginal.setHabitacionInicial(true);
+        habitacionOriginal.colocarJugadorHabitacionBase();
     }
 
     // Generate a new room when the player goes through a door
@@ -14,17 +16,63 @@ public class Mazmorra {
         return habitacionNueva;
     }
 
-    // Move to a connected room or create a new one if it doesn't exist
-    public Habitacion irSiguiente(int direction) {
-        if (habitacionActual.vecinos[direction] == null) {
-            // Create a new room if no room exists in the given direction
-            habitacionActual.vecinos[direction] = crearHabitacion(direction);
+public Habitacion irSiguiente(int direction) {
+    // Track player's current position
+    int playerX = -1, playerY = -1;
+    for (int i = 0; i < habitacionActual.habitacion.length; i++) {
+        for (int j = 0; j < habitacionActual.habitacion[0].length; j++) {
+            if (habitacionActual.habitacion[i][j] == 2) { // Assuming '2' represents the player
+                playerX = i;
+                playerY = j;
+                break;
+            }
         }
-        habitacionActual = habitacionActual.vecinos[direction];
-        // Place player at the opposite door in the new room
-        System.out.println("Has pasado a otra habitacion");
-        return habitacionActual;
+        if (playerX != -1 && playerY != -1) break;
     }
+
+    // Replace the player with the door
+    if (playerX != -1 && playerY != -1) {
+        switch (direction) {
+            case 0: // Norte
+                habitacionActual.habitacion[playerX][playerY] = 3;
+                break;
+            case 1: // Sur
+                habitacionActual.habitacion[playerX][playerY] = 8;
+                break;
+            case 2: // Este
+                habitacionActual.habitacion[playerX][playerY] = 9;
+                break;
+            case 3: // Oeste
+                habitacionActual.habitacion[playerX][playerY] = 10;
+                break;
+        }
+    }
+
+    // Move to the next room
+    if (habitacionActual.vecinos[direction] == null) {
+        Habitacion nuevaHabitacion = crearHabitacion(direction);
+        habitacionActual.connectar(nuevaHabitacion, direction);
+    }
+
+    int opposite = oppositeDirection(direction);
+    habitacionActual = habitacionActual.vecinos[direction];
+    habitacionActual.colocarJugador(opposite); // Place player based on entry
+
+    System.out.println("Has pasado a otra habitacion");
+    return habitacionActual;
+}
+
+private int oppositeDirection(int direction) {
+    switch (direction) {
+        case 0: return 1; // Norte
+        case 1: return 0; // Sur
+        case 2: return 3; // Este
+        case 3: return 2; // Oeste
+        default: return -1; // Invalid direction
+    }
+}
+
+
 
     public void ImprimirHabitacion() {
         for (int[] fila : habitacionActual.habitacion) {

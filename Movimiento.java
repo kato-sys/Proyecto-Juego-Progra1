@@ -6,10 +6,8 @@ public class Movimiento {
     Combate callCombate = new Combate();
     Mazmorra mazmorra = new Mazmorra();
     boolean gameOver = false;
-    Habitacion habitacion = mazmorra.habitacionActual;
-    Enemigo[] enemigosEnCuarto = habitacion.enemigos;
-
     public void RecorridoHabitacion(Jugador jugador) {
+        Habitacion habitacion = mazmorra.habitacionActual;
     while (!gameOver) {
         int[][] habitacionMatriz = habitacion.habitacion;
         mazmorra.ImprimirHabitacion();
@@ -93,13 +91,13 @@ public class Movimiento {
                 jugador.activarDebuff(); // Debuff
                 break;
             case 8: // Puerta Sur
-            habitacion = mazmorra.irSiguiente(1);
+                habitacion = mazmorra.irSiguiente(1);
                 break;
             case 9: // Puerta Este
-            habitacion = mazmorra.irSiguiente(2);
+                habitacion = mazmorra.irSiguiente(2);
                 break;
             case 10: // Puerta Oeste
-            habitacion = mazmorra.irSiguiente(3);
+                habitacion = mazmorra.irSiguiente(3);
                 break;
             default:
                 // Si es otro número, permitimos el movimiento
