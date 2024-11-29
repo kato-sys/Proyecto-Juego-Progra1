@@ -2,22 +2,17 @@
 import java.util.Scanner;
 
 public class Movimiento {
-
     Scanner myScanner = new Scanner(System.in);
     Combate callCombate = new Combate();
     Mazmorra mazmorra = new Mazmorra();
     boolean gameOver = false;
-    GeneracionHabitacion HabitacionGenerada = new GeneracionHabitacion();
-    Enemigo[] enemigosEnCuarto = HabitacionGenerada.getEnemigos();
-
-    
-    Habitacion habitacionActual = HabitacionGenerada.getHabitacion();
+    Habitacion habitacion = mazmorra.habitacionActual;
+    Enemigo[] enemigosEnCuarto = habitacion.enemigos;
 
     public void RecorridoHabitacion(Jugador jugador) {
-    HabitacionGenerada.LlenarHabitacion();
     while (!gameOver) {
-        int[][] habitacion = habitacionActual.tamano();
-        HabitacionGenerada.ImprimirHabitacion();
+        int[][] habitacionMatriz = habitacion.habitacion;
+        mazmorra.ImprimirHabitacion();
         int pPosF = 0; // Posicion fila
         int pPosC = 0; // Posicion columna
 
@@ -33,9 +28,9 @@ public class Movimiento {
           continue;
         }
         // Se busca la posicion del jugador en el cuarto
-        for (int f = 0; f < habitacion.length; f++) {
-            for (int c = 0; c < habitacion[0].length; c++) {
-                if (habitacion[f][c] == 2) {
+        for (int f = 0; f < habitacionMatriz.length; f++) {
+            for (int c = 0; c < habitacionMatriz[0].length; c++) {
+                if (habitacionMatriz[f][c] == 2) {
                     pPosF = f;
                     pPosC = c;
                 }
@@ -71,40 +66,40 @@ public class Movimiento {
                 continue; // Salta al próximo ciclo del bucle
         }
 
-        if (destinationF < 0 || destinationF >= habitacion.length || destinationC < 0 || destinationC >= habitacion[0].length) {
+        if (destinationF < 0 || destinationF >= habitacionMatriz.length || destinationC < 0 || destinationC >= habitacionMatriz[0].length) {
             System.out.println("Movimiento fuera de los límites. Intente de nuevo.");
             continue;
         }
 
-        switch (habitacion[destinationF][destinationC]) {
+        switch (habitacionMatriz[destinationF][destinationC]) {
             case 1: // Pared
                 System.out.println("No puede avanzar más porque hay una pared.");
                 canGo = false;
                 break;
             case 3: // Puerta Norte
-                habitacionActual = mazmorra.irSiguiente("norte", habitacionActual.arriba);
+                habitacion = mazmorra.irSiguiente(0);
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().recogerGenerarItem();
                 System.out.println("Obtuviste el item: " + item.getNombre());
-                habitacion[destinationF][destinationC] = 0;
+                habitacionMatriz[destinationF][destinationC] = 0;
                 break;
             case 5: // Arma
                 Item arma = jugador.getInventario().recogerGenerarArma(jugador);
                 System.out.println("Obtuviste el arma: " + arma.getNombre());
-                habitacion[destinationF][destinationC] = 0;
+                habitacionMatriz[destinationF][destinationC] = 0;
                 break;
             case 7:
                 jugador.activarDebuff(); // Debuff
                 break;
             case 8: // Puerta Sur
-            habitacionActual = mazmorra.irSiguiente("sur", habitacionActual.abajo);
+            habitacion = mazmorra.irSiguiente(1);
                 break;
             case 9: // Puerta Este
-            habitacionActual = mazmorra.irSiguiente("este", habitacionActual.derecha);
+            habitacion = mazmorra.irSiguiente(2);
                 break;
             case 10: // Puerta Oeste
-            habitacionActual = mazmorra.irSiguiente("oeste", habitacionActual.izquierda);
+            habitacion = mazmorra.irSiguiente(3);
                 break;
             default:
                 // Si es otro número, permitimos el movimiento
@@ -113,18 +108,18 @@ public class Movimiento {
 
         if (canGo) {
             // Se mueve el jugador a la posicion
-            habitacion[destinationF][destinationC] = 2;
-            habitacion[pPosF][pPosC] = 0;
-            checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
+            habitacionMatriz[destinationF][destinationC] = 2;
+            habitacionMatriz[pPosF][pPosC] = 0;
+            checksurrounding(destinationF, destinationC, habitacionMatriz, jugador, habitacion);
             // Mover enemigos después de verificar combates
-            moverEnemigos(habitacion, destinationF, destinationC, HabitacionGenerada);
-            checksurrounding(destinationF, destinationC, habitacion, jugador, HabitacionGenerada);
+            moverEnemigos(habitacionMatriz, destinationF, destinationC, habitacion);
+            checksurrounding(destinationF, destinationC, habitacionMatriz, jugador, habitacion);
             
         }
       }
     }
 
-    private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, GeneracionHabitacion HabitacionGenerada) {
+    private void checksurrounding(int x, int y, int[][] habitacion, Jugador jugador, Habitacion HabitacionGenerada) {
         // Solo verifica casillas adyacentes
         int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
         int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
@@ -135,13 +130,13 @@ public class Movimiento {
             // Verificar límites y buscar enemigos adyacentes
             if (nx >= 0 && nx < habitacion.length && ny >= 0 && ny < habitacion[0].length && habitacion[nx][ny] == 6) { // 6 representa al enemigo
                 int enemigoActual = HabitacionGenerada.getEnemigoPorPosicion(nx, ny);
-                callCombate.combate(HabitacionGenerada.getEnemigos(), jugador, habitacion, enemigoActual, HabitacionGenerada);
+                callCombate.combate(HabitacionGenerada.enemigos, jugador, habitacion, enemigoActual, HabitacionGenerada);
             }
         }
     }
 
-    private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, GeneracionHabitacion HabitacionGenerada) {
-    for (Enemigo enemigo : HabitacionGenerada.getEnemigos()) {
+    private void moverEnemigos(int[][] habitacion, int jugadorF, int jugadorC, Habitacion HabitacionGenerada) {
+    for (Enemigo enemigo : HabitacionGenerada.enemigos) {
         if (enemigo != null && enemigo.getVida() > 0) {
             int enemigoF = enemigo.getPosFila();
             int enemigoC = enemigo.getPosColumna();

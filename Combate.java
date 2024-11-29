@@ -5,7 +5,7 @@ public class Combate {
     private Random rand = new Random();
     private Scanner input = new Scanner(System.in);
 
-    public void combate(Enemigo[] enemigos, Jugador jugador, int[][] habitacion, int index, GeneracionHabitacion HabitacionGenerada) {
+    public void combate(Enemigo[] enemigos, Jugador jugador, int[][] habitacion, int index, Habitacion HabitacionGenerada) {
         System.out.println("¡Inicio de combate!");
         int playerdecision;
 
