@@ -42,14 +42,6 @@ public class Movimiento {
 
         System.out.println("Ingrese 'w' (arriba), 'a' (izquierda), 's' (abajo) o 'd' (derecha): ");
         char movimiento = myScanner.next().charAt(0);
-        if (movimiento == 'm'){
-            //Imprimir el mapa de la mazmorra.
-            mazmorra.ImprimirMapa();
-        }
-        if (movimiento == 'e'){
-            System.out.println("Salida de emergencias activada. Has salido del juego.");
-            gameOver = true;
-        }
         switch (movimiento) {
             case 'w':
                 destinationF = pPosF - 1;
@@ -63,8 +55,13 @@ public class Movimiento {
             case 'd':
                 destinationC = pPosC + 1;
                 break;
+            case 'e':
+                System.out.println("Salida de emergencias activada. Has salido del juego.");
+                gameOver = true;
+                break;
+
             default:
-                System.out.println("No te moviste.");
+                System.out.println("Opción inválida. Intente de nuevo.");
                 continue; // Salta al próximo ciclo del bucle
         }
 
@@ -80,8 +77,8 @@ public class Movimiento {
                 break;
             case 3: // Puerta Norte
                 canGo = false;
-                habitacion.habitacionIncial = false;
                 habitacion = mazmorra.irSiguiente(0);
+                canGo = false;
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().recogerGenerarItem();
@@ -98,17 +95,14 @@ public class Movimiento {
                 break;
             case 8: // Puerta Sur
                 canGo = false;
-                habitacion.habitacionIncial = false;
                 habitacion = mazmorra.irSiguiente(1);
                 break;
             case 9: // Puerta Este
                 canGo = false;
-                habitacion.habitacionIncial = false;
                 habitacion = mazmorra.irSiguiente(2);
                 break;
             case 10: // Puerta Oeste
                 canGo = false;
-                habitacion.habitacionIncial = false;
                 habitacion = mazmorra.irSiguiente(3);
                 break;
             default:

@@ -9,45 +9,6 @@ public class Mazmorra {
         habitacionOriginal.colocarJugadorHabitacionBase();
     }
 
-    public void ImprimirMapa() {
-        String norte = "N";
-        String sur = "N";
-        String este = "N";
-        String oeste = "N";
-
-        // Verificar vecinos
-        if (habitacionActual.vecinos[0] != null) {
-            norte = habitacionActual.vecinos[0].getHabitacionSalida() ? "S" :
-            habitacionActual.vecinos[0].getHabitacionJefe() ? "B" :
-            String.valueOf(habitacionActual.vecinos[0].getNumeroHabitacion());
-        }
-        if (habitacionActual.vecinos[1] != null) {
-            sur = habitacionActual.vecinos[1].getHabitacionSalida() ? "S" :
-            habitacionActual.vecinos[1].getHabitacionJefe() ? "B" :
-            String.valueOf(habitacionActual.vecinos[1].getNumeroHabitacion());
-        }
-        if (habitacionActual.vecinos[2] != null) {
-            este = habitacionActual.vecinos[2].getHabitacionSalida() ? "S" :
-            habitacionActual.vecinos[2].getHabitacionJefe() ? "B" :
-            String.valueOf(habitacionActual.vecinos[2].getNumeroHabitacion());
-        }
-        if (habitacionActual.vecinos[3] != null) {
-            oeste = habitacionActual.vecinos[3].getHabitacionSalida() ? "S" :
-            habitacionActual.vecinos[3].getHabitacionJefe() ? "B" :
-            String.valueOf(habitacionActual.vecinos[3].getNumeroHabitacion());
-        }
-
-        // Imprimir el mapa
-        System.out.println("     " + norte);
-        System.out.println("     |");
-        System.out.println("[" + oeste + "]-[" + habitacionActual.getNumeroHabitacion() + "]-[" + este + "]");
-        System.out.println("     |");
-        System.out.println("     " + sur);
-    }
-
-
-
-
     // Método de creación de una posición. 
     private Habitacion crearHabitacion(int direction) {
         Habitacion habitacionNueva = new Habitacion();
@@ -97,7 +58,7 @@ public class Mazmorra {
             }
         }
 
-        // Mover a la siguiente habitación
+        // Move to the next room
         if (habitacionActual.vecinos[direction] == null) {
             Habitacion nuevaHabitacion = crearHabitacion(direction);
             habitacionActual.connectar(nuevaHabitacion, direction);
@@ -105,7 +66,7 @@ public class Mazmorra {
 
         int opposite = oppositeDirection(direction);
         habitacionActual = habitacionActual.vecinos[direction];
-        habitacionActual.colocarJugador(opposite); // Colocar al jugador, dependiendo de la puerta donde salió.
+        habitacionActual.colocarJugador(opposite); // Place player based on entry
         System.out.println("Has pasado a otra habitacion");
         return habitacionActual;
     }
