@@ -82,6 +82,7 @@ public class Movimiento {
                 canGo = false;
                 habitacion.deDondeViene = 1;
                 habitacion = mazmorra.irSiguiente(0);
+                habitacion.lastPuerta = 3;
                 break;
             case 4:  // Item
                 Item item = jugador.getInventario().recogerGenerarItem();
@@ -100,16 +101,19 @@ public class Movimiento {
                 canGo = false;
                 habitacion.deDondeViene = 2;
                 habitacion = mazmorra.irSiguiente(1);
+                habitacion.lastPuerta = 8;
                 break;
             case 9: // Puerta Este
                 canGo = false;
                 habitacion.deDondeViene = 3;
                 habitacion = mazmorra.irSiguiente(2);
+                habitacion.lastPuerta = 9;
                 break;
             case 10: // Puerta Oeste
                 canGo = false;
                 habitacion.deDondeViene = 4;
                 habitacion = mazmorra.irSiguiente(3);
+                habitacion.lastPuerta = 10;
                 break;
             case 12:
                 if (jugador.getBossDerrotado() == true){

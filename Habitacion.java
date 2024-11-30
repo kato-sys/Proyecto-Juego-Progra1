@@ -14,9 +14,9 @@ public class Habitacion {
     private static int contadorHabitaciones = 0;
     int numeroHabitacion;
     int puertas = 1;
-    int cualPuerta;
     misc prob = new misc();
     boolean[] puertasPrevias = {true, true, true, true};
+    int lastPuerta;
     
 
     public Habitacion() {
@@ -149,9 +149,8 @@ public class Habitacion {
     if (prob.probabilidad(60)) puertas += 1;
     if (prob.probabilidad(40)) puertas += 1;
     if (prob.probabilidad(20)) puertas += 1;
-
+    int cualPuerta = colocarPuertaOpuesta(lastPuerta);
     while (puertas > 0) {
-        cualPuerta = rand.nextInt(4); // Generar puerta aleatoria
         switch (cualPuerta) {
             case 0: // Puerta Norte
                 if (puertasPrevias[0]) {
@@ -159,11 +158,6 @@ public class Habitacion {
                     habitacion[0][puertaNorteCol] = 3;
                     puertasPrevias[0] = false;
                     puertas -= 1;
-
-                    // Colocar puerta opuesta en la habitación vecina (Sur)
-                    if (vecinos[1] != null) {
-                        vecinos[1].colocarPuertaOpuesta(1); // Sur
-                    }
                 }
                 break;
             case 1: // Puerta Sur
@@ -172,11 +166,6 @@ public class Habitacion {
                     habitacion[filas - 1][puertaSurCol] = 8;
                     puertasPrevias[1] = false;
                     puertas -= 1;
-
-                    // Colocar puerta opuesta en la habitación vecina (Norte)
-                    if (vecinos[0] != null) {
-                        vecinos[0].colocarPuertaOpuesta(0); // Norte
-                    }
                 }
                 break;
             case 2: // Puerta Este
@@ -185,11 +174,6 @@ public class Habitacion {
                     habitacion[puertaEsteFila][columnas - 1] = 9;
                     puertasPrevias[2] = false;
                     puertas -= 1;
-
-                    // Colocar puerta opuesta en la habitación vecina (Oeste)
-                    if (vecinos[3] != null) {
-                        vecinos[3].colocarPuertaOpuesta(3); // Oeste
-                    }
                 }
                 break;
             case 3: // Puerta Oeste
@@ -198,14 +182,10 @@ public class Habitacion {
                     habitacion[puertaOesteFila][0] = 10;
                     puertasPrevias[3] = false;
                     puertas -= 1;
-
-                    // Colocar puerta opuesta en la habitación vecina (Este)
-                    if (vecinos[2] != null) {
-                        vecinos[2].colocarPuertaOpuesta(2); // Este
-                    }
                 }
                 break;
         }
+        cualPuerta = rand.nextInt(4); // Generar puerta aleatoria
     }
 
 
@@ -258,26 +238,15 @@ public class Habitacion {
             default: return -1; // Dirección Inválida
         }
     }
-    public void colocarPuertaOpuesta(int direccion) {
+    public int colocarPuertaOpuesta(int lastPuerta) {
     // Coloca la puerta opuesta en la vecina
-    switch (direccion) {
-        case 0: // Norte
-            int puertaSurCol = rand.nextInt(columnas - 2) + 1;
-            habitacion[filas - 1][puertaSurCol] = 8;
-            break;
-        case 1: // Sur
-            int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
-            habitacion[0][puertaNorteCol] = 3;
-            break;
-        case 2: // Este
-            int puertaOesteFila = rand.nextInt(filas - 2) + 1;
-            habitacion[puertaOesteFila][0] = 10;
-            break;
-        case 3: // Oeste
-            int puertaEsteFila = rand.nextInt(filas - 2) + 1;
-            habitacion[puertaEsteFila][columnas - 1] = 9;
-            break;
+    switch (lastPuerta) {
+        case 3: lastPuerta = 1;
+        case 8: lastPuerta = 0;
+        case 9: lastPuerta = 3;
+        case 10: lastPuerta = 2;
     }
+    return lastPuerta;
 }
 
 
