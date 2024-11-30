@@ -53,26 +53,26 @@ public class Mazmorra {
 
     // Método de creación de una posición. 
     private Habitacion crearHabitacion(int direction) {
-    Habitacion habitacionNueva = new Habitacion();
+        Habitacion habitacionNueva = new Habitacion();
     
-    // Verificar si esta será la habitación del jefe o salida
-    if (!habitacionNueva.getHabitacionJefe() && probabilidadJefe >= Math.random()) {
-        habitacionNueva.setHabitacionJefe(true);
-        System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación del jefe.");
-        probabilidadJefe = 0; // Resetea para que no haya más jefes
-    } else if (!habitacionNueva.getHabitacionSalida() && probabilidadSalida >= Math.random()) {
-        habitacionNueva.setHabitacionSalida(true);
-        System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación de salida.");
-        probabilidadSalida = 0; // Resetea para que no haya más salidas
-    }
+        // Verificar si esta será la habitación del jefe o salida
+        if (!habitacionNueva.getHabitacionJefe() && probabilidadJefe >= Math.random()) {
+            habitacionNueva.setHabitacionJefe(true);
+            System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación del jefe.");
+            probabilidadJefe = 0; // Resetea para que no haya más jefes
+        } else if (!habitacionNueva.getHabitacionSalida() && probabilidadSalida >= Math.random()) {
+            habitacionNueva.setHabitacionSalida(true);
+            System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación de salida.");
+            probabilidadSalida = 0; // Resetea para que no haya más salidas
+        }
 
-    // Incrementar las probabilidades para las siguientes habitaciones
-    probabilidadJefe += 0.07; // Incremento del 7%
-    probabilidadSalida += 0.05; // Incremento del 5%
+        // Incrementar las probabilidades para las siguientes habitaciones
+        probabilidadJefe += 0.07; // Incremento del 7%
+        probabilidadSalida += 0.05; // Incremento del 5%
 
-    // Conectar la habitación
-    habitacionActual.connectar(habitacionNueva, direction);
-    return habitacionNueva; 
+        // Conectar la habitación
+        habitacionActual.connectar(habitacionNueva, direction);
+        return habitacionNueva; 
     }   
 
 
