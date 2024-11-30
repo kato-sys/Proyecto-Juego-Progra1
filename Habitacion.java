@@ -257,13 +257,13 @@ public class Habitacion {
                     enemigos[i] = new Enemigo("Goblin", 10, 2, 2, x, y);
                     break;
                 case 1:
-                    enemigos[i] = new Enemigo("Orco", 30, 10, 5, x, y);
+                    enemigos[i] = new Enemigo("Orco", 25, 5, 5, x, y);
                     break;
                 case 2:
                     enemigos[i] = new Enemigo("Espectro", 20, 1, 1, x, y);
                     break;
                 case 3:
-                    enemigos[i] = new Enemigo("Slime", 10, 5, 0, x, y);
+                    enemigos[i] = new Enemigo("Slime", 10, 2, 0, x, y);
                     break;
                 default:
                     enemigos[i] = new Enemigo("Goblin", 10, 2, 2, x, y);
