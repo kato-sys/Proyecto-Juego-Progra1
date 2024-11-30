@@ -77,16 +77,6 @@ public class Mazmorra {
 
 
     public Habitacion irSiguiente(int direction) {
-        // Limpiar la posición del jugador en la habitación actual
-        for (int i = 0; i < habitacionActual.habitacion.length; i++) {
-            for (int j = 0; j < habitacionActual.habitacion[0].length; j++) {
-                if (habitacionActual.habitacion[i][j] == 2) { // '2' representa al jugador
-                    habitacionActual.habitacion[i][j] = 0; // Limpia la posición
-                    break;
-                }
-            }
-        }
-
         // Encontrar la posición actual del jugador
         int playerX = -1, playerY = -1;
         for (int i = 0; i < habitacionActual.habitacion.length; i++) {
@@ -100,7 +90,7 @@ public class Mazmorra {
             if (playerX != -1 && playerY != -1) break;
         }
 
-        // Replace the player with the door
+        // Remplazar el jugador con la puerta
         if (playerX != -1 && playerY != -1) {
             switch (direction) {
                 case 0: // Norte
@@ -115,6 +105,16 @@ public class Mazmorra {
                 case 3: // Oeste
                     habitacionActual.habitacion[playerX][playerY] = 10;
                     break;
+            }
+        }
+
+        // Limpiar la posición del jugador en la habitación actual
+        for (int i = 0; i < habitacionActual.habitacion.length; i++) {
+            for (int j = 0; j < habitacionActual.habitacion[0].length; j++) {
+                if (habitacionActual.habitacion[i][j] == 2) { // '2' representa al jugador
+                    habitacionActual.habitacion[i][j] = 0; // Limpia la posición
+                    break;
+                }
             }
         }
 
