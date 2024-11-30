@@ -1,6 +1,9 @@
 public class Mazmorra {
     Habitacion habitacionOriginal; 
     Habitacion habitacionActual;
+    private double probabilidadJefe = 0.10; // Inicial 10%
+    private double probabilidadSalida = 0.05; // Inicial 5%
+
 
     public Mazmorra() {
         habitacionOriginal = new Habitacion();
@@ -50,10 +53,28 @@ public class Mazmorra {
 
     // Método de creación de una posición. 
     private Habitacion crearHabitacion(int direction) {
-        Habitacion habitacionNueva = new Habitacion();
-        habitacionActual.connectar(habitacionNueva, direction);
-        return habitacionNueva;
+    Habitacion habitacionNueva = new Habitacion();
+    
+    // Verificar si esta será la habitación del jefe o salida
+    if (!habitacionNueva.getHabitacionJefe() && probabilidadJefe >= Math.random()) {
+        habitacionNueva.setHabitacionJefe(true);
+        System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación del jefe.");
+        probabilidadJefe = 0; // Resetea para que no haya más jefes
+    } else if (!habitacionNueva.getHabitacionSalida() && probabilidadSalida >= Math.random()) {
+        habitacionNueva.setHabitacionSalida(true);
+        System.out.println("Habitación " + habitacionNueva.getNumeroHabitacion() + " es la habitación de salida.");
+        probabilidadSalida = 0; // Resetea para que no haya más salidas
     }
+
+    // Incrementar las probabilidades para las siguientes habitaciones
+    probabilidadJefe += 0.07; // Incremento del 7%
+    probabilidadSalida += 0.05; // Incremento del 5%
+
+    // Conectar la habitación
+    habitacionActual.connectar(habitacionNueva, direction);
+    return habitacionNueva; 
+    }   
+
 
     public Habitacion irSiguiente(int direction) {
         // Limpiar la posición del jugador en la habitación actual

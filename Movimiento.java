@@ -111,6 +111,13 @@ public class Movimiento {
                 habitacion.deDondeViene = 4;
                 habitacion = mazmorra.irSiguiente(3);
                 break;
+            case 12:
+                if (jugador.getBossDerrotado() == true){
+                    System.out.println("Felicidades, has escapado de la Dungeon.");
+                }else{
+                    System.out.println("Lo siento, necesitas la llave que suelta el jefe para escapar.");
+                }
+                break;
             default:
                 // Si es otro número, permitimos el movimiento
                 break;

@@ -17,6 +17,7 @@ public class Habitacion {
     int cualPuerta;
     misc prob = new misc();
     boolean[] puertasPrevias = {true, true, true, true};
+    
 
     public Habitacion() {
         filas = rand.nextInt(9) + 8; //Estos son valores para hacer aleatoria el tamaño de la habitación.
@@ -25,7 +26,12 @@ public class Habitacion {
         this.habitacion = new int[filas][columnas];
         enemigos = new Enemigo[5];
         this.numeroHabitacion = contadorHabitaciones++; // Incrementa el contador y asigna el número
-        LlenarHabitacion();
+        if(habitacionSalida){
+            GenerarHabitacionSalida();
+        }else{
+            LlenarHabitacion();
+        }
+        
     }
 
     public boolean getHabitacionInicial(){
@@ -51,10 +57,34 @@ public class Habitacion {
         this.habitacionSalida = esSalida;
     }
 
+
     public int getNumeroHabitacion() {
         return numeroHabitacion; // Devuelve el número único de esta habitación
     }
 
+
+    public void GenerarHabitacionSalida(){
+        // techo y piso
+        for (int i = 0; i < 9; i++) {
+            habitacion[0][i] = 1;
+            habitacion[9 - 1][i] = 1;
+        }
+        // paredes
+        for (int i = 0; i < 9; i++) {
+            habitacion[i][0] = 1;
+            habitacion[i][9 - 1] = 1;
+        }
+        // adentro
+        for (int i = 1; i < 9 - 1; i++) {
+            for (int j = 1; j < 9 - 1; j++) {
+                habitacion[i][j] = 0;
+            }
+        }
+        //Puerta Final
+        int puertaNorteCol = rand.nextInt(columnas - 2) + 1;
+        habitacion[0][puertaNorteCol] = 12;
+        
+    }
     public void LlenarHabitacion() {
         // techo y piso
         for (int i = 0; i < columnas; i++) {
@@ -158,6 +188,9 @@ public class Habitacion {
 
         // Aquí se van a generar los enemigos según probabilidad.
         double probEnemigos = rand.nextDouble();
+        if (habitacionJefe){
+            colocarEnemigos(1);
+        }
         if(probEnemigos < 0.02){
           colocarEnemigos(4); //Cuatro enemigos se generan.
         }else if(probEnemigos < 0.12){
@@ -212,6 +245,9 @@ public class Habitacion {
             x = rand.nextInt(filas - 2) + 1;
             y = rand.nextInt(columnas - 2) + 1;
           }while (habitacion[x][y] != 0);//Esto es para asegurarse de que la posición sea válida. 
+        if (habitacionJefe){
+            enemigos[i] = new Enemigo("Mister Boss Final", 100, 10, 1, x, y);
+        }
         if (rand.nextDouble() < 0.0001){
           enemigos[i] = new Enemigo("[[ETERNO RESPLANDOR DEL FALLECIMIENTO DE INFINITAS ESTRELLAS]]", 999, 999, 999, x, y);
         }else{

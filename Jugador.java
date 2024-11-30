@@ -12,6 +12,7 @@ public class Jugador {
     public Inventario inventario; // inventario
     private boolean tieneDebuff; // status debuff
     public Movimiento callMovimiento;
+    boolean bossDerrotado;
 
     public Jugador(String nombre, int vida, int ataque, int defensa) {
         this.jugadorNombre = nombre;
@@ -21,6 +22,14 @@ public class Jugador {
         this.inventario = new Inventario();
         this.tieneDebuff = false;
         this.callMovimiento = new Movimiento();
+        this.bossDerrotado = false;
+    }
+
+    public boolean getBossDerrotado(){
+        return this.bossDerrotado;
+    }
+    public void getBossDerrotado(boolean derrotado){
+        this.bossDerrotado = derrotado;
     }
 
     public int getUltimaPosicionJugadorF(){

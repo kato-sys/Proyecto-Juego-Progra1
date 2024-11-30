@@ -41,6 +41,10 @@ public class Combate {
                     //Acá cada vez que el jugador ataca, se revisa la vida del enemigo. Si es cero, es derrotado.
                     if (enemigos[index].getVida() == 0) {
                         System.out.println(enemigos[index].getNombre() + " ha sido derrotado.");
+                        if (enemigos[index].getNombre() == "Mister Boss Final"){
+                          System.out.println("El jefe cae... HAS GANADO UNA LLAVE. LLAVE DE LA SALIDA DE LA DUNGEON.");
+                          jugador.getBossDerrotado(true);
+                        }
                         //Acá el enemigo suelta un item si tiene, y si es derrotado. 
                         dejarItemAlDerrotarEnemigo(enemigos[index],jugador);
                         habitacion[enemigos[index].getPosFila()][enemigos[index].getPosColumna()] = 0;
