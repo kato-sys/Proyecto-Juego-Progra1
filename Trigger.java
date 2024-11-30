@@ -2,9 +2,10 @@
 public class Trigger {
 
     public static void main(String[] args) {
+        
         Jugador jugador = new Jugador("Player", 100, 8, 0);
         Movimiento movimiento = new Movimiento();
-        System.out.println("Bienvenido al juego! Intenta encontrar la salida (/) y esquiva o enfrenta los enemigos (E).");
+        System.out.println("Bienvenido a esta aventura del proyecto de programación... Misteriosamente te encuentras en una mazmorra. ¡Necesitas volver a tu hogar! ¡La ECCI te espera!");
 
         movimiento.RecorridoHabitacion(jugador);
 
